@@ -3,9 +3,12 @@ from app.models import (
     Color,
     Flower,
     FlowerColor,
+    FlowerInventory,
     FlowerOccasion,
     FlowerStyle,
     Foliage,
+    Florist,
+    FloristFlower,
     Occasion,
     Style,
     Wrapping,
@@ -439,9 +442,97 @@ def populate_database():
 
         db.commit()
 
+        florist = db.query(Florist).filter_by(name="Florist Demo").first()
+
+        if florist is None:
+            florist = Florist(name="Florist Demo")
+            db.add(florist)
+            db.flush()
+
+        db.commit()
+
+        florist_flower_data = [
+            ("Rose", 12.00),
+            ("Tulip", 10.00),
+            ("Hydrangea", 15.00),
+            ("Sunflower", 8.00),
+            ("Lily", 14.00),
+            ("Carnation", 7.00),
+            ("Daisy", 6.00),
+            ("Gerbera", 9.00),
+            ("Peony", 18.00),
+            ("Baby's Breath", 5.00),
+        ]
+
+        for flower_name, price in florist_flower_data:
+            flower = db.query(Flower).filter_by(name=flower_name).first()
+
+            if flower is None:
+                continue
+
+            existing_relationship = (
+                db.query(FloristFlower)
+                .filter_by(
+                    florist_id=florist.id,
+                    flower_id=flower.id,
+                )
+                .first()
+            )
+
+            if existing_relationship is None:
+                db.add(
+                    FloristFlower(
+                        florist_id=florist.id,
+                        flower_id=flower.id,
+                        price=price,
+                        active=True,
+                    )
+                )
+
+        db.commit()
+
+        flower_inventory_data = [
+            ("Rose", 30),
+            ("Tulip", 25),
+            ("Hydrangea", 15),
+            ("Sunflower", 20),
+            ("Lily", 18),
+            ("Carnation", 40),
+            ("Daisy", 35),
+            ("Gerbera", 25),
+            ("Peony", 12),
+            ("Baby's Breath", 50),
+        ]
+
+        for flower_name, quantity in flower_inventory_data:
+            flower = db.query(Flower).filter_by(name=flower_name).first()
+
+            if flower is None:
+                continue
+
+            existing_inventory = (
+                db.query(FlowerInventory)
+                .filter_by(
+                    florist_id=florist.id,
+                    flower_id=flower.id,
+                )
+                .first()
+            )
+
+            if existing_inventory is None:
+                db.add(
+                    FlowerInventory(
+                        florist_id=florist.id,
+                        flower_id=flower.id,
+                        quantity=quantity,
+                    )
+                )
+
+        db.commit()
+
         print(
-            "Flowers, colors, styles, occasions, foliage, wrappings, "
-            "and all relationships added successfully."
+            "Flowers, colors, styles, occasions, foliage, wrappings, florist, "
+            "florist flowers, flower inventory, and all relationships added successfully."
         )
 
     finally:
