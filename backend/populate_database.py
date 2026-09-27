@@ -3,12 +3,19 @@ from app.models import (
     Color,
     Flower,
     FlowerColor,
+    FlowerInventory,
     FlowerOccasion,
     FlowerStyle,
     Foliage,
+    FoliageInventory,
+    Florist,
+    FloristFlower,
+    FloristFoliage,
+    FloristWrapping,
     Occasion,
     Style,
     Wrapping,
+    WrappingInventory,
 )
 
 
@@ -439,9 +446,232 @@ def populate_database():
 
         db.commit()
 
+        florist = db.query(Florist).filter_by(name="Florist Demo").first()
+
+        if florist is None:
+            florist = Florist(name="Florist Demo")
+            db.add(florist)
+            db.flush()
+
+        db.commit()
+
+        florist_flower_data = [
+            ("Rose", 12.00),
+            ("Tulip", 10.00),
+            ("Hydrangea", 15.00),
+            ("Sunflower", 8.00),
+            ("Lily", 14.00),
+            ("Carnation", 7.00),
+            ("Daisy", 6.00),
+            ("Gerbera", 9.00),
+            ("Peony", 18.00),
+            ("Baby's Breath", 5.00),
+        ]
+
+        for flower_name, price in florist_flower_data:
+            flower = db.query(Flower).filter_by(name=flower_name).first()
+
+            if flower is None:
+                continue
+
+            existing_relationship = (
+                db.query(FloristFlower)
+                .filter_by(
+                    florist_id=florist.id,
+                    flower_id=flower.id,
+                )
+                .first()
+            )
+
+            if existing_relationship is None:
+                db.add(
+                    FloristFlower(
+                        florist_id=florist.id,
+                        flower_id=flower.id,
+                        price=price,
+                        active=True,
+                    )
+                )
+
+        db.commit()
+
+        flower_inventory_data = [
+            ("Rose", 30),
+            ("Tulip", 25),
+            ("Hydrangea", 15),
+            ("Sunflower", 20),
+            ("Lily", 18),
+            ("Carnation", 40),
+            ("Daisy", 35),
+            ("Gerbera", 25),
+            ("Peony", 12),
+            ("Baby's Breath", 50),
+        ]
+
+        for flower_name, quantity in flower_inventory_data:
+            flower = db.query(Flower).filter_by(name=flower_name).first()
+
+            if flower is None:
+                continue
+
+            existing_inventory = (
+                db.query(FlowerInventory)
+                .filter_by(
+                    florist_id=florist.id,
+                    flower_id=flower.id,
+                )
+                .first()
+            )
+
+            if existing_inventory is None:
+                db.add(
+                    FlowerInventory(
+                        florist_id=florist.id,
+                        flower_id=flower.id,
+                        quantity=quantity,
+                    )
+                )
+
+        db.commit()
+
+        florist_foliage_data = [
+            ("Eucalyptus", 5.00),
+            ("Ruscus", 6.00),
+            ("Fern", 4.00),
+            ("Olive Branch", 7.00),
+        ]
+
+        for foliage_name, price in florist_foliage_data:
+            foliage = db.query(Foliage).filter_by(name=foliage_name).first()
+
+            if foliage is None:
+                continue
+
+            existing_relationship = (
+                db.query(FloristFoliage)
+                .filter_by(
+                    florist_id=florist.id,
+                    foliage_id=foliage.id,
+                )
+                .first()
+            )
+
+            if existing_relationship is None:
+                db.add(
+                    FloristFoliage(
+                        florist_id=florist.id,
+                        foliage_id=foliage.id,
+                        price=price,
+                        active=True,
+                    )
+                )
+
+        db.commit()
+
+        foliage_inventory_data = [
+            ("Eucalyptus", 40),
+            ("Ruscus", 30),
+            ("Fern", 35),
+            ("Olive Branch", 20),
+        ]
+
+        for foliage_name, quantity in foliage_inventory_data:
+            foliage = db.query(Foliage).filter_by(name=foliage_name).first()
+
+            if foliage is None:
+                continue
+
+            existing_inventory = (
+                db.query(FoliageInventory)
+                .filter_by(
+                    florist_id=florist.id,
+                    foliage_id=foliage.id,
+                )
+                .first()
+            )
+
+            if existing_inventory is None:
+                db.add(
+                    FoliageInventory(
+                        florist_id=florist.id,
+                        foliage_id=foliage.id,
+                        quantity=quantity,
+                    )
+                )
+
+        db.commit()
+
+        florist_wrapping_data = [
+            ("Kraft Paper", 4.00),
+            ("White Paper", 4.00),
+            ("Pink Paper", 5.00),
+            ("Premium Fabric", 12.00),
+        ]
+
+        for wrapping_name, price in florist_wrapping_data:
+            wrapping = db.query(Wrapping).filter_by(name=wrapping_name).first()
+
+            if wrapping is None:
+                continue
+
+            existing_relationship = (
+                db.query(FloristWrapping)
+                .filter_by(
+                    florist_id=florist.id,
+                    wrapping_id=wrapping.id,
+                )
+                .first()
+            )
+
+            if existing_relationship is None:
+                db.add(
+                    FloristWrapping(
+                        florist_id=florist.id,
+                        wrapping_id=wrapping.id,
+                        price=price,
+                        active=True,
+                    )
+                )
+
+        db.commit()
+
+        wrapping_inventory_data = [
+            ("Kraft Paper", 50),
+            ("White Paper", 40),
+            ("Pink Paper", 30),
+            ("Premium Fabric", 15),
+        ]
+
+        for wrapping_name, quantity in wrapping_inventory_data:
+            wrapping = db.query(Wrapping).filter_by(name=wrapping_name).first()
+
+            if wrapping is None:
+                continue
+
+            existing_inventory = (
+                db.query(WrappingInventory)
+                .filter_by(
+                    florist_id=florist.id,
+                    wrapping_id=wrapping.id,
+                )
+                .first()
+            )
+
+            if existing_inventory is None:
+                db.add(
+                    WrappingInventory(
+                        florist_id=florist.id,
+                        wrapping_id=wrapping.id,
+                        quantity=quantity,
+                    )
+                )
+
+        db.commit()
+
         print(
-            "Flowers, colors, styles, occasions, foliage, wrappings, "
-            "and all relationships added successfully."
+            "Flowers, colors, styles, occasions, foliage, wrappings, florist, "
+            "florist flowers, flower inventory, florist foliage, foliage inventory, "
+            "florist wrappings, wrapping inventory, and all relationships added successfully."
         )
 
     finally:
