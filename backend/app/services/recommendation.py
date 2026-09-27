@@ -6,8 +6,6 @@ build bouquet compositions, validate stock, and calculate prices.
 
 from decimal import Decimal
 
-from sqlalchemy.orm import Session
-
 from app.models import (
     Color,
     FloristFlower,
@@ -26,6 +24,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
+from sqlalchemy.orm import Session
 
 SIZE_RANGES = {
     "SMALL": (3, 7),
@@ -321,7 +320,7 @@ def get_flower_price(
     )
 
     if florist_flower is None:
-        return Decimal("0")
+        return Decimal("0")  # noqa: FURB157
 
     return florist_flower.price
 

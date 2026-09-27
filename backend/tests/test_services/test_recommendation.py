@@ -2,7 +2,6 @@ from decimal import Decimal
 from types import SimpleNamespace
 
 import pytest
-
 from app.models import (
     Color,
     Florist,
@@ -26,6 +25,7 @@ from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
     build_complete_composition,
+    build_preferred_flower_composition,
     build_recommended_composition,
     calculate_bouquet_price,
     calculate_complete_bouquet_price,
@@ -306,12 +306,17 @@ def test_prioritize_preferred_flowers_handles_empty_or_missing_preferences():
     assert prioritize_preferred_flowers(flowers, ["Unknown"]) == flowers
 
 
-def test_add_secondary_flowers_skips_primary_and_obeys_quantity():
-    rose = SimpleNamespace(id=1, name="Rose")
-    tulip = SimpleNamespace(id=2, name="Tulip")
-    daisy = SimpleNamespace(id=3, name="Daisy")
+def test_add_secondary_flowers_skips_primary_and_obeys_quantity(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    daisy = catalog.flowers["Daisy"]
 
     result = add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
         [rose, tulip, daisy],
         rose,
         {rose.id: 2},
@@ -322,20 +327,36 @@ def test_add_secondary_flowers_skips_primary_and_obeys_quantity():
 
 
 @pytest.mark.parametrize("quantity", [0, -1])
-def test_add_secondary_flowers_handles_nonpositive_quantity(quantity):
-    rose = SimpleNamespace(id=1, name="Rose")
-    tulip = SimpleNamespace(id=2, name="Tulip")
+def test_add_secondary_flowers_handles_nonpositive_quantity(
+    db_session,
+    catalog,
+    quantity,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
     composition = {rose.id: 2}
 
-    assert add_secondary_flowers([rose, tulip], rose, composition, quantity) == {
-        rose.id: 2
-    }
+    assert add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        rose,
+        composition,
+        quantity,
+    ) == {rose.id: 2}
 
 
-def test_add_secondary_flowers_handles_empty_candidates():
-    rose = SimpleNamespace(id=1, name="Rose")
+def test_add_secondary_flowers_handles_empty_candidates(db_session, catalog):
+    rose = catalog.flowers["Rose"]
 
-    assert add_secondary_flowers([], rose, {rose.id: 2}, 2) == {rose.id: 2}
+    assert add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [],
+        rose,
+        {rose.id: 2},
+        2,
+    ) == {rose.id: 2}
 
 
 def test_select_foliage_handles_empty_and_zero_quantity():
@@ -373,18 +394,68 @@ def test_is_within_budget(total, budget_max, expected):
     assert is_within_budget(total, budget_max) is expected
 
 
-def test_build_cheapest_composition_handles_empty_candidates():
-    assert build_cheapest_composition([], "SMALL") == {}
+def test_build_cheapest_composition_handles_empty_candidates(db_session, catalog):
+    assert build_cheapest_composition(
+        db_session,
+        catalog.florist.id,
+        [],
+        "SMALL",
+    ) == {}
 
 
-def test_build_cheapest_composition_cycles_candidates():
-    rose = SimpleNamespace(id=1, name="Rose")
-    tulip = SimpleNamespace(id=2, name="Tulip")
+def test_build_cheapest_composition_uses_stock_to_meet_minimum(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
 
-    assert build_cheapest_composition([rose, tulip], "MEDIUM") == {
-        rose.id: 4,
-        tulip.id: 4,
+    assert build_cheapest_composition(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        "MEDIUM",
+    ) == {
+        rose.id: 8,
     }
+
+
+def test_build_preferred_flower_composition_limits_primary_to_stock(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    db_session.get(FlowerInventory, (catalog.florist.id, rose.id)).quantity = 1
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 2
+    db_session.flush()
+
+    assert build_preferred_flower_composition(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        rose,
+        "SMALL",
+    ) == {rose.id: 1, tulip.id: 2}
+
+
+def test_build_preferred_flower_composition_requires_minimum_stock(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    db_session.get(FlowerInventory, (catalog.florist.id, rose.id)).quantity = 1
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 1
+    db_session.flush()
+
+    assert build_preferred_flower_composition(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        rose,
+        "SMALL",
+    ) == {}
 
 
 def test_database_stock_helpers_return_inventory_or_zero(db_session, catalog):
@@ -962,9 +1033,7 @@ def test_find_valid_composition_falls_back_to_cheaper_mix(
 
     assert composition == {
         "flowers": {
-            catalog.flowers["Daisy"].id: 1,
-            catalog.flowers["Tulip"].id: 1,
-            catalog.flowers["Rose"].id: 1,
+            catalog.flowers["Daisy"].id: 3,
         },
         "foliage": {catalog.foliage["Eucalyptus"].id: 1},
         "wrapping": {},
