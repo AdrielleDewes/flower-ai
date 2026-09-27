@@ -5,11 +5,14 @@ from sqlalchemy.orm import Session
 from app.models import (
     Color,
     FloristFlower,
+    FloristFoliage,
     Flower,
     FlowerColor,
     FlowerInventory,
     FlowerOccasion,
     FlowerStyle,
+    Foliage,
+    FoliageInventory,
     Occasion,
     Style,
 )
@@ -24,6 +27,18 @@ SIZE_RANGES = {
 
 def get_flower_quantity_range(size: str) -> tuple[int, int]:
     return SIZE_RANGES[size]
+
+
+def get_foliage_quantity(
+    size: str,
+) -> int:
+    foliage_quantities = {
+        "SMALL": 1,
+        "MEDIUM": 2,
+        "LARGE": 3,
+    }
+
+    return foliage_quantities[size]
 
 
 def select_primary_flower(
@@ -230,6 +245,26 @@ def get_flower_stock(
     return inventory.quantity
 
 
+def get_foliage_stock(
+    db: Session,
+    florist_id: int,
+    foliage_id: int,
+) -> int:
+    inventory = (
+        db.query(FoliageInventory)
+        .filter(
+            FoliageInventory.florist_id == florist_id,
+            FoliageInventory.foliage_id == foliage_id,
+        )
+        .first()
+    )
+
+    if inventory is None:
+        return 0
+
+    return inventory.quantity
+
+
 def has_sufficient_stock(
     db: Session,
     florist_id: int,
@@ -240,6 +275,24 @@ def has_sufficient_stock(
             db,
             florist_id,
             flower_id,
+        )
+
+        if available_quantity < required_quantity:
+            return False
+
+    return True
+
+
+def has_sufficient_foliage_stock(
+    db: Session,
+    florist_id: int,
+    composition: dict[int, int],
+) -> bool:
+    for foliage_id, required_quantity in composition.items():
+        available_quantity = get_foliage_stock(
+            db,
+            florist_id,
+            foliage_id,
         )
 
         if available_quantity < required_quantity:
@@ -403,3 +456,51 @@ def find_candidate_flowers(
     )
 
     return query.distinct().all()
+
+
+def find_candidate_foliage(
+    db: Session,
+    florist_id: int,
+) -> list[Foliage]:
+    query = (
+        db.query(Foliage)
+        .join(
+            FloristFoliage,
+            FloristFoliage.foliage_id == Foliage.id,
+        )
+        .join(
+            FoliageInventory,
+            (
+                FoliageInventory.foliage_id == Foliage.id
+            )
+            & (
+                FoliageInventory.florist_id == florist_id
+            ),
+        )
+        .filter(
+            FloristFoliage.florist_id == florist_id,
+            FloristFoliage.active.is_(True),
+            FoliageInventory.quantity > 0,
+        )
+    )
+
+    return query.distinct().all()
+
+
+def select_foliage(
+    candidate_foliage: list[Foliage],
+    quantity: int,
+) -> dict[int, int]:
+    if not candidate_foliage or quantity <= 0:
+        return {}
+
+    composition = {}
+
+    for foliage in candidate_foliage:
+        if quantity <= 0:
+            break
+
+        composition[foliage.id] = 1
+        quantity -= 1
+
+    return composition
