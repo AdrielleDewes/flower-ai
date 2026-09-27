@@ -47,6 +47,15 @@ def get_primary_flower_quantity(
     return primary_quantities[size]
 
 
+def get_remaining_quantity(
+    size: str,
+    primary_quantity: int,
+) -> int:
+    min_quantity, _ = get_flower_quantity_range(size)
+
+    return max(min_quantity - primary_quantity, 0)
+
+
 def build_bouquet_composition(
     candidate_flowers: list[Flower],
     size: str,
@@ -61,6 +70,53 @@ def build_bouquet_composition(
     return {
         flower.id: min_quantity,
     }
+
+
+def build_cheapest_composition(
+    candidate_flowers: list[Flower],
+    size: str,
+) -> dict[int, int]:
+    min_quantity, _ = get_flower_quantity_range(size)
+
+    if not candidate_flowers:
+        return {}
+
+    composition = {}
+    remaining_quantity = min_quantity
+    index = 0
+
+    while remaining_quantity > 0:
+        flower = candidate_flowers[index]
+        composition[flower.id] = composition.get(flower.id, 0) + 1
+        remaining_quantity -= 1
+        index = (index + 1) % len(candidate_flowers)
+
+    return composition
+
+
+def validate_composition(
+    db: Session,
+    florist_id: int,
+    composition: dict[int, int],
+    budget_max: Decimal | None,
+) -> bool:
+    if not composition:
+        return False
+
+    if not has_sufficient_stock(
+        db,
+        florist_id,
+        composition,
+    ):
+        return False
+
+    total = calculate_bouquet_price(
+        db,
+        florist_id,
+        composition,
+    )
+
+    return is_within_budget(total, budget_max)
 
 
 def add_secondary_flowers(
@@ -106,6 +162,23 @@ def calculate_bouquet_price(
         total += florist_flower.price * quantity
 
     return total
+
+
+def sort_flowers_by_price(
+    db: Session,
+    florist_id: int,
+    candidate_flowers: list[Flower],
+) -> list[Flower]:
+    return sorted(
+        candidate_flowers,
+        key=lambda flower: (
+            calculate_bouquet_price(
+                db,
+                florist_id,
+                {flower.id: 1},
+            )
+        ),
+    )
 
 
 def is_within_budget(
@@ -163,8 +236,6 @@ def find_valid_composition(
     size: str,
     budget_max: Decimal | None,
 ) -> dict[int, int]:
-    min_quantity, _ = get_flower_quantity_range(size)
-
     if not candidate_flowers:
         return {}
 
@@ -179,7 +250,10 @@ def find_valid_composition(
         primary_flower.id: primary_quantity,
     }
 
-    remaining_quantity = min_quantity - primary_quantity
+    remaining_quantity = get_remaining_quantity(
+        size,
+        primary_quantity,
+    )
 
     composition = add_secondary_flowers(
         candidate_flowers,
@@ -188,28 +262,34 @@ def find_valid_composition(
         remaining_quantity,
     )
 
-    total_quantity = sum(composition.values())
-
-    if total_quantity < min_quantity:
-        return {}
-
-    if not has_sufficient_stock(
+    if validate_composition(
         db,
         florist_id,
         composition,
+        budget_max,
     ):
-        return {}
+        return composition
 
-    total = calculate_bouquet_price(
+    sorted_flowers = sort_flowers_by_price(
         db,
         florist_id,
-        composition,
+        candidate_flowers,
     )
 
-    if not is_within_budget(total, budget_max):
-        return {}
+    cheapest_composition = build_cheapest_composition(
+        sorted_flowers,
+        size,
+    )
 
-    return composition
+    if validate_composition(
+        db,
+        florist_id,
+        cheapest_composition,
+        budget_max,
+    ):
+        return cheapest_composition
+
+    return {}
 
 
 def find_candidate_flowers(
