@@ -6,6 +6,7 @@ from app.models import (
     Color,
     FloristFlower,
     FloristFoliage,
+    FloristWrapping,
     Flower,
     FlowerColor,
     FlowerInventory,
@@ -15,6 +16,8 @@ from app.models import (
     FoliageInventory,
     Occasion,
     Style,
+    Wrapping,
+    WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
 
@@ -107,6 +110,8 @@ def build_bouquet_composition(
 
 
 def build_cheapest_composition(
+    db: Session,
+    florist_id: int,
     candidate_flowers: list[Flower],
     size: str,
 ) -> dict[int, int]:
@@ -117,13 +122,78 @@ def build_cheapest_composition(
 
     composition = {}
     remaining_quantity = min_quantity
-    index = 0
 
-    while remaining_quantity > 0:
-        flower = candidate_flowers[index]
-        composition[flower.id] = composition.get(flower.id, 0) + 1
-        remaining_quantity -= 1
-        index = (index + 1) % len(candidate_flowers)
+    for flower in candidate_flowers:
+        if remaining_quantity <= 0:
+            break
+
+        available_stock = get_flower_stock(
+            db,
+            florist_id,
+            flower.id,
+        )
+
+        quantity = min(
+            available_stock,
+            remaining_quantity,
+        )
+
+        if quantity > 0:
+            composition[flower.id] = quantity
+            remaining_quantity -= quantity
+
+    if remaining_quantity > 0:
+        return {}
+
+    return composition
+
+
+def build_preferred_flower_composition(
+    db: Session,
+    florist_id: int,
+    candidate_flowers: list[Flower],
+    primary_flower: Flower,
+    size: str,
+) -> dict[int, int]:
+    min_quantity, _ = get_flower_quantity_range(size)
+
+    if not candidate_flowers:
+        return {}
+
+    primary_stock = get_flower_stock(
+        db,
+        florist_id,
+        primary_flower.id,
+    )
+
+    primary_quantity = min(
+        get_primary_flower_quantity(size),
+        primary_stock,
+    )
+
+    if primary_quantity <= 0:
+        return {}
+
+    composition = {
+        primary_flower.id: primary_quantity,
+    }
+
+    remaining_quantity = min_quantity - primary_quantity
+
+    if remaining_quantity <= 0:
+        return composition
+
+    composition = add_secondary_flowers(
+        db,
+        florist_id,
+        candidate_flowers,
+        primary_flower,
+        composition,
+        remaining_quantity,
+    )
+
+    if sum(composition.values()) < min_quantity:
+        return {}
 
     return composition
 
@@ -131,7 +201,7 @@ def build_cheapest_composition(
 def validate_composition(
     db: Session,
     florist_id: int,
-    composition: dict[int, int],
+    composition: dict,
     budget_max: Decimal | None,
 ) -> bool:
     if not composition:
@@ -140,36 +210,93 @@ def validate_composition(
     if not has_sufficient_stock(
         db,
         florist_id,
-        composition,
+        composition["flowers"],
     ):
         return False
 
-    total = calculate_bouquet_price(
+    if not has_sufficient_foliage_stock(
+        db,
+        florist_id,
+        composition["foliage"],
+    ):
+        return False
+
+    if not has_sufficient_wrapping_stock(
+        db,
+        florist_id,
+        composition["wrapping"],
+    ):
+        return False
+
+    total = calculate_complete_bouquet_price(
         db,
         florist_id,
         composition,
     )
 
-    return is_within_budget(total, budget_max)
+    return is_within_budget(
+        total,
+        budget_max,
+    )
 
 
 def add_secondary_flowers(
+    db: Session,
+    florist_id: int,
     candidate_flowers: list[Flower],
     primary_flower: Flower,
     composition: dict[int, int],
     remaining_quantity: int,
 ) -> dict[int, int]:
-    for flower in candidate_flowers:
-        if remaining_quantity <= 0:
-            break
+    if remaining_quantity <= 0:
+        return composition
 
+    for flower in candidate_flowers:
         if flower.id == primary_flower.id:
             continue
 
-        composition[flower.id] = 1
-        remaining_quantity -= 1
+        if remaining_quantity <= 0:
+            break
+
+        available_stock = get_flower_stock(
+            db,
+            florist_id,
+            flower.id,
+        )
+
+        quantity = min(
+            available_stock,
+            remaining_quantity,
+        )
+
+        if quantity > 0:
+            composition[flower.id] = (
+                composition.get(flower.id, 0) + quantity
+            )
+            remaining_quantity -= quantity
 
     return composition
+
+
+def get_flower_price(
+    db: Session,
+    florist_id: int,
+    flower_id: int,
+) -> Decimal:
+    florist_flower = (
+        db.query(FloristFlower)
+        .filter(
+            FloristFlower.florist_id == florist_id,
+            FloristFlower.flower_id == flower_id,
+            FloristFlower.active.is_(True),
+        )
+        .first()
+    )
+
+    if florist_flower is None:
+        return Decimal("0")
+
+    return florist_flower.price
 
 
 def calculate_bouquet_price(
@@ -198,6 +325,99 @@ def calculate_bouquet_price(
     return total
 
 
+def calculate_foliage_price(
+    db: Session,
+    florist_id: int,
+    composition: dict[int, int],
+) -> Decimal:
+    total = Decimal(0)
+
+    for foliage_id, quantity in composition.items():
+        florist_foliage = (
+            db.query(FloristFoliage)
+            .filter(
+                FloristFoliage.florist_id == florist_id,
+                FloristFoliage.foliage_id == foliage_id,
+                FloristFoliage.active.is_(True),
+            )
+            .first()
+        )
+
+        if florist_foliage is None:
+            continue
+
+        total += florist_foliage.price * quantity
+
+    return total
+
+
+def select_cheapest_foliage(
+    candidate_foliage: list[Foliage],
+    quantity: int,
+) -> dict[int, int]:
+    if not candidate_foliage or quantity <= 0:
+        return {}
+
+    composition = {}
+
+    for foliage in candidate_foliage[:quantity]:
+        composition[foliage.id] = 1
+
+    return composition
+
+
+def calculate_wrapping_price(
+    db: Session,
+    florist_id: int,
+    composition: dict[int, int],
+) -> Decimal:
+    total = Decimal(0)
+
+    for wrapping_id, quantity in composition.items():
+        florist_wrapping = (
+            db.query(FloristWrapping)
+            .filter(
+                FloristWrapping.florist_id == florist_id,
+                FloristWrapping.wrapping_id == wrapping_id,
+                FloristWrapping.active.is_(True),
+            )
+            .first()
+        )
+
+        if florist_wrapping is None:
+            continue
+
+        total += florist_wrapping.price * quantity
+
+    return total
+
+
+def calculate_complete_bouquet_price(
+    db: Session,
+    florist_id: int,
+    composition: dict,
+) -> Decimal:
+    flower_price = calculate_bouquet_price(
+        db,
+        florist_id,
+        composition["flowers"],
+    )
+
+    foliage_price = calculate_foliage_price(
+        db,
+        florist_id,
+        composition["foliage"],
+    )
+
+    wrapping_price = calculate_wrapping_price(
+        db,
+        florist_id,
+        composition["wrapping"],
+    )
+
+    return flower_price + foliage_price + wrapping_price
+
+
 def sort_flowers_by_price(
     db: Session,
     florist_id: int,
@@ -206,13 +426,61 @@ def sort_flowers_by_price(
     return sorted(
         candidate_flowers,
         key=lambda flower: (
-            calculate_bouquet_price(
-                db,
-                florist_id,
-                {flower.id: 1},
-            )
+            get_flower_price(
+            db,
+            florist_id,
+            flower.id,
+        ),
         ),
     )
+
+def sort_foliage_by_price(
+    db: Session,
+    florist_id: int,
+    candidate_foliage: list[Foliage],
+) -> list[Foliage]:
+    return sorted(
+        candidate_foliage,
+        key=lambda foliage: (
+            db.query(FloristFoliage)
+            .filter(
+                FloristFoliage.florist_id == florist_id,
+                FloristFoliage.foliage_id == foliage.id,
+                FloristFoliage.active.is_(True),
+            )
+            .first()
+            .price
+        ),
+    )
+
+
+def sort_wrappings_by_price(
+    db: Session,
+    florist_id: int,
+    candidate_wrappings: list[Wrapping],
+) -> list[Wrapping]:
+    return sorted(
+        candidate_wrappings,
+        key=lambda wrapping: (
+            db.query(FloristWrapping)
+            .filter(
+                FloristWrapping.florist_id == florist_id,
+                FloristWrapping.wrapping_id == wrapping.id,
+                FloristWrapping.active.is_(True),
+            )
+            .first()
+            .price
+        ),
+    )
+
+
+def select_cheapest_wrapping(
+    candidate_wrappings: list[Wrapping],
+) -> Wrapping | None:
+    if not candidate_wrappings:
+        return None
+
+    return candidate_wrappings[0]
 
 
 def is_within_budget(
@@ -265,6 +533,26 @@ def get_foliage_stock(
     return inventory.quantity
 
 
+def get_wrapping_stock(
+    db: Session,
+    florist_id: int,
+    wrapping_id: int,
+) -> int:
+    inventory = (
+        db.query(WrappingInventory)
+        .filter(
+            WrappingInventory.florist_id == florist_id,
+            WrappingInventory.wrapping_id == wrapping_id,
+        )
+        .first()
+    )
+
+    if inventory is None:
+        return 0
+
+    return inventory.quantity
+
+
 def has_sufficient_stock(
     db: Session,
     florist_id: int,
@@ -301,6 +589,24 @@ def has_sufficient_foliage_stock(
     return True
 
 
+def has_sufficient_wrapping_stock(
+    db: Session,
+    florist_id: int,
+    composition: dict[int, int],
+) -> bool:
+    for wrapping_id, required_quantity in composition.items():
+        available_quantity = get_wrapping_stock(
+            db,
+            florist_id,
+            wrapping_id,
+        )
+
+        if available_quantity < required_quantity:
+            return False
+
+    return True
+
+
 def find_valid_composition(
     db: Session,
     florist_id: int,
@@ -308,7 +614,7 @@ def find_valid_composition(
     size: str,
     budget_max: Decimal | None,
     preferred_flowers: list[str],
-) -> dict[int, int]:
+) -> dict[str, dict[int, int]]:
     if not candidate_flowers:
         return {}
 
@@ -322,31 +628,29 @@ def find_valid_composition(
     if primary_flower is None:
         return {}
 
-    primary_quantity = get_primary_flower_quantity(size)
-
-    composition = {
-        primary_flower.id: primary_quantity,
-    }
-
-    remaining_quantity = get_remaining_quantity(
-        size,
-        primary_quantity,
-    )
-
-    composition = add_secondary_flowers(
-        candidate_flowers,
-        primary_flower,
-        composition,
-        remaining_quantity,
-    )
-
-    if validate_composition(
+    flower_composition = build_preferred_flower_composition(
         db,
         florist_id,
-        composition,
-        budget_max,
-    ):
-        return composition
+        candidate_flowers,
+        primary_flower,
+        size,
+    )
+
+    if flower_composition:
+        complete_composition = build_recommended_composition(
+            db,
+            florist_id,
+            flower_composition,
+            size,
+        )
+
+        if validate_composition(
+            db,
+            florist_id,
+            complete_composition,
+            budget_max,
+        ):
+            return complete_composition
 
     sorted_flowers = sort_flowers_by_price(
         db,
@@ -354,18 +658,27 @@ def find_valid_composition(
         candidate_flowers,
     )
 
-    cheapest_composition = build_cheapest_composition(
+    cheapest_flower_composition = build_cheapest_composition(
+        db,
+        florist_id,
         sorted_flowers,
+        size,
+    )
+
+    cheapest_complete_composition = build_recommended_composition(
+        db,
+        florist_id,
+        cheapest_flower_composition,
         size,
     )
 
     if validate_composition(
         db,
         florist_id,
-        cheapest_composition,
+        cheapest_complete_composition,
         budget_max,
     ):
-        return cheapest_composition
+        return cheapest_complete_composition
 
     return {}
 
@@ -504,3 +817,103 @@ def select_foliage(
         quantity -= 1
 
     return composition
+
+
+def find_candidate_wrappings(
+    db: Session,
+    florist_id: int,
+) -> list[Wrapping]:
+    query = (
+        db.query(Wrapping)
+        .join(
+            FloristWrapping,
+            FloristWrapping.wrapping_id == Wrapping.id,
+        )
+        .join(
+            WrappingInventory,
+            (
+                WrappingInventory.wrapping_id == Wrapping.id
+            )
+            & (
+                WrappingInventory.florist_id == florist_id
+            ),
+        )
+        .filter(
+            FloristWrapping.florist_id == florist_id,
+            FloristWrapping.active.is_(True),
+            WrappingInventory.quantity > 0,
+        )
+    )
+
+    return query.distinct().all()
+
+
+def select_wrapping(
+    candidate_wrappings: list[Wrapping],
+) -> Wrapping | None:
+    if not candidate_wrappings:
+        return None
+
+    return candidate_wrappings[0]
+
+
+def build_complete_composition(
+    flower_composition: dict[int, int],
+    foliage_composition: dict[int, int],
+    wrapping: Wrapping | None,
+) -> dict:
+    return {
+        "flowers": flower_composition,
+        "foliage": foliage_composition,
+        "wrapping": (
+            {wrapping.id: 1}
+            if wrapping is not None
+            else {}
+        ),
+    }
+
+
+def build_recommended_composition(
+    db: Session,
+    florist_id: int,
+    flower_composition: dict[int, int],
+    size: str,
+) -> dict:
+    candidate_foliage = find_candidate_foliage(
+        db,
+        florist_id,
+    )
+
+    sorted_foliage = sort_foliage_by_price(
+        db,
+        florist_id,
+        candidate_foliage,
+    )
+
+    foliage_quantity = get_foliage_quantity(size)
+
+    foliage_composition = select_cheapest_foliage(
+        sorted_foliage,
+        foliage_quantity,
+    )
+
+    candidate_wrappings = find_candidate_wrappings(
+        db,
+        florist_id,
+    )
+
+    sorted_wrappings = sort_wrappings_by_price(
+        db,
+        florist_id,
+        candidate_wrappings,
+    )
+
+    wrapping = select_cheapest_wrapping(
+        sorted_wrappings,
+    )
+
+    return build_complete_composition(
+        flower_composition,
+        foliage_composition,
+        wrapping,
+    )

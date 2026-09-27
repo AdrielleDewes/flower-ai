@@ -8,6 +8,7 @@ from app.models import (
     Florist,
     FloristFlower,
     FloristFoliage,
+    FloristWrapping,
     Flower,
     FlowerColor,
     FlowerInventory,
@@ -17,14 +18,22 @@ from app.models import (
     FoliageInventory,
     Occasion,
     Style,
+    Wrapping,
+    WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
 from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
+    build_complete_composition,
+    build_recommended_composition,
     calculate_bouquet_price,
+    calculate_complete_bouquet_price,
+    calculate_foliage_price,
+    calculate_wrapping_price,
     find_candidate_flowers,
     find_candidate_foliage,
+    find_candidate_wrappings,
     find_valid_composition,
     get_flower_quantity_range,
     get_flower_stock,
@@ -32,12 +41,15 @@ from app.services.recommendation import (
     get_foliage_stock,
     get_primary_flower_quantity,
     get_remaining_quantity,
+    get_wrapping_stock,
     has_sufficient_foliage_stock,
     has_sufficient_stock,
+    has_sufficient_wrapping_stock,
     is_within_budget,
     prioritize_preferred_flowers,
     select_foliage,
     select_primary_flower,
+    select_wrapping,
     sort_flowers_by_price,
     validate_composition,
 )
@@ -419,6 +431,41 @@ def test_sufficient_foliage_stock_checks_every_item(db_session, catalog):
     )
 
 
+def test_wrapping_stock_helpers_check_available_quantity(db_session, catalog):
+    kraft_paper = Wrapping(name="Kraft Paper")
+    db_session.add(kraft_paper)
+    db_session.flush()
+    db_session.add(
+        WrappingInventory(
+            florist_id=catalog.florist.id,
+            wrapping_id=kraft_paper.id,
+            quantity=50,
+        )
+    )
+    db_session.commit()
+
+    florist_id = catalog.florist.id
+
+    assert get_wrapping_stock(db_session, florist_id, kraft_paper.id) == 50
+    assert get_wrapping_stock(db_session, florist_id, 99999) == 0
+    assert has_sufficient_wrapping_stock(db_session, florist_id, {})
+    assert has_sufficient_wrapping_stock(
+        db_session,
+        florist_id,
+        {kraft_paper.id: 50},
+    )
+    assert not has_sufficient_wrapping_stock(
+        db_session,
+        florist_id,
+        {kraft_paper.id: 51},
+    )
+    assert not has_sufficient_wrapping_stock(
+        db_session,
+        florist_id,
+        {99999: 1},
+    )
+
+
 def test_calculate_bouquet_price_uses_active_florist_prices(db_session, catalog):
     rose = catalog.flowers["Rose"]
     tulip = catalog.flowers["Tulip"]
@@ -440,6 +487,93 @@ def test_calculate_bouquet_price_uses_active_florist_prices(db_session, catalog)
     ) == Decimal(0)
 
 
+def test_calculate_foliage_price_uses_active_florist_prices(db_session, catalog):
+    eucalyptus = catalog.foliage["Eucalyptus"]
+    fern = catalog.foliage["Fern"]
+    inactive_ruscus = catalog.foliage["Ruscus"]
+
+    total = calculate_foliage_price(
+        db_session,
+        catalog.florist.id,
+        {
+            eucalyptus.id: 2,
+            fern.id: 1,
+            inactive_ruscus.id: 4,
+            99999: 3,
+        },
+    )
+
+    assert total == Decimal("14.00")
+    assert calculate_foliage_price(db_session, catalog.florist.id, {}) == Decimal(0)
+
+
+def test_calculate_wrapping_price_uses_active_florist_prices(db_session, catalog):
+    kraft_paper = Wrapping(name="Kraft Paper")
+    inactive_paper = Wrapping(name="Inactive Paper")
+    db_session.add_all([kraft_paper, inactive_paper])
+    db_session.flush()
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft_paper.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive_paper.id,
+                price=Decimal("12.00"),
+                active=False,
+            ),
+        ]
+    )
+    db_session.commit()
+
+    total = calculate_wrapping_price(
+        db_session,
+        catalog.florist.id,
+        {kraft_paper.id: 2, inactive_paper.id: 1, 99999: 1},
+    )
+
+    assert total == Decimal("8.00")
+    assert calculate_wrapping_price(db_session, catalog.florist.id, {}) == Decimal(0)
+
+
+def test_calculate_complete_bouquet_price_sums_all_components(db_session, catalog):
+    rose = catalog.flowers["Rose"]
+    eucalyptus = catalog.foliage["Eucalyptus"]
+    kraft_paper = Wrapping(name="Kraft Paper")
+    db_session.add(kraft_paper)
+    db_session.flush()
+    db_session.add(
+        FloristWrapping(
+            florist_id=catalog.florist.id,
+            wrapping_id=kraft_paper.id,
+            price=Decimal("4.00"),
+            active=True,
+        )
+    )
+    db_session.commit()
+
+    total = calculate_complete_bouquet_price(
+        db_session,
+        catalog.florist.id,
+        {
+            "flowers": {rose.id: 2},
+            "foliage": {eucalyptus.id: 2},
+            "wrapping": {kraft_paper.id: 3},
+        },
+    )
+
+    assert total == Decimal("46.00")
+    assert calculate_complete_bouquet_price(
+        db_session,
+        catalog.florist.id,
+        {"flowers": {}, "foliage": {}, "wrapping": {}},
+    ) == Decimal(0)
+
+
 def test_sort_flowers_by_price_returns_ascending_prices(db_session, catalog):
     flowers = [
         catalog.flowers["Rose"],
@@ -455,23 +589,78 @@ def test_sort_flowers_by_price_returns_ascending_prices(db_session, catalog):
 
 def test_validate_composition_checks_stock_and_budget(db_session, catalog):
     rose = catalog.flowers["Rose"]
+    eucalyptus = catalog.foliage["Eucalyptus"]
+    kraft_paper = Wrapping(name="Kraft Paper")
+    db_session.add(kraft_paper)
+    db_session.flush()
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft_paper.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft_paper.id,
+                quantity=5,
+            ),
+        ]
+    )
+    db_session.commit()
+
     florist_id = catalog.florist.id
+    composition = {
+        "flowers": {rose.id: 2},
+        "foliage": {eucalyptus.id: 2},
+        "wrapping": {kraft_paper.id: 1},
+    }
 
     assert not validate_composition(db_session, florist_id, {}, None)
     assert validate_composition(
         db_session,
         florist_id,
-        {rose.id: 2},
-        Decimal("24.00"),
+        composition,
+        Decimal("38.00"),
     )
-    assert validate_composition(db_session, florist_id, {rose.id: 2}, None)
+    assert validate_composition(db_session, florist_id, composition, None)
     assert not validate_composition(
         db_session,
         florist_id,
-        {rose.id: 2},
-        Decimal("23.99"),
+        composition,
+        Decimal("37.99"),
     )
-    assert not validate_composition(db_session, florist_id, {rose.id: 31}, None)
+    insufficient_flower_stock = {
+        **composition,
+        "flowers": {rose.id: 31},
+    }
+    assert not validate_composition(
+        db_session,
+        florist_id,
+        insufficient_flower_stock,
+        None,
+    )
+    insufficient_foliage_stock = {
+        **composition,
+        "foliage": {eucalyptus.id: 41},
+    }
+    assert not validate_composition(
+        db_session,
+        florist_id,
+        insufficient_foliage_stock,
+        None,
+    )
+    insufficient_wrapping_stock = {
+        **composition,
+        "wrapping": {kraft_paper.id: 6},
+    }
+    assert not validate_composition(
+        db_session,
+        florist_id,
+        insufficient_wrapping_stock,
+        None,
+    )
 
 
 def test_find_candidate_flowers_filters_and_deduplicates(db_session, catalog):
@@ -536,6 +725,193 @@ def test_find_candidate_foliage_requires_active_catalog_and_positive_stock(
     assert find_candidate_foliage(db_session, 99999) == []
 
 
+def test_find_candidate_wrappings_requires_active_catalog_and_positive_stock(
+    db_session,
+    catalog,
+):
+    active = Wrapping(name="Kraft Paper")
+    out_of_stock = Wrapping(name="Out Of Stock Paper")
+    inactive = Wrapping(name="Inactive Paper")
+    other_florist_only = Wrapping(name="Other Florist Paper")
+    other_florist = Florist(name="Other Florist")
+
+    db_session.add_all(
+        [active, out_of_stock, inactive, other_florist_only, other_florist]
+    )
+    db_session.flush()
+
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=active.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=out_of_stock.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                price=Decimal("4.00"),
+                active=False,
+            ),
+            FloristWrapping(
+                florist_id=other_florist.id,
+                wrapping_id=other_florist_only.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=active.id,
+                quantity=10,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=out_of_stock.id,
+                quantity=0,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                quantity=10,
+            ),
+            WrappingInventory(
+                florist_id=other_florist.id,
+                wrapping_id=other_florist_only.id,
+                quantity=10,
+            ),
+        ]
+    )
+    db_session.commit()
+
+    candidates = find_candidate_wrappings(db_session, catalog.florist.id)
+
+    assert [wrapping.name for wrapping in candidates] == ["Kraft Paper"]
+    assert find_candidate_wrappings(db_session, 99999) == []
+
+
+def test_select_wrapping_returns_none_for_empty_candidates():
+    assert select_wrapping([]) is None
+
+
+def test_select_wrapping_returns_first_candidate():
+    wrappings = [
+        SimpleNamespace(id=1, name="Kraft Paper"),
+        SimpleNamespace(id=2, name="White Paper"),
+    ]
+
+    assert select_wrapping(wrappings) is wrappings[0]
+
+
+def test_build_complete_composition_includes_wrapping():
+    flowers = {1: 3}
+    foliage = {8: 1}
+    wrapping = SimpleNamespace(id=12)
+
+    assert build_complete_composition(flowers, foliage, wrapping) == {
+        "flowers": flowers,
+        "foliage": foliage,
+        "wrapping": {12: 1},
+    }
+
+
+def test_build_complete_composition_handles_missing_wrapping():
+    flowers = {1: 3}
+    foliage = {8: 1}
+
+    assert build_complete_composition(flowers, foliage, None) == {
+        "flowers": flowers,
+        "foliage": foliage,
+        "wrapping": {},
+    }
+
+
+def test_build_recommended_composition_selects_available_foliage_without_wrapping(
+    db_session,
+    catalog,
+):
+    flowers = {catalog.flowers["Rose"].id: 4}
+
+    composition = build_recommended_composition(
+        db_session,
+        catalog.florist.id,
+        flowers,
+        "MEDIUM",
+    )
+
+    expected_foliage_ids = {
+        catalog.foliage["Eucalyptus"].id,
+        catalog.foliage["Olive Branch"].id,
+    }
+    assert composition == {
+        "flowers": flowers,
+        "foliage": {foliage_id: 1 for foliage_id in expected_foliage_ids},
+        "wrapping": {},
+    }
+
+
+def test_build_recommended_composition_includes_available_wrapping(
+    db_session,
+    catalog,
+):
+    wrapping = Wrapping(name="Kraft Paper")
+    db_session.add(wrapping)
+    db_session.flush()
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=wrapping.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=wrapping.id,
+                quantity=10,
+            ),
+        ]
+    )
+    db_session.commit()
+
+    flowers = {catalog.flowers["Rose"].id: 2}
+    composition = build_recommended_composition(
+        db_session,
+        catalog.florist.id,
+        flowers,
+        "SMALL",
+    )
+
+    assert composition["flowers"] == flowers
+    assert composition["wrapping"] == {wrapping.id: 1}
+
+
+def test_build_recommended_composition_handles_no_available_accessories(
+    db_session,
+    catalog,
+):
+    flowers = {catalog.flowers["Rose"].id: 2}
+
+    composition = build_recommended_composition(
+        db_session,
+        99999,
+        flowers,
+        "SMALL",
+    )
+
+    assert composition == {
+        "flowers": flowers,
+        "foliage": {},
+        "wrapping": {},
+    }
+
+
 def test_find_valid_composition_prioritizes_preferred_flowers(
     db_session,
     catalog,
@@ -556,8 +932,12 @@ def test_find_valid_composition_prioritizes_preferred_flowers(
     )
 
     assert composition == {
-        catalog.flowers["Tulip"].id: 2,
-        catalog.flowers["Rose"].id: 1,
+        "flowers": {
+            catalog.flowers["Tulip"].id: 2,
+            catalog.flowers["Rose"].id: 1,
+        },
+        "foliage": {catalog.foliage["Eucalyptus"].id: 1},
+        "wrapping": {},
     }
 
 
@@ -576,14 +956,18 @@ def test_find_valid_composition_falls_back_to_cheaper_mix(
         catalog.florist.id,
         flowers,
         "SMALL",
-        Decimal("26.00"),
+        Decimal("31.00"),
         ["Rose"],
     )
 
     assert composition == {
-        catalog.flowers["Daisy"].id: 1,
-        catalog.flowers["Tulip"].id: 1,
-        catalog.flowers["Rose"].id: 1,
+        "flowers": {
+            catalog.flowers["Daisy"].id: 1,
+            catalog.flowers["Tulip"].id: 1,
+            catalog.flowers["Rose"].id: 1,
+        },
+        "foliage": {catalog.foliage["Eucalyptus"].id: 1},
+        "wrapping": {},
     }
 
 
