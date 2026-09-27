@@ -1,3 +1,9 @@
+"""Recommendation logic for generating valid bouquet compositions.
+
+This module contains the business rules used to find flowers,
+build bouquet compositions, validate stock, and calculate prices.
+"""
+
 from decimal import Decimal
 
 from sqlalchemy.orm import Session
@@ -29,12 +35,14 @@ SIZE_RANGES = {
 
 
 def get_flower_quantity_range(size: str) -> tuple[int, int]:
+    """Return the minimum and maximum stem counts for a bouquet size."""
     return SIZE_RANGES[size]
 
 
 def get_foliage_quantity(
     size: str,
 ) -> int:
+    """Return the foliage stem count assigned to a bouquet size."""
     foliage_quantities = {
         "SMALL": 1,
         "MEDIUM": 2,
@@ -47,6 +55,7 @@ def get_foliage_quantity(
 def select_primary_flower(
     candidate_flowers: list[Flower],
 ) -> Flower | None:
+    """Choose the first candidate flower as the bouquet's primary flower."""
     if not candidate_flowers:
         return None
 
@@ -57,6 +66,7 @@ def prioritize_preferred_flowers(
     candidate_flowers: list[Flower],
     preferred_flowers: list[str],
 ) -> list[Flower]:
+    """Move requested flower names to the front while preserving order."""
     if not preferred_flowers:
         return candidate_flowers
 
@@ -75,6 +85,7 @@ def prioritize_preferred_flowers(
 def get_primary_flower_quantity(
     size: str,
 ) -> int:
+    """Return the number of primary flower stems for a bouquet size."""
     primary_quantities = {
         "SMALL": 2,
         "MEDIUM": 4,
@@ -88,6 +99,7 @@ def get_remaining_quantity(
     size: str,
     primary_quantity: int,
 ) -> int:
+    """Return the minimum bouquet stem count not supplied by its primary flower."""
     min_quantity, _ = get_flower_quantity_range(size)
 
     return max(min_quantity - primary_quantity, 0)
@@ -97,6 +109,7 @@ def build_bouquet_composition(
     candidate_flowers: list[Flower],
     size: str,
 ) -> dict[int, int]:
+    """Build a composition using the first candidate to meet the minimum size."""
     min_quantity, _ = get_flower_quantity_range(size)
 
     if not candidate_flowers:
@@ -115,6 +128,11 @@ def build_cheapest_composition(
     candidate_flowers: list[Flower],
     size: str,
 ) -> dict[int, int]:
+    """Fill the minimum bouquet size with the cheapest candidates in input order.
+
+    Candidates are expected to be price-sorted. Return an empty composition
+    when their available stock cannot meet the size's minimum stem count.
+    """
     min_quantity, _ = get_flower_quantity_range(size)
 
     if not candidate_flowers:
@@ -155,6 +173,12 @@ def build_preferred_flower_composition(
     primary_flower: Flower,
     size: str,
 ) -> dict[int, int]:
+    """Build a stock-aware composition centered on the preferred primary flower.
+
+    The primary receives its size-specific target, limited by available stock;
+    secondary candidates fill the remaining minimum quantity. Return an empty
+    composition when the minimum cannot be met.
+    """
     min_quantity, _ = get_flower_quantity_range(size)
 
     if not candidate_flowers:
@@ -204,6 +228,7 @@ def validate_composition(
     composition: dict,
     budget_max: Decimal | None,
 ) -> bool:
+    """Check stock and budget constraints for a complete bouquet composition."""
     if not composition:
         return False
 
@@ -248,6 +273,7 @@ def add_secondary_flowers(
     composition: dict[int, int],
     remaining_quantity: int,
 ) -> dict[int, int]:
+    """Fill remaining stems from secondary flowers without exceeding stock."""
     if remaining_quantity <= 0:
         return composition
 
@@ -283,6 +309,7 @@ def get_flower_price(
     florist_id: int,
     flower_id: int,
 ) -> Decimal:
+    """Return the active florist price for a flower, or zero if unavailable."""
     florist_flower = (
         db.query(FloristFlower)
         .filter(
@@ -304,6 +331,7 @@ def calculate_bouquet_price(
     florist_id: int,
     composition: dict[int, int],
 ) -> Decimal:
+    """Calculate the total price of the flower portion of a bouquet."""
     total = Decimal(0)
 
     for flower_id, quantity in composition.items():
@@ -330,6 +358,7 @@ def calculate_foliage_price(
     florist_id: int,
     composition: dict[int, int],
 ) -> Decimal:
+    """Calculate the total price of the foliage portion of a bouquet."""
     total = Decimal(0)
 
     for foliage_id, quantity in composition.items():
@@ -355,6 +384,7 @@ def select_cheapest_foliage(
     candidate_foliage: list[Foliage],
     quantity: int,
 ) -> dict[int, int]:
+    """Select up to the requested number of foliage items from the candidates."""
     if not candidate_foliage or quantity <= 0:
         return {}
 
@@ -371,6 +401,7 @@ def calculate_wrapping_price(
     florist_id: int,
     composition: dict[int, int],
 ) -> Decimal:
+    """Calculate the total price of the wrapping portion of a bouquet."""
     total = Decimal(0)
 
     for wrapping_id, quantity in composition.items():
@@ -397,6 +428,7 @@ def calculate_complete_bouquet_price(
     florist_id: int,
     composition: dict,
 ) -> Decimal:
+    """Sum flower, foliage, and wrapping prices for a complete composition."""
     flower_price = calculate_bouquet_price(
         db,
         florist_id,
@@ -423,6 +455,7 @@ def sort_flowers_by_price(
     florist_id: int,
     candidate_flowers: list[Flower],
 ) -> list[Flower]:
+    """Return candidate flowers ordered from lowest to highest active price."""
     return sorted(
         candidate_flowers,
         key=lambda flower: (
@@ -439,6 +472,7 @@ def sort_foliage_by_price(
     florist_id: int,
     candidate_foliage: list[Foliage],
 ) -> list[Foliage]:
+    """Return candidate foliage ordered from lowest to highest florist price."""
     return sorted(
         candidate_foliage,
         key=lambda foliage: (
@@ -459,6 +493,7 @@ def sort_wrappings_by_price(
     florist_id: int,
     candidate_wrappings: list[Wrapping],
 ) -> list[Wrapping]:
+    """Return candidate wrappings ordered from lowest to highest florist price."""
     return sorted(
         candidate_wrappings,
         key=lambda wrapping: (
@@ -477,6 +512,7 @@ def sort_wrappings_by_price(
 def select_cheapest_wrapping(
     candidate_wrappings: list[Wrapping],
 ) -> Wrapping | None:
+    """Choose the first candidate wrapping, expected to be the cheapest."""
     if not candidate_wrappings:
         return None
 
@@ -487,6 +523,7 @@ def is_within_budget(
     total: Decimal,
     budget_max: Decimal | None,
 ) -> bool:
+    """Return whether a total is within the optional maximum budget."""
     if budget_max is None:
         return True
 
@@ -498,6 +535,7 @@ def get_flower_stock(
     florist_id: int,
     flower_id: int,
 ) -> int:
+    """Return the available stock for a flower at a florist."""
     inventory = (
         db.query(FlowerInventory)
         .filter(
@@ -518,6 +556,7 @@ def get_foliage_stock(
     florist_id: int,
     foliage_id: int,
 ) -> int:
+    """Return the available stock for foliage at a florist."""
     inventory = (
         db.query(FoliageInventory)
         .filter(
@@ -538,6 +577,7 @@ def get_wrapping_stock(
     florist_id: int,
     wrapping_id: int,
 ) -> int:
+    """Return the available stock for wrapping at a florist."""
     inventory = (
         db.query(WrappingInventory)
         .filter(
@@ -558,6 +598,7 @@ def has_sufficient_stock(
     florist_id: int,
     composition: dict[int, int],
 ) -> bool:
+    """Check whether flower inventory covers every requested quantity."""
     for flower_id, required_quantity in composition.items():
         available_quantity = get_flower_stock(
             db,
@@ -576,6 +617,7 @@ def has_sufficient_foliage_stock(
     florist_id: int,
     composition: dict[int, int],
 ) -> bool:
+    """Check whether foliage inventory covers every requested quantity."""
     for foliage_id, required_quantity in composition.items():
         available_quantity = get_foliage_stock(
             db,
@@ -594,6 +636,7 @@ def has_sufficient_wrapping_stock(
     florist_id: int,
     composition: dict[int, int],
 ) -> bool:
+    """Check whether wrapping inventory covers every requested quantity."""
     for wrapping_id, required_quantity in composition.items():
         available_quantity = get_wrapping_stock(
             db,
@@ -615,6 +658,12 @@ def find_valid_composition(
     budget_max: Decimal | None,
     preferred_flowers: list[str],
 ) -> dict[str, dict[int, int]]:
+    """Build and validate a bouquet composition.
+
+    Preference-based composition is attempted first. If it cannot satisfy
+    stock or budget constraints, the cheapest valid composition is used as
+    a fallback.
+    """
     if not candidate_flowers:
         return {}
 
@@ -688,6 +737,7 @@ def find_candidate_flowers(
     florist_id: int,
     request: BouquetRequest,
 ) -> list[Flower]:
+    """Find flowers matching the request that are active and in stock."""
     occasion = (
         db.query(Occasion)
         .filter(Occasion.name == request.occasion)
@@ -775,6 +825,7 @@ def find_candidate_foliage(
     db: Session,
     florist_id: int,
 ) -> list[Foliage]:
+    """Find active foliage offered by the florist with available stock."""
     query = (
         db.query(Foliage)
         .join(
@@ -804,6 +855,7 @@ def select_foliage(
     candidate_foliage: list[Foliage],
     quantity: int,
 ) -> dict[int, int]:
+    """Select the requested number of foliage items from the candidates."""
     if not candidate_foliage or quantity <= 0:
         return {}
 
@@ -823,6 +875,7 @@ def find_candidate_wrappings(
     db: Session,
     florist_id: int,
 ) -> list[Wrapping]:
+    """Find active wrappings offered by the florist with available stock."""
     query = (
         db.query(Wrapping)
         .join(
@@ -851,6 +904,7 @@ def find_candidate_wrappings(
 def select_wrapping(
     candidate_wrappings: list[Wrapping],
 ) -> Wrapping | None:
+    """Choose the first candidate wrapping."""
     if not candidate_wrappings:
         return None
 
@@ -862,6 +916,7 @@ def build_complete_composition(
     foliage_composition: dict[int, int],
     wrapping: Wrapping | None,
 ) -> dict:
+    """Combine flower, foliage, and optional wrapping selections."""
     return {
         "flowers": flower_composition,
         "foliage": foliage_composition,
@@ -879,6 +934,7 @@ def build_recommended_composition(
     flower_composition: dict[int, int],
     size: str,
 ) -> dict:
+    """Complete a flower selection with the cheapest available foliage and wrapping."""
     candidate_foliage = find_candidate_foliage(
         db,
         florist_id,

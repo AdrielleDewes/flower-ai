@@ -1,3 +1,5 @@
+"""Catalog models for flowers and their descriptive attributes."""
+
 from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -5,6 +7,8 @@ from app.database import Base
 
 
 class Flower(Base):
+    """Catalog entry describing a flower available for bouquets."""
+
     __tablename__ = "flowers"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -13,6 +17,8 @@ class Flower(Base):
 
 
 class Foliage(Base):
+    """Catalog entry describing foliage available for bouquets."""
+
     __tablename__ = "foliage"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -21,6 +27,8 @@ class Foliage(Base):
 
 
 class Wrapping(Base):
+    """Catalog entry describing bouquet wrapping material."""
+
     __tablename__ = "wrappings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -29,6 +37,8 @@ class Wrapping(Base):
 
 
 class Color(Base):
+    """Catalog color that can be associated with flowers."""
+
     __tablename__ = "colors"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -37,6 +47,8 @@ class Color(Base):
 
 
 class Style(Base):
+    """Catalog style used to match flowers to bouquet requests."""
+
     __tablename__ = "styles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -45,6 +57,8 @@ class Style(Base):
 
 
 class Occasion(Base):
+    """Catalog occasion used to match flowers to bouquet requests."""
+
     __tablename__ = "occasions"
 
     id: Mapped[int] = mapped_column(primary_key=True)

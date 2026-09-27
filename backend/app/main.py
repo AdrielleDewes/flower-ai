@@ -1,3 +1,5 @@
+"""FastAPI application entry point for FlowerAI."""
+
 from fastapi import FastAPI
 
 app = FastAPI(
@@ -9,4 +11,5 @@ app = FastAPI(
 
 @app.get("/")
 def root():
+    """Return a basic status message for the FlowerAI API."""
     return {"message": "FlowerAI API is running"}

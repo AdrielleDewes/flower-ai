@@ -1,3 +1,5 @@
+"""Database engine, ORM base, and session configuration."""
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
@@ -13,8 +15,11 @@ SessionLocal = sessionmaker(
 
 
 class Base(DeclarativeBase):
+    """Base class for SQLAlchemy ORM models."""
+
     pass
 
 
 def create_tables():
+    """Create all tables registered on the declarative model base."""
     Base.metadata.create_all(bind=engine)
