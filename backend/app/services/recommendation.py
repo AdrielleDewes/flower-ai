@@ -35,6 +35,25 @@ def select_primary_flower(
     return candidate_flowers[0]
 
 
+def prioritize_preferred_flowers(
+    candidate_flowers: list[Flower],
+    preferred_flowers: list[str],
+) -> list[Flower]:
+    if not preferred_flowers:
+        return candidate_flowers
+
+    preferred = []
+    others = []
+
+    for flower in candidate_flowers:
+        if flower.name in preferred_flowers:
+            preferred.append(flower)
+        else:
+            others.append(flower)
+
+    return preferred + others
+
+
 def get_primary_flower_quantity(
     size: str,
 ) -> int:
@@ -235,9 +254,15 @@ def find_valid_composition(
     candidate_flowers: list[Flower],
     size: str,
     budget_max: Decimal | None,
+    preferred_flowers: list[str],
 ) -> dict[int, int]:
     if not candidate_flowers:
         return {}
+
+    candidate_flowers = prioritize_preferred_flowers(
+        candidate_flowers,
+        preferred_flowers,
+    )
 
     primary_flower = select_primary_flower(candidate_flowers)
 
@@ -317,7 +342,7 @@ def find_candidate_flowers(
 
         style_ids = [style_id for (style_id,) in style_ids]
 
-        if not style_ids:
+        if request.styles and not style_ids:
             return []
 
     color_ids = (
@@ -367,6 +392,11 @@ def find_candidate_flowers(
             *(
                 [FlowerStyle.style_id.in_(style_ids)]
                 if style_ids
+                else []
+            ),
+            *(
+                [~Flower.name.in_(request.excluded_flowers)]
+                if request.excluded_flowers
                 else []
             ),
         )
