@@ -6,6 +6,8 @@ build bouquet compositions, validate stock, and calculate prices.
 
 from decimal import Decimal
 
+from sqlalchemy.orm import Session
+
 from app.models import (
     Color,
     FloristFlower,
@@ -24,7 +26,6 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
-from sqlalchemy.orm import Session
 
 SIZE_RANGES = {
     "SMALL": (3, 7),
@@ -712,6 +713,9 @@ def find_valid_composition(
         sorted_flowers,
         size,
     )
+
+    if not cheapest_flower_composition:
+        return {}
 
     cheapest_complete_composition = build_recommended_composition(
         db,

@@ -3,6 +3,10 @@
 from app.database import SessionLocal
 from app.models import (
     Color,
+    Florist,
+    FloristFlower,
+    FloristFoliage,
+    FloristWrapping,
     Flower,
     FlowerColor,
     FlowerInventory,
@@ -10,10 +14,6 @@ from app.models import (
     FlowerStyle,
     Foliage,
     FoliageInventory,
-    Florist,
-    FloristFlower,
-    FloristFoliage,
-    FloristWrapping,
     Occasion,
     Style,
     Wrapping,

@@ -2,11 +2,12 @@ from collections.abc import Iterator
 from os import getenv
 
 import pytest
-from app.database import DATABASE_URL, Base
 from sqlalchemy import create_engine, event
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
+
+from app.database import DATABASE_URL, Base
 
 TEST_DATABASE_URL = getenv("TEST_DATABASE_URL")
 

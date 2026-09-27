@@ -17,7 +17,6 @@ SessionLocal = sessionmaker(
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy ORM models."""
 
-    pass
 
 
 def create_tables():
