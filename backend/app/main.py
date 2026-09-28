@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 
+from app.routers.flowers import router as flowers_router
 from app.routers.recommendations import router as recommendations_router
 
 app = FastAPI(
@@ -11,6 +12,7 @@ app = FastAPI(
 )
 
 app.include_router(recommendations_router)
+app.include_router(flowers_router)
 
 
 @app.get("/")
