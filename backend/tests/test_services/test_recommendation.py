@@ -23,6 +23,8 @@ from app.models import (
 )
 from app.schemas.bouquet import BouquetRequest
 from app.schemas.recommendation import Recommendation
+from app.services.foliage import get_florist_foliage
+from app.services.wrappings import get_florist_wrappings
 from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
@@ -870,6 +872,115 @@ def test_find_candidate_foliage_requires_active_catalog_and_positive_stock(
 
     assert {item.name for item in result} == {"Eucalyptus", "Olive Branch"}
     assert find_candidate_foliage(db_session, 99999) == []
+
+
+def test_get_florist_foliage_returns_active_items_with_price_and_stock(
+    db_session,
+    catalog,
+):
+    result = get_florist_foliage(db_session, catalog.florist.id)
+
+    assert [item["name"] for item in result] == [
+        "Eucalyptus",
+        "Fern",
+        "Olive Branch",
+    ]
+    assert result == [
+        {
+            "id": catalog.foliage["Eucalyptus"].id,
+            "name": "Eucalyptus",
+            "description": None,
+            "price": Decimal("5.00"),
+            "available_quantity": 40,
+            "active": True,
+        },
+        {
+            "id": catalog.foliage["Fern"].id,
+            "name": "Fern",
+            "description": None,
+            "price": Decimal("4.00"),
+            "available_quantity": 0,
+            "active": True,
+        },
+        {
+            "id": catalog.foliage["Olive Branch"].id,
+            "name": "Olive Branch",
+            "description": None,
+            "price": Decimal("7.00"),
+            "available_quantity": 20,
+            "active": True,
+        },
+    ]
+
+
+def test_get_florist_wrappings_returns_active_items_with_price_and_stock(
+    db_session,
+    catalog,
+):
+    kraft = Wrapping(name="Kraft Paper")
+    fabric = Wrapping(name="Premium Fabric")
+    inactive = Wrapping(name="Inactive Wrap")
+    db_session.add_all([kraft, fabric, inactive])
+    db_session.flush()
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=fabric.id,
+                price=Decimal("12.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                price=Decimal("3.00"),
+                active=False,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft.id,
+                quantity=20,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=fabric.id,
+                quantity=0,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                quantity=100,
+            ),
+        ]
+    )
+    db_session.flush()
+
+    result = get_florist_wrappings(db_session, catalog.florist.id)
+
+    assert result == [
+        {
+            "id": kraft.id,
+            "name": "Kraft Paper",
+            "description": None,
+            "price": Decimal("4.00"),
+            "available_quantity": 20,
+            "active": True,
+        },
+        {
+            "id": fabric.id,
+            "name": "Premium Fabric",
+            "description": None,
+            "price": Decimal("12.00"),
+            "available_quantity": 0,
+            "active": True,
+        },
+    ]
 
 
 def test_find_candidate_wrappings_requires_active_catalog_and_positive_stock(

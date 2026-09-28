@@ -2,8 +2,10 @@
 
 from fastapi import FastAPI
 
+from app.routers.foliage import router as foliage_router
 from app.routers.flowers import router as flowers_router
 from app.routers.recommendations import router as recommendations_router
+from app.routers.wrappings import router as wrappings_router
 
 app = FastAPI(
     title="FlowerAI API",
@@ -13,6 +15,8 @@ app = FastAPI(
 
 app.include_router(recommendations_router)
 app.include_router(flowers_router)
+app.include_router(foliage_router)
+app.include_router(wrappings_router)
 
 
 @app.get("/")
