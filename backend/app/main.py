@@ -2,11 +2,15 @@
 
 from fastapi import FastAPI
 
+from app.routers.recommendations import router as recommendations_router
+
 app = FastAPI(
     title="FlowerAI API",
     description="AI-powered bouquet recommendation platform.",
     version="0.1.0",
 )
+
+app.include_router(recommendations_router)
 
 
 @app.get("/")

@@ -26,6 +26,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
+from app.schemas.recommendation import Recommendation
 
 SIZE_RANGES = {
     "SMALL": (3, 7),
@@ -1030,4 +1031,40 @@ def build_recommended_composition(
         flower_composition,
         foliage_composition,
         wrapping,
+    )
+
+
+def generate_recommendation(
+    db: Session,
+    florist_id: int,
+    request: BouquetRequest,
+) -> Recommendation | None:
+    """Generate a valid bouquet recommendation from a bouquet request."""
+    candidate_flowers = find_candidate_flowers(
+        db,
+        florist_id,
+        request,
+    )
+
+    composition = find_valid_composition(
+        db,
+        florist_id,
+        candidate_flowers,
+        request.size.value,
+        request.budget_max,
+        request.preferred_flowers,
+    )
+
+    if not composition:
+        return None
+
+    total_price = calculate_complete_bouquet_price(
+        db,
+        florist_id,
+        composition,
+    )
+
+    return Recommendation(
+        composition=composition,
+        total_price=total_price,
     )

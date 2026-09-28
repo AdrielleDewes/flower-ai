@@ -22,6 +22,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
+from app.schemas.recommendation import Recommendation
 from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
@@ -36,6 +37,7 @@ from app.services.recommendation import (
     find_candidate_foliage,
     find_candidate_wrappings,
     find_valid_composition,
+    generate_recommendation,
     get_flower_quantity_range,
     get_flower_stock,
     get_foliage_quantity,
@@ -1079,7 +1081,7 @@ def test_find_valid_composition_prioritizes_preferred_flowers(
     assert composition == {
         "flowers": {
             catalog.flowers["Tulip"].id: 2,
-            catalog.flowers["Rose"].id: 1,
+            catalog.flowers["Daisy"].id: 1,
         },
         "foliage": {catalog.foliage["Eucalyptus"].id: 1},
         "wrapping": {},
@@ -1172,3 +1174,38 @@ def test_find_valid_composition_rejects_invalid_size(db_session, catalog):
             None,
             [],
         )
+
+
+def test_generate_recommendation_returns_composition_and_total_price(
+    db_session,
+    catalog,
+):
+    result = generate_recommendation(
+        db_session,
+        catalog.florist.id,
+        make_request(preferred_flowers=["Tulip"]),
+    )
+
+    assert isinstance(result, Recommendation)
+    assert result.composition == {
+        "flowers": {
+            catalog.flowers["Tulip"].id: 2,
+            catalog.flowers["Daisy"].id: 1,
+        },
+        "foliage": {catalog.foliage["Eucalyptus"].id: 1},
+        "wrapping": {},
+    }
+    assert result.total_price == Decimal("27.00")
+
+
+def test_generate_recommendation_returns_none_without_candidate_flowers(
+    db_session,
+    catalog,
+):
+    result = generate_recommendation(
+        db_session,
+        catalog.florist.id,
+        make_request(occasion="Unknown Occasion"),
+    )
+
+    assert result is None
