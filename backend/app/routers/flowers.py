@@ -4,6 +4,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies import get_florist
+from app.models.florist import Florist
 from app.schemas.flower import FlowerResponse
 from app.services.flowers import get_florist_flowers
 
@@ -15,11 +17,11 @@ router = APIRouter(
 
 @router.get("/", response_model=list[FlowerResponse])
 def list_flowers(
-    florist_id: int,
+    florist: Florist = Depends(get_florist),
     db: Session = Depends(get_db),
 ):
     """List flowers offered by a florist."""
     return get_florist_flowers(
         db,
-        florist_id,
+        florist.id,
     )
