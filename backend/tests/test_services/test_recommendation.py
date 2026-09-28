@@ -48,6 +48,7 @@ from app.services.recommendation import (
     has_sufficient_wrapping_stock,
     is_within_budget,
     prioritize_preferred_flowers,
+    select_cheapest_foliage,
     select_foliage,
     select_primary_flower,
     select_wrapping,
@@ -284,7 +285,7 @@ def test_select_primary_flower_returns_first_candidate():
     assert select_primary_flower(flowers) is flowers[0]
 
 
-def test_prioritize_preferred_flowers_preserves_candidate_order():
+def test_prioritize_preferred_flowers_uses_preference_and_name_order():
     rose = SimpleNamespace(id=1, name="Rose")
     tulip = SimpleNamespace(id=2, name="Tulip")
     daisy = SimpleNamespace(id=3, name="Daisy")
@@ -294,17 +295,20 @@ def test_prioritize_preferred_flowers_preserves_candidate_order():
         ["Daisy", "Missing Flower", "Tulip"],
     )
 
-    assert result == [tulip, daisy, rose]
+    assert result == [daisy, tulip, rose]
 
 
-def test_prioritize_preferred_flowers_handles_empty_or_missing_preferences():
+def test_prioritize_preferred_flowers_sorts_without_matching_preferences():
     flowers = [
-        SimpleNamespace(id=1, name="Rose"),
-        SimpleNamespace(id=2, name="Tulip"),
+        SimpleNamespace(id=1, name="Tulip"),
+        SimpleNamespace(id=2, name="Rose"),
     ]
 
-    assert prioritize_preferred_flowers(flowers, []) is flowers
-    assert prioritize_preferred_flowers(flowers, ["Unknown"]) == flowers
+    assert prioritize_preferred_flowers(flowers, []) == [flowers[1], flowers[0]]
+    assert prioritize_preferred_flowers(flowers, ["Unknown"]) == [
+        flowers[1],
+        flowers[0],
+    ]
 
 
 def test_add_secondary_flowers_skips_primary_and_obeys_quantity(
@@ -325,6 +329,29 @@ def test_add_secondary_flowers_skips_primary_and_obeys_quantity(
     )
 
     assert result == {rose.id: 2, tulip.id: 1}
+
+
+def test_add_secondary_flowers_distributes_round_robin_with_limited_stock(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    daisy = catalog.flowers["Daisy"]
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 1
+    db_session.get(FlowerInventory, (catalog.florist.id, daisy.id)).quantity = 4
+    db_session.flush()
+
+    result = add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip, daisy],
+        rose,
+        {rose.id: 2},
+        4,
+    )
+
+    assert result == {rose.id: 2, tulip.id: 1, daisy.id: 3}
 
 
 @pytest.mark.parametrize("quantity", [0, -1])
@@ -360,6 +387,26 @@ def test_add_secondary_flowers_handles_empty_candidates(db_session, catalog):
     ) == {rose.id: 2}
 
 
+def test_add_secondary_flowers_stops_when_secondary_stock_is_empty(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 0
+    db_session.flush()
+    composition = {rose.id: 2}
+
+    assert add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        rose,
+        composition,
+        3,
+    ) == {rose.id: 2}
+
+
 def test_select_foliage_handles_empty_and_zero_quantity():
     foliage = [
         SimpleNamespace(id=1, name="Eucalyptus"),
@@ -381,6 +428,32 @@ def test_select_foliage_selects_no_more_than_requested():
         foliage[0].id: 1,
         foliage[1].id: 1,
     }
+
+
+def test_select_cheapest_foliage_distributes_by_stock_in_round_robin():
+    eucalyptus = SimpleNamespace(id=1, name="Eucalyptus")
+    fern = SimpleNamespace(id=2, name="Fern")
+    ruscus = SimpleNamespace(id=3, name="Ruscus")
+    stock = {eucalyptus.id: 2, fern.id: 5, ruscus.id: 0}
+
+    composition = select_cheapest_foliage(
+        [eucalyptus, fern, ruscus],
+        5,
+        stock,
+    )
+
+    assert composition == {eucalyptus.id: 2, fern.id: 3}
+    assert stock == {eucalyptus.id: 0, fern.id: 2, ruscus.id: 0}
+
+
+def test_select_cheapest_foliage_returns_available_quantity_only():
+    eucalyptus = SimpleNamespace(id=1, name="Eucalyptus")
+
+    assert select_cheapest_foliage([eucalyptus], 3, {eucalyptus.id: 1}) == {
+        eucalyptus.id: 1
+    }
+    assert select_cheapest_foliage([eucalyptus], 0, {eucalyptus.id: 1}) == {}
+    assert select_cheapest_foliage([], 2, {}) == {}
 
 
 @pytest.mark.parametrize(

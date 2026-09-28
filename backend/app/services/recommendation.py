@@ -66,18 +66,31 @@ def prioritize_preferred_flowers(
     candidate_flowers: list[Flower],
     preferred_flowers: list[str],
 ) -> list[Flower]:
-    """Move requested flower names to the front while preserving order."""
+    """Move requested flower names to the front in preference order."""
+
     if not preferred_flowers:
-        return candidate_flowers
+        return sorted(candidate_flowers, key=lambda flower: flower.name)
 
-    preferred = []
-    others = []
+    flowers_by_name = {
+        flower.name: flower
+        for flower in candidate_flowers
+    }
 
-    for flower in candidate_flowers:
-        if flower.name in preferred_flowers:
-            preferred.append(flower)
-        else:
-            others.append(flower)
+    preferred = [
+        flowers_by_name[name]
+        for name in preferred_flowers
+        if name in flowers_by_name
+    ]
+
+    preferred_ids = {flower.id for flower in preferred}
+
+    others = [
+        flower
+        for flower in candidate_flowers
+        if flower.id not in preferred_ids
+    ]
+
+    others.sort(key=lambda flower: flower.name)
 
     return preferred + others
 
@@ -273,33 +286,47 @@ def add_secondary_flowers(
     composition: dict[int, int],
     remaining_quantity: int,
 ) -> dict[int, int]:
-    """Fill remaining stems from secondary flowers without exceeding stock."""
+    """Distribute remaining quantities across secondary flowers."""
     if remaining_quantity <= 0:
         return composition
 
-    for flower in candidate_flowers:
-        if flower.id == primary_flower.id:
-            continue
+    secondary_flowers = [
+        flower
+        for flower in candidate_flowers
+        if flower.id != primary_flower.id
+    ]
 
-        if remaining_quantity <= 0:
-            break
+    if not secondary_flowers:
+        return composition
 
-        available_stock = get_flower_stock(
+    stock = {
+        flower.id: get_flower_stock(
             db,
             florist_id,
             flower.id,
         )
+        for flower in secondary_flowers
+    }
 
-        quantity = min(
-            available_stock,
-            remaining_quantity,
-        )
+    while remaining_quantity > 0:
+        added = False
 
-        if quantity > 0:
+        for flower in secondary_flowers:
+            if remaining_quantity <= 0:
+                break
+
+            if stock[flower.id] <= 0:
+                continue
+
             composition[flower.id] = (
-                composition.get(flower.id, 0) + quantity
+                composition.get(flower.id, 0) + 1
             )
-            remaining_quantity -= quantity
+            stock[flower.id] -= 1
+            remaining_quantity -= 1
+            added = True
+
+        if not added:
+            break
 
     return composition
 
@@ -383,15 +410,34 @@ def calculate_foliage_price(
 def select_cheapest_foliage(
     candidate_foliage: list[Foliage],
     quantity: int,
+    stock: dict[int, int],
 ) -> dict[int, int]:
-    """Select up to the requested number of foliage items from the candidates."""
+    """Select foliage items while respecting stock and requested quantity."""
     if not candidate_foliage or quantity <= 0:
         return {}
 
     composition = {}
+    remaining_quantity = quantity
 
-    for foliage in candidate_foliage[:quantity]:
-        composition[foliage.id] = 1
+    while remaining_quantity > 0:
+        added = False
+
+        for foliage in candidate_foliage:
+            if remaining_quantity <= 0:
+                break
+
+            if stock.get(foliage.id, 0) <= 0:
+                continue
+
+            composition[foliage.id] = (
+                composition.get(foliage.id, 0) + 1
+            )
+            stock[foliage.id] -= 1
+            remaining_quantity -= 1
+            added = True
+
+        if not added:
+            break
 
     return composition
 
@@ -950,10 +996,19 @@ def build_recommended_composition(
     )
 
     foliage_quantity = get_foliage_quantity(size)
+    foliage_stock = {
+        foliage.id: get_foliage_stock(
+            db,
+            florist_id,
+            foliage.id,
+        )
+        for foliage in sorted_foliage
+    }
 
     foliage_composition = select_cheapest_foliage(
         sorted_foliage,
         foliage_quantity,
+        foliage_stock,
     )
 
     candidate_wrappings = find_candidate_wrappings(
