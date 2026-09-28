@@ -1,6 +1,12 @@
+"""Populate the database with demo catalog, florist, and inventory data."""
+
 from app.database import SessionLocal
 from app.models import (
     Color,
+    Florist,
+    FloristFlower,
+    FloristFoliage,
+    FloristWrapping,
     Flower,
     FlowerColor,
     FlowerInventory,
@@ -8,10 +14,6 @@ from app.models import (
     FlowerStyle,
     Foliage,
     FoliageInventory,
-    Florist,
-    FloristFlower,
-    FloristFoliage,
-    FloristWrapping,
     Occasion,
     Style,
     Wrapping,
@@ -20,6 +22,7 @@ from app.models import (
 
 
 def populate_database():
+    """Insert the demo catalog, florist offers, inventory, and relationships."""
     db = SessionLocal()
 
     try:

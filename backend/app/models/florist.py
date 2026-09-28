@@ -1,3 +1,5 @@
+"""Florist models and florist-specific catalog offerings."""
+
 from decimal import Decimal
 
 from sqlalchemy import ForeignKey, Numeric
@@ -7,6 +9,8 @@ from app.database import Base
 
 
 class Florist(Base):
+    """A florist that offers catalog items at its own prices."""
+
     __tablename__ = "florists"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -14,6 +18,8 @@ class Florist(Base):
 
 
 class FloristFlower(Base):
+    """A flower offered by a florist, with its price and active status."""
+
     __tablename__ = "florist_flowers"
 
     florist_id: Mapped[int] = mapped_column(
@@ -29,6 +35,8 @@ class FloristFlower(Base):
 
 
 class FloristFoliage(Base):
+    """Foliage offered by a florist, with its price and active status."""
+
     __tablename__ = "florist_foliage"
 
     florist_id: Mapped[int] = mapped_column(
@@ -44,6 +52,8 @@ class FloristFoliage(Base):
 
 
 class FloristWrapping(Base):
+    """Wrapping offered by a florist, with its price and active status."""
+
     __tablename__ = "florist_wrappings"
 
     florist_id: Mapped[int] = mapped_column(

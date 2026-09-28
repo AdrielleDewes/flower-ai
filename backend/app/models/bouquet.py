@@ -1,3 +1,5 @@
+"""Models for saved bouquets and their component items."""
+
 from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, String, Text
@@ -7,6 +9,8 @@ from app.database import Base
 
 
 class Bouquet(Base):
+    """A saved bouquet belonging to a florist."""
+
     __tablename__ = "bouquets"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -29,6 +33,8 @@ class Bouquet(Base):
 
 
 class BouquetFlower(Base):
+    """Flower item and quantity included in a saved bouquet."""
+
     __tablename__ = "bouquet_flowers"
 
     bouquet_id: Mapped[int] = mapped_column(
@@ -43,6 +49,8 @@ class BouquetFlower(Base):
 
 
 class BouquetFoliage(Base):
+    """Foliage item and quantity included in a saved bouquet."""
+
     __tablename__ = "bouquet_foliage"
 
     bouquet_id: Mapped[int] = mapped_column(
@@ -57,6 +65,8 @@ class BouquetFoliage(Base):
 
 
 class BouquetWrapping(Base):
+    """Wrapping item and quantity included in a saved bouquet."""
+
     __tablename__ = "bouquet_wrappings"
 
     bouquet_id: Mapped[int] = mapped_column(
