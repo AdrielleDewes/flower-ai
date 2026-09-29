@@ -1,5 +1,6 @@
 """Request schemas and options for bouquet recommendations."""
 
+from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 
@@ -37,3 +38,36 @@ class BouquetCreate(BaseModel):
     flowers: dict[int, int] = Field(default_factory=dict)
     foliage: dict[int, int] = Field(default_factory=dict)
     wrapping: dict[int, int] = Field(default_factory=dict)
+
+
+class BouquetResponse(BaseModel):
+    """Saved bouquet information returned by the API."""
+
+    id: int
+    florist_id: int
+    name: str
+    description: str | None
+    size: BouquetSize
+    source: str
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {
+        "from_attributes": True,
+    }
+
+
+class BouquetItemResponse(BaseModel):
+    """Catalog item included in a saved bouquet."""
+
+    id: int
+    name: str
+    quantity: int
+
+
+class BouquetDetailResponse(BouquetResponse):
+    """Saved bouquet including its complete composition."""
+
+    flowers: list[BouquetItemResponse]
+    foliage: list[BouquetItemResponse]
+    wrapping: list[BouquetItemResponse]

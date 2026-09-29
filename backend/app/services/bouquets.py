@@ -10,6 +10,7 @@ from app.models.bouquet import (
     BouquetFoliage,
     BouquetWrapping,
 )
+from app.models.catalog import Flower, Foliage, Wrapping
 from app.models.florist import FloristFlower, FloristFoliage, FloristWrapping
 from app.models.inventory import (
     FlowerInventory,
@@ -17,6 +18,101 @@ from app.models.inventory import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetCreate
+
+
+def get_florist_bouquets(
+    db: Session,
+    florist_id: int,
+) -> list[Bouquet]:
+    """Return saved bouquets for a florist."""
+    return (
+        db.query(Bouquet)
+        .filter(Bouquet.florist_id == florist_id)
+        .order_by(Bouquet.created_at.desc())
+        .all()
+    )
+
+
+def get_bouquet_detail(
+    db: Session,
+    florist_id: int,
+    bouquet_id: int,
+) -> dict | None:
+    """Return a saved bouquet with its complete composition."""
+    bouquet = (
+        db.query(Bouquet)
+        .filter(
+            Bouquet.id == bouquet_id,
+            Bouquet.florist_id == florist_id,
+        )
+        .first()
+    )
+
+    if bouquet is None:
+        return None
+
+    flowers = (
+        db.query(BouquetFlower, Flower)
+        .join(
+            Flower,
+            Flower.id == BouquetFlower.flower_id,
+        )
+        .filter(BouquetFlower.bouquet_id == bouquet_id)
+        .all()
+    )
+    foliage = (
+        db.query(BouquetFoliage, Foliage)
+        .join(
+            Foliage,
+            Foliage.id == BouquetFoliage.foliage_id,
+        )
+        .filter(BouquetFoliage.bouquet_id == bouquet_id)
+        .all()
+    )
+    wrapping = (
+        db.query(BouquetWrapping, Wrapping)
+        .join(
+            Wrapping,
+            Wrapping.id == BouquetWrapping.wrapping_id,
+        )
+        .filter(BouquetWrapping.bouquet_id == bouquet_id)
+        .all()
+    )
+
+    return {
+        "id": bouquet.id,
+        "florist_id": bouquet.florist_id,
+        "name": bouquet.name,
+        "description": bouquet.description,
+        "size": bouquet.size,
+        "source": bouquet.source,
+        "created_at": bouquet.created_at,
+        "updated_at": bouquet.updated_at,
+        "flowers": [
+            {
+                "id": flower.id,
+                "name": flower.name,
+                "quantity": bouquet_flower.quantity,
+            }
+            for bouquet_flower, flower in flowers
+        ],
+        "foliage": [
+            {
+                "id": foliage_item.id,
+                "name": foliage_item.name,
+                "quantity": bouquet_foliage.quantity,
+            }
+            for bouquet_foliage, foliage_item in foliage
+        ],
+        "wrapping": [
+            {
+                "id": wrapping_item.id,
+                "name": wrapping_item.name,
+                "quantity": bouquet_wrapping.quantity,
+            }
+            for bouquet_wrapping, wrapping_item in wrapping
+        ],
+    }
 
 
 def validate_bouquet_items(

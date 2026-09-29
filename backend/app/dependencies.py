@@ -9,10 +9,9 @@ from app.models.florist import Florist
 
 def get_florist(
     florist_id: int,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db),  # noqa: B008
 ) -> Florist:
     """Return a florist or raise a 404 error."""
-
     florist = (
         db.query(Florist)
         .filter(Florist.id == florist_id)

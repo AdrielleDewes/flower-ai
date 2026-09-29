@@ -1,9 +1,9 @@
 from decimal import Decimal
 from types import SimpleNamespace
 
+from app.routers import recommendations
 from app.schemas.bouquet import BouquetRequest
 from app.schemas.recommendation import Recommendation
-from app.routers import recommendations
 
 
 def test_create_recommendation_uses_injected_florist_id(db_session, monkeypatch):

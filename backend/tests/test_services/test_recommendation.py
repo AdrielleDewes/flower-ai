@@ -24,7 +24,6 @@ from app.models import (
 from app.schemas.bouquet import BouquetRequest
 from app.schemas.recommendation import Recommendation, RecommendationItem
 from app.services.foliage import get_florist_foliage
-from app.services.wrappings import get_florist_wrappings
 from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
@@ -59,6 +58,7 @@ from app.services.recommendation import (
     sort_flowers_by_price,
     validate_composition,
 )
+from app.services.wrappings import get_florist_wrappings
 
 
 @pytest.fixture

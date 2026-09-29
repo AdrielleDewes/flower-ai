@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 import pytest
@@ -19,7 +20,134 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetCreate, BouquetSize
-from app.services.bouquets import create_bouquet, validate_bouquet_items
+from app.services.bouquets import (
+    create_bouquet,
+    get_bouquet_detail,
+    get_florist_bouquets,
+    validate_bouquet_items,
+)
+
+
+def test_get_florist_bouquets_filters_florist_and_sorts_newest_first(
+    db_session,
+):
+    florist = Florist(name="Test Florist")
+    other_florist = Florist(name="Other Florist")
+    db_session.add_all([florist, other_florist])
+    db_session.flush()
+
+    now = datetime.now(tz=timezone.utc)
+    older_bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Older Bouquet",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now - timedelta(days=1),
+        updated_at=now - timedelta(days=1),
+    )
+    newer_bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Newer Bouquet",
+        size=BouquetSize.MEDIUM.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    other_bouquet = Bouquet(
+        florist_id=other_florist.id,
+        name="Other Florist Bouquet",
+        size=BouquetSize.LARGE.value,
+        source="MANUAL",
+        created_at=now + timedelta(days=1),
+        updated_at=now + timedelta(days=1),
+    )
+    db_session.add_all([older_bouquet, newer_bouquet, other_bouquet])
+    db_session.flush()
+
+    result = get_florist_bouquets(db_session, florist.id)
+
+    assert result == [newer_bouquet, older_bouquet]
+
+
+def test_get_bouquet_detail_returns_bouquet_with_named_composition(db_session):
+    florist = Florist(name="Test Florist")
+    flower = Flower(name="Rose")
+    foliage = Foliage(name="Eucalyptus")
+    wrapping = Wrapping(name="Kraft Paper")
+    db_session.add_all([florist, flower, foliage, wrapping])
+    db_session.flush()
+
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Birthday Bouquet",
+        description="For a celebration",
+        size=BouquetSize.MEDIUM.value,
+        source="GENERATED",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+    db_session.add_all(
+        [
+            BouquetFlower(
+                bouquet_id=bouquet.id,
+                flower_id=flower.id,
+                quantity=4,
+            ),
+            BouquetFoliage(
+                bouquet_id=bouquet.id,
+                foliage_id=foliage.id,
+                quantity=2,
+            ),
+            BouquetWrapping(
+                bouquet_id=bouquet.id,
+                wrapping_id=wrapping.id,
+                quantity=1,
+            ),
+        ]
+    )
+    db_session.flush()
+
+    result = get_bouquet_detail(db_session, florist.id, bouquet.id)
+
+    assert result == {
+        "id": bouquet.id,
+        "florist_id": florist.id,
+        "name": "Birthday Bouquet",
+        "description": "For a celebration",
+        "size": BouquetSize.MEDIUM.value,
+        "source": "GENERATED",
+        "created_at": bouquet.created_at,
+        "updated_at": bouquet.updated_at,
+        "flowers": [{"id": flower.id, "name": "Rose", "quantity": 4}],
+        "foliage": [{"id": foliage.id, "name": "Eucalyptus", "quantity": 2}],
+        "wrapping": [{"id": wrapping.id, "name": "Kraft Paper", "quantity": 1}],
+    }
+
+
+def test_get_bouquet_detail_does_not_expose_another_florists_bouquet(
+    db_session,
+):
+    florist = Florist(name="Bouquet Owner")
+    other_florist = Florist(name="Other Florist")
+    db_session.add_all([florist, other_florist])
+    db_session.flush()
+
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Private Bouquet",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+
+    assert get_bouquet_detail(db_session, other_florist.id, bouquet.id) is None
 
 
 def test_create_bouquet_persists_bouquet_and_all_composition_items(db_session):
