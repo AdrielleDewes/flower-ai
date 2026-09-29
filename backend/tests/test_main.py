@@ -7,6 +7,12 @@ def test_recommendations_router_is_included_in_application():
     assert "post" in paths["/florists/{florist_id}/recommendations"]
 
 
+def test_bouquets_router_is_included_in_application():
+    paths = app.openapi()["paths"]
+
+    assert "post" in paths["/florists/{florist_id}/bouquets/"]
+
+
 def test_flowers_router_is_included_in_application():
     paths = app.openapi()["paths"]
 

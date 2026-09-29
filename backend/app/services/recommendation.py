@@ -26,7 +26,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
-from app.schemas.recommendation import Recommendation
+from app.schemas.recommendation import Recommendation, RecommendationItem
 
 SIZE_RANGES = {
     "SMALL": (3, 7),
@@ -1034,6 +1034,93 @@ def build_recommended_composition(
     )
 
 
+def build_recommendation_items(
+    db: Session,
+    florist_id: int,
+    composition: dict[str, dict[int, int]],
+) -> dict[str, list[RecommendationItem]]:
+    """Build detailed recommendation items from a bouquet composition."""
+    items = {
+        "flowers": [],
+        "foliage": [],
+        "wrapping": [],
+    }
+
+    for flower_id, quantity in composition["flowers"].items():
+        flower = db.query(Flower).filter(Flower.id == flower_id).first()
+        price = get_flower_price(db, florist_id, flower_id)
+
+        items["flowers"].append(
+            RecommendationItem(
+                id=flower.id,
+                name=flower.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    for foliage_id, quantity in composition["foliage"].items():
+        foliage = db.query(Foliage).filter(Foliage.id == foliage_id).first()
+        florist_foliage = (
+            db.query(FloristFoliage)
+            .filter(
+                FloristFoliage.florist_id == florist_id,
+                FloristFoliage.foliage_id == foliage_id,
+                FloristFoliage.active.is_(True),
+            )
+            .first()
+        )
+        price = (
+            florist_foliage.price
+            if florist_foliage is not None
+            else Decimal("0")  # noqa: FURB157
+        )
+
+        items["foliage"].append(
+            RecommendationItem(
+                id=foliage.id,
+                name=foliage.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    for wrapping_id, quantity in composition["wrapping"].items():
+        wrapping = (
+            db.query(Wrapping)
+            .filter(Wrapping.id == wrapping_id)
+            .first()
+        )
+        florist_wrapping = (
+            db.query(FloristWrapping)
+            .filter(
+                FloristWrapping.florist_id == florist_id,
+                FloristWrapping.wrapping_id == wrapping_id,
+                FloristWrapping.active.is_(True),
+            )
+            .first()
+        )
+        price = (
+            florist_wrapping.price
+            if florist_wrapping is not None
+            else Decimal("0")  # noqa: FURB157
+        )
+
+        items["wrapping"].append(
+            RecommendationItem(
+                id=wrapping.id,
+                name=wrapping.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    return items
+
+
 def generate_recommendation(
     db: Session,
     florist_id: int,
@@ -1064,7 +1151,15 @@ def generate_recommendation(
         composition,
     )
 
+    items = build_recommendation_items(
+        db,
+        florist_id,
+        composition,
+    )
+
     return Recommendation(
-        composition=composition,
+        flowers=items["flowers"],
+        foliage=items["foliage"],
+        wrapping=items["wrapping"],
         total_price=total_price,
     )

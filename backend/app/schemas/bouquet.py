@@ -25,3 +25,15 @@ class BouquetRequest(BaseModel):
     budget_max: Decimal | None = None
     preferred_flowers: list[str] = Field(default_factory=list)
     excluded_flowers: list[str] = Field(default_factory=list)
+
+
+class BouquetCreate(BaseModel):
+    """Data required to save a bouquet."""
+
+    name: str
+    description: str | None = None
+    size: BouquetSize
+    source: str
+    flowers: dict[int, int] = Field(default_factory=dict)
+    foliage: dict[int, int] = Field(default_factory=dict)
+    wrapping: dict[int, int] = Field(default_factory=dict)

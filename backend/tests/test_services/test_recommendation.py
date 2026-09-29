@@ -22,7 +22,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
-from app.schemas.recommendation import Recommendation
+from app.schemas.recommendation import Recommendation, RecommendationItem
 from app.services.foliage import get_florist_foliage
 from app.services.wrappings import get_florist_wrappings
 from app.services.recommendation import (
@@ -1287,7 +1287,7 @@ def test_find_valid_composition_rejects_invalid_size(db_session, catalog):
         )
 
 
-def test_generate_recommendation_returns_composition_and_total_price(
+def test_generate_recommendation_returns_detailed_items_and_total_price(
     db_session,
     catalog,
 ):
@@ -1298,14 +1298,32 @@ def test_generate_recommendation_returns_composition_and_total_price(
     )
 
     assert isinstance(result, Recommendation)
-    assert result.composition == {
-        "flowers": {
-            catalog.flowers["Tulip"].id: 2,
-            catalog.flowers["Daisy"].id: 1,
-        },
-        "foliage": {catalog.foliage["Eucalyptus"].id: 1},
-        "wrapping": {},
-    }
+    assert result.flowers == [
+        RecommendationItem(
+            id=catalog.flowers["Tulip"].id,
+            name="Tulip",
+            quantity=2,
+            unit_price=Decimal("8.00"),
+            subtotal=Decimal("16.00"),
+        ),
+        RecommendationItem(
+            id=catalog.flowers["Daisy"].id,
+            name="Daisy",
+            quantity=1,
+            unit_price=Decimal("6.00"),
+            subtotal=Decimal("6.00"),
+        ),
+    ]
+    assert result.foliage == [
+        RecommendationItem(
+            id=catalog.foliage["Eucalyptus"].id,
+            name="Eucalyptus",
+            quantity=1,
+            unit_price=Decimal("5.00"),
+            subtotal=Decimal("5.00"),
+        ),
+    ]
+    assert result.wrapping == []
     assert result.total_price == Decimal("27.00")
 
 

@@ -15,7 +15,9 @@ def test_create_recommendation_uses_injected_florist_id(db_session, monkeypatch)
         size="SMALL",
     )
     expected = Recommendation(
-        composition={"flowers": {1: 3}, "foliage": {}, "wrapping": {}},
+        flowers=[],
+        foliage=[],
+        wrapping=[],
         total_price=Decimal("25.00"),
     )
     calls = {}
