@@ -26,6 +26,7 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
+from app.schemas.recommendation import Recommendation, RecommendationItem
 
 SIZE_RANGES = {
     "SMALL": (3, 7),
@@ -66,18 +67,31 @@ def prioritize_preferred_flowers(
     candidate_flowers: list[Flower],
     preferred_flowers: list[str],
 ) -> list[Flower]:
-    """Move requested flower names to the front while preserving order."""
+    """Move requested flower names to the front in preference order."""
+
     if not preferred_flowers:
-        return candidate_flowers
+        return sorted(candidate_flowers, key=lambda flower: flower.name)
 
-    preferred = []
-    others = []
+    flowers_by_name = {
+        flower.name: flower
+        for flower in candidate_flowers
+    }
 
-    for flower in candidate_flowers:
-        if flower.name in preferred_flowers:
-            preferred.append(flower)
-        else:
-            others.append(flower)
+    preferred = [
+        flowers_by_name[name]
+        for name in preferred_flowers
+        if name in flowers_by_name
+    ]
+
+    preferred_ids = {flower.id for flower in preferred}
+
+    others = [
+        flower
+        for flower in candidate_flowers
+        if flower.id not in preferred_ids
+    ]
+
+    others.sort(key=lambda flower: flower.name)
 
     return preferred + others
 
@@ -273,33 +287,47 @@ def add_secondary_flowers(
     composition: dict[int, int],
     remaining_quantity: int,
 ) -> dict[int, int]:
-    """Fill remaining stems from secondary flowers without exceeding stock."""
+    """Distribute remaining quantities across secondary flowers."""
     if remaining_quantity <= 0:
         return composition
 
-    for flower in candidate_flowers:
-        if flower.id == primary_flower.id:
-            continue
+    secondary_flowers = [
+        flower
+        for flower in candidate_flowers
+        if flower.id != primary_flower.id
+    ]
 
-        if remaining_quantity <= 0:
-            break
+    if not secondary_flowers:
+        return composition
 
-        available_stock = get_flower_stock(
+    stock = {
+        flower.id: get_flower_stock(
             db,
             florist_id,
             flower.id,
         )
+        for flower in secondary_flowers
+    }
 
-        quantity = min(
-            available_stock,
-            remaining_quantity,
-        )
+    while remaining_quantity > 0:
+        added = False
 
-        if quantity > 0:
+        for flower in secondary_flowers:
+            if remaining_quantity <= 0:
+                break
+
+            if stock[flower.id] <= 0:
+                continue
+
             composition[flower.id] = (
-                composition.get(flower.id, 0) + quantity
+                composition.get(flower.id, 0) + 1
             )
-            remaining_quantity -= quantity
+            stock[flower.id] -= 1
+            remaining_quantity -= 1
+            added = True
+
+        if not added:
+            break
 
     return composition
 
@@ -383,15 +411,34 @@ def calculate_foliage_price(
 def select_cheapest_foliage(
     candidate_foliage: list[Foliage],
     quantity: int,
+    stock: dict[int, int],
 ) -> dict[int, int]:
-    """Select up to the requested number of foliage items from the candidates."""
+    """Select foliage items while respecting stock and requested quantity."""
     if not candidate_foliage or quantity <= 0:
         return {}
 
     composition = {}
+    remaining_quantity = quantity
 
-    for foliage in candidate_foliage[:quantity]:
-        composition[foliage.id] = 1
+    while remaining_quantity > 0:
+        added = False
+
+        for foliage in candidate_foliage:
+            if remaining_quantity <= 0:
+                break
+
+            if stock.get(foliage.id, 0) <= 0:
+                continue
+
+            composition[foliage.id] = (
+                composition.get(foliage.id, 0) + 1
+            )
+            stock[foliage.id] -= 1
+            remaining_quantity -= 1
+            added = True
+
+        if not added:
+            break
 
     return composition
 
@@ -950,10 +997,19 @@ def build_recommended_composition(
     )
 
     foliage_quantity = get_foliage_quantity(size)
+    foliage_stock = {
+        foliage.id: get_foliage_stock(
+            db,
+            florist_id,
+            foliage.id,
+        )
+        for foliage in sorted_foliage
+    }
 
     foliage_composition = select_cheapest_foliage(
         sorted_foliage,
         foliage_quantity,
+        foliage_stock,
     )
 
     candidate_wrappings = find_candidate_wrappings(
@@ -975,4 +1031,135 @@ def build_recommended_composition(
         flower_composition,
         foliage_composition,
         wrapping,
+    )
+
+
+def build_recommendation_items(
+    db: Session,
+    florist_id: int,
+    composition: dict[str, dict[int, int]],
+) -> dict[str, list[RecommendationItem]]:
+    """Build detailed recommendation items from a bouquet composition."""
+    items = {
+        "flowers": [],
+        "foliage": [],
+        "wrapping": [],
+    }
+
+    for flower_id, quantity in composition["flowers"].items():
+        flower = db.query(Flower).filter(Flower.id == flower_id).first()
+        price = get_flower_price(db, florist_id, flower_id)
+
+        items["flowers"].append(
+            RecommendationItem(
+                id=flower.id,
+                name=flower.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    for foliage_id, quantity in composition["foliage"].items():
+        foliage = db.query(Foliage).filter(Foliage.id == foliage_id).first()
+        florist_foliage = (
+            db.query(FloristFoliage)
+            .filter(
+                FloristFoliage.florist_id == florist_id,
+                FloristFoliage.foliage_id == foliage_id,
+                FloristFoliage.active.is_(True),
+            )
+            .first()
+        )
+        price = (
+            florist_foliage.price
+            if florist_foliage is not None
+            else Decimal("0")  # noqa: FURB157
+        )
+
+        items["foliage"].append(
+            RecommendationItem(
+                id=foliage.id,
+                name=foliage.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    for wrapping_id, quantity in composition["wrapping"].items():
+        wrapping = (
+            db.query(Wrapping)
+            .filter(Wrapping.id == wrapping_id)
+            .first()
+        )
+        florist_wrapping = (
+            db.query(FloristWrapping)
+            .filter(
+                FloristWrapping.florist_id == florist_id,
+                FloristWrapping.wrapping_id == wrapping_id,
+                FloristWrapping.active.is_(True),
+            )
+            .first()
+        )
+        price = (
+            florist_wrapping.price
+            if florist_wrapping is not None
+            else Decimal("0")  # noqa: FURB157
+        )
+
+        items["wrapping"].append(
+            RecommendationItem(
+                id=wrapping.id,
+                name=wrapping.name,
+                quantity=quantity,
+                unit_price=price,
+                subtotal=price * quantity,
+            )
+        )
+
+    return items
+
+
+def generate_recommendation(
+    db: Session,
+    florist_id: int,
+    request: BouquetRequest,
+) -> Recommendation | None:
+    """Generate a valid bouquet recommendation from a bouquet request."""
+    candidate_flowers = find_candidate_flowers(
+        db,
+        florist_id,
+        request,
+    )
+
+    composition = find_valid_composition(
+        db,
+        florist_id,
+        candidate_flowers,
+        request.size.value,
+        request.budget_max,
+        request.preferred_flowers,
+    )
+
+    if not composition:
+        return None
+
+    total_price = calculate_complete_bouquet_price(
+        db,
+        florist_id,
+        composition,
+    )
+
+    items = build_recommendation_items(
+        db,
+        florist_id,
+        composition,
+    )
+
+    return Recommendation(
+        flowers=items["flowers"],
+        foliage=items["foliage"],
+        wrapping=items["wrapping"],
+        total_price=total_price,
     )

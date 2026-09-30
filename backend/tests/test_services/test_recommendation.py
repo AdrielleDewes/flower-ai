@@ -22,6 +22,8 @@ from app.models import (
     WrappingInventory,
 )
 from app.schemas.bouquet import BouquetRequest
+from app.schemas.recommendation import Recommendation, RecommendationItem
+from app.services.foliage import get_florist_foliage
 from app.services.recommendation import (
     add_secondary_flowers,
     build_cheapest_composition,
@@ -36,6 +38,7 @@ from app.services.recommendation import (
     find_candidate_foliage,
     find_candidate_wrappings,
     find_valid_composition,
+    generate_recommendation,
     get_flower_quantity_range,
     get_flower_stock,
     get_foliage_quantity,
@@ -48,12 +51,14 @@ from app.services.recommendation import (
     has_sufficient_wrapping_stock,
     is_within_budget,
     prioritize_preferred_flowers,
+    select_cheapest_foliage,
     select_foliage,
     select_primary_flower,
     select_wrapping,
     sort_flowers_by_price,
     validate_composition,
 )
+from app.services.wrappings import get_florist_wrappings
 
 
 @pytest.fixture
@@ -284,7 +289,7 @@ def test_select_primary_flower_returns_first_candidate():
     assert select_primary_flower(flowers) is flowers[0]
 
 
-def test_prioritize_preferred_flowers_preserves_candidate_order():
+def test_prioritize_preferred_flowers_uses_preference_and_name_order():
     rose = SimpleNamespace(id=1, name="Rose")
     tulip = SimpleNamespace(id=2, name="Tulip")
     daisy = SimpleNamespace(id=3, name="Daisy")
@@ -294,17 +299,20 @@ def test_prioritize_preferred_flowers_preserves_candidate_order():
         ["Daisy", "Missing Flower", "Tulip"],
     )
 
-    assert result == [tulip, daisy, rose]
+    assert result == [daisy, tulip, rose]
 
 
-def test_prioritize_preferred_flowers_handles_empty_or_missing_preferences():
+def test_prioritize_preferred_flowers_sorts_without_matching_preferences():
     flowers = [
-        SimpleNamespace(id=1, name="Rose"),
-        SimpleNamespace(id=2, name="Tulip"),
+        SimpleNamespace(id=1, name="Tulip"),
+        SimpleNamespace(id=2, name="Rose"),
     ]
 
-    assert prioritize_preferred_flowers(flowers, []) is flowers
-    assert prioritize_preferred_flowers(flowers, ["Unknown"]) == flowers
+    assert prioritize_preferred_flowers(flowers, []) == [flowers[1], flowers[0]]
+    assert prioritize_preferred_flowers(flowers, ["Unknown"]) == [
+        flowers[1],
+        flowers[0],
+    ]
 
 
 def test_add_secondary_flowers_skips_primary_and_obeys_quantity(
@@ -325,6 +333,29 @@ def test_add_secondary_flowers_skips_primary_and_obeys_quantity(
     )
 
     assert result == {rose.id: 2, tulip.id: 1}
+
+
+def test_add_secondary_flowers_distributes_round_robin_with_limited_stock(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    daisy = catalog.flowers["Daisy"]
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 1
+    db_session.get(FlowerInventory, (catalog.florist.id, daisy.id)).quantity = 4
+    db_session.flush()
+
+    result = add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip, daisy],
+        rose,
+        {rose.id: 2},
+        4,
+    )
+
+    assert result == {rose.id: 2, tulip.id: 1, daisy.id: 3}
 
 
 @pytest.mark.parametrize("quantity", [0, -1])
@@ -360,6 +391,26 @@ def test_add_secondary_flowers_handles_empty_candidates(db_session, catalog):
     ) == {rose.id: 2}
 
 
+def test_add_secondary_flowers_stops_when_secondary_stock_is_empty(
+    db_session,
+    catalog,
+):
+    rose = catalog.flowers["Rose"]
+    tulip = catalog.flowers["Tulip"]
+    db_session.get(FlowerInventory, (catalog.florist.id, tulip.id)).quantity = 0
+    db_session.flush()
+    composition = {rose.id: 2}
+
+    assert add_secondary_flowers(
+        db_session,
+        catalog.florist.id,
+        [rose, tulip],
+        rose,
+        composition,
+        3,
+    ) == {rose.id: 2}
+
+
 def test_select_foliage_handles_empty_and_zero_quantity():
     foliage = [
         SimpleNamespace(id=1, name="Eucalyptus"),
@@ -381,6 +432,32 @@ def test_select_foliage_selects_no_more_than_requested():
         foliage[0].id: 1,
         foliage[1].id: 1,
     }
+
+
+def test_select_cheapest_foliage_distributes_by_stock_in_round_robin():
+    eucalyptus = SimpleNamespace(id=1, name="Eucalyptus")
+    fern = SimpleNamespace(id=2, name="Fern")
+    ruscus = SimpleNamespace(id=3, name="Ruscus")
+    stock = {eucalyptus.id: 2, fern.id: 5, ruscus.id: 0}
+
+    composition = select_cheapest_foliage(
+        [eucalyptus, fern, ruscus],
+        5,
+        stock,
+    )
+
+    assert composition == {eucalyptus.id: 2, fern.id: 3}
+    assert stock == {eucalyptus.id: 0, fern.id: 2, ruscus.id: 0}
+
+
+def test_select_cheapest_foliage_returns_available_quantity_only():
+    eucalyptus = SimpleNamespace(id=1, name="Eucalyptus")
+
+    assert select_cheapest_foliage([eucalyptus], 3, {eucalyptus.id: 1}) == {
+        eucalyptus.id: 1
+    }
+    assert select_cheapest_foliage([eucalyptus], 0, {eucalyptus.id: 1}) == {}
+    assert select_cheapest_foliage([], 2, {}) == {}
 
 
 @pytest.mark.parametrize(
@@ -797,6 +874,115 @@ def test_find_candidate_foliage_requires_active_catalog_and_positive_stock(
     assert find_candidate_foliage(db_session, 99999) == []
 
 
+def test_get_florist_foliage_returns_active_items_with_price_and_stock(
+    db_session,
+    catalog,
+):
+    result = get_florist_foliage(db_session, catalog.florist.id)
+
+    assert [item["name"] for item in result] == [
+        "Eucalyptus",
+        "Fern",
+        "Olive Branch",
+    ]
+    assert result == [
+        {
+            "id": catalog.foliage["Eucalyptus"].id,
+            "name": "Eucalyptus",
+            "description": None,
+            "price": Decimal("5.00"),
+            "available_quantity": 40,
+            "active": True,
+        },
+        {
+            "id": catalog.foliage["Fern"].id,
+            "name": "Fern",
+            "description": None,
+            "price": Decimal("4.00"),
+            "available_quantity": 0,
+            "active": True,
+        },
+        {
+            "id": catalog.foliage["Olive Branch"].id,
+            "name": "Olive Branch",
+            "description": None,
+            "price": Decimal("7.00"),
+            "available_quantity": 20,
+            "active": True,
+        },
+    ]
+
+
+def test_get_florist_wrappings_returns_active_items_with_price_and_stock(
+    db_session,
+    catalog,
+):
+    kraft = Wrapping(name="Kraft Paper")
+    fabric = Wrapping(name="Premium Fabric")
+    inactive = Wrapping(name="Inactive Wrap")
+    db_session.add_all([kraft, fabric, inactive])
+    db_session.flush()
+    db_session.add_all(
+        [
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=fabric.id,
+                price=Decimal("12.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                price=Decimal("3.00"),
+                active=False,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=kraft.id,
+                quantity=20,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=fabric.id,
+                quantity=0,
+            ),
+            WrappingInventory(
+                florist_id=catalog.florist.id,
+                wrapping_id=inactive.id,
+                quantity=100,
+            ),
+        ]
+    )
+    db_session.flush()
+
+    result = get_florist_wrappings(db_session, catalog.florist.id)
+
+    assert result == [
+        {
+            "id": kraft.id,
+            "name": "Kraft Paper",
+            "description": None,
+            "price": Decimal("4.00"),
+            "available_quantity": 20,
+            "active": True,
+        },
+        {
+            "id": fabric.id,
+            "name": "Premium Fabric",
+            "description": None,
+            "price": Decimal("12.00"),
+            "available_quantity": 0,
+            "active": True,
+        },
+    ]
+
+
 def test_find_candidate_wrappings_requires_active_catalog_and_positive_stock(
     db_session,
     catalog,
@@ -1006,7 +1192,7 @@ def test_find_valid_composition_prioritizes_preferred_flowers(
     assert composition == {
         "flowers": {
             catalog.flowers["Tulip"].id: 2,
-            catalog.flowers["Rose"].id: 1,
+            catalog.flowers["Daisy"].id: 1,
         },
         "foliage": {catalog.foliage["Eucalyptus"].id: 1},
         "wrapping": {},
@@ -1099,3 +1285,56 @@ def test_find_valid_composition_rejects_invalid_size(db_session, catalog):
             None,
             [],
         )
+
+
+def test_generate_recommendation_returns_detailed_items_and_total_price(
+    db_session,
+    catalog,
+):
+    result = generate_recommendation(
+        db_session,
+        catalog.florist.id,
+        make_request(preferred_flowers=["Tulip"]),
+    )
+
+    assert isinstance(result, Recommendation)
+    assert result.flowers == [
+        RecommendationItem(
+            id=catalog.flowers["Tulip"].id,
+            name="Tulip",
+            quantity=2,
+            unit_price=Decimal("8.00"),
+            subtotal=Decimal("16.00"),
+        ),
+        RecommendationItem(
+            id=catalog.flowers["Daisy"].id,
+            name="Daisy",
+            quantity=1,
+            unit_price=Decimal("6.00"),
+            subtotal=Decimal("6.00"),
+        ),
+    ]
+    assert result.foliage == [
+        RecommendationItem(
+            id=catalog.foliage["Eucalyptus"].id,
+            name="Eucalyptus",
+            quantity=1,
+            unit_price=Decimal("5.00"),
+            subtotal=Decimal("5.00"),
+        ),
+    ]
+    assert result.wrapping == []
+    assert result.total_price == Decimal("27.00")
+
+
+def test_generate_recommendation_returns_none_without_candidate_flowers(
+    db_session,
+    catalog,
+):
+    result = generate_recommendation(
+        db_session,
+        catalog.florist.id,
+        make_request(occasion="Unknown Occasion"),
+    )
+
+    assert result is None
