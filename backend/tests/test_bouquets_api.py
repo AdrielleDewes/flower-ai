@@ -111,3 +111,104 @@ def test_create_bouquet_returns_400_for_insufficient_stock(
 
     assert response.status_code == 400
     assert response.json()["detail"] == f"Not enough stock for flower {flower.id}."
+
+
+def test_update_bouquet_replaces_saved_bouquet(
+    api_client,
+    florist_with_flower,
+):
+    florist, flower = florist_with_flower
+    created = api_client.post(
+        f"/florists/{florist.id}/bouquets/",
+        json={
+            "name": "Original Bouquet",
+            "size": "SMALL",
+            "source": "MANUAL",
+            "flowers": {flower.id: 1},
+        },
+    )
+    bouquet_id = created.json()["id"]
+
+    response = api_client.patch(
+        f"/florists/{florist.id}/bouquets/{bouquet_id}",
+        json={
+            "name": "Updated Bouquet",
+            "description": "Updated through the API",
+            "size": "MEDIUM",
+            "flowers": {flower.id: 1},
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["name"] == "Updated Bouquet"
+    assert response.json()["description"] == "Updated through the API"
+    assert response.json()["size"] == "MEDIUM"
+    assert response.json()["source"] == "MANUAL"
+
+    detail = api_client.get(
+        f"/florists/{florist.id}/bouquets/{bouquet_id}"
+    )
+    assert detail.status_code == 200
+    assert detail.json()["flowers"] == [
+        {"id": flower.id, "name": flower.name, "quantity": 1}
+    ]
+
+
+def test_update_bouquet_returns_404_when_not_owned_by_florist(
+    api_client,
+    db_session,
+    florist_with_flower,
+):
+    florist, _flower = florist_with_flower
+    other_florist = Florist(name="Other Florist")
+    db_session.add(other_florist)
+    db_session.flush()
+
+    created = api_client.post(
+        f"/florists/{florist.id}/bouquets/",
+        json={
+            "name": "Private Bouquet",
+            "size": "SMALL",
+            "source": "MANUAL",
+        },
+    )
+    bouquet_id = created.json()["id"]
+
+    response = api_client.patch(
+        f"/florists/{other_florist.id}/bouquets/{bouquet_id}",
+        json={
+            "name": "Unauthorized update",
+            "size": "SMALL",
+            "source": "MANUAL",
+        },
+    )
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Bouquet not found."
+
+
+def test_delete_bouquet_returns_204_and_deletes_its_composition(
+    api_client,
+    florist_with_flower,
+):
+    florist, flower = florist_with_flower
+    created = api_client.post(
+        f"/florists/{florist.id}/bouquets/",
+        json={
+            "name": "Bouquet to delete",
+            "size": "SMALL",
+            "source": "MANUAL",
+            "flowers": {flower.id: 1},
+        },
+    )
+    bouquet_id = created.json()["id"]
+
+    response = api_client.delete(
+        f"/florists/{florist.id}/bouquets/{bouquet_id}"
+    )
+
+    assert response.status_code == 204
+    assert response.content == b""
+    assert api_client.get(
+        f"/florists/{florist.id}/bouquets/{bouquet_id}"
+    ).status_code == 404

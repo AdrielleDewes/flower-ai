@@ -19,8 +19,8 @@ router = APIRouter(tags=["recommendations"])
 )
 def create_recommendation(
     request: BouquetRequest,
-    florist: Florist = Depends(get_florist),
-    db: Session = Depends(get_db),
+    florist: Florist = Depends(get_florist),  # noqa: B008
+    db: Session = Depends(get_db),  # noqa: B008
 ):
     """Generate a bouquet recommendation."""
     recommendation = generate_recommendation(

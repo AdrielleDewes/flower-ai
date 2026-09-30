@@ -40,6 +40,17 @@ class BouquetCreate(BaseModel):
     wrapping: dict[int, int] = Field(default_factory=dict)
 
 
+class BouquetUpdate(BaseModel):
+    """Data that can be updated on a saved bouquet."""
+
+    name: str | None = None
+    description: str | None = None
+    size: BouquetSize | None = None
+    flowers: dict[int, int] | None = None
+    foliage: dict[int, int] | None = None
+    wrapping: dict[int, int] | None = None
+
+
 class BouquetResponse(BaseModel):
     """Saved bouquet information returned by the API."""
 

@@ -19,11 +19,13 @@ from app.models import (
     Wrapping,
     WrappingInventory,
 )
-from app.schemas.bouquet import BouquetCreate, BouquetSize
+from app.schemas.bouquet import BouquetCreate, BouquetSize, BouquetUpdate
 from app.services.bouquets import (
     create_bouquet,
+    delete_bouquet,
     get_bouquet_detail,
     get_florist_bouquets,
+    update_bouquet,
     validate_bouquet_items,
 )
 
@@ -260,6 +262,332 @@ def test_create_bouquet_persists_empty_composition(db_session):
     )
 
 
+def test_update_bouquet_replaces_details_and_composition(db_session):
+    florist = Florist(name="Test Florist")
+    old_flower = Flower(name="Old Rose")
+    new_flower = Flower(name="New Rose")
+    db_session.add_all([florist, old_flower, new_flower])
+    db_session.flush()
+
+    db_session.add_all(
+        [
+            FloristFlower(
+                florist_id=florist.id,
+                flower_id=old_flower.id,
+                price=Decimal("10.00"),
+                active=True,
+            ),
+            FloristFlower(
+                florist_id=florist.id,
+                flower_id=new_flower.id,
+                price=Decimal("12.00"),
+                active=True,
+            ),
+            FlowerInventory(
+                florist_id=florist.id,
+                flower_id=old_flower.id,
+                quantity=10,
+            ),
+            FlowerInventory(
+                florist_id=florist.id,
+                flower_id=new_flower.id,
+                quantity=10,
+            ),
+        ]
+    )
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Old bouquet",
+        description="Old description",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+    db_session.add(
+        BouquetFlower(
+            bouquet_id=bouquet.id,
+            flower_id=old_flower.id,
+            quantity=2,
+        )
+    )
+    db_session.commit()
+    previous_updated_at = bouquet.updated_at
+
+    updated = update_bouquet(
+        db_session,
+        florist.id,
+        bouquet.id,
+        BouquetUpdate(
+            name="Updated bouquet",
+            description="New description",
+            size=BouquetSize.MEDIUM,
+            flowers={new_flower.id: 3},
+        ),
+    )
+
+    assert updated is bouquet
+    assert updated.name == "Updated bouquet"
+    assert updated.description == "New description"
+    assert updated.size == BouquetSize.MEDIUM.value
+    assert updated.source == "MANUAL"
+    assert updated.updated_at > previous_updated_at
+    assert db_session.get(BouquetFlower, (bouquet.id, old_flower.id)) is None
+    assert db_session.get(BouquetFlower, (bouquet.id, new_flower.id)).quantity == 3
+
+
+def test_update_bouquet_preserves_fields_and_composition_not_supplied(db_session):
+    florist = Florist(name="Test Florist")
+    flower = Flower(name="Rose")
+    db_session.add_all([florist, flower])
+    db_session.flush()
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Original name",
+        description="Keep this description",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=datetime.now(tz=timezone.utc),
+        updated_at=datetime.now(tz=timezone.utc),
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+    db_session.add(
+        BouquetFlower(
+            bouquet_id=bouquet.id,
+            flower_id=flower.id,
+            quantity=2,
+        )
+    )
+    db_session.commit()
+
+    updated = update_bouquet(
+        db_session,
+        florist.id,
+        bouquet.id,
+        BouquetUpdate(name="New name"),
+    )
+
+    assert updated.name == "New name"
+    assert updated.description == "Keep this description"
+    assert updated.size == BouquetSize.SMALL.value
+    assert updated.source == "MANUAL"
+    assert db_session.get(BouquetFlower, (bouquet.id, flower.id)).quantity == 2
+
+
+def test_update_bouquet_can_clear_description(db_session):
+    florist = Florist(name="Test Florist")
+    db_session.add(florist)
+    db_session.flush()
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Bouquet",
+        description="Existing description",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.commit()
+
+    updated = update_bouquet(
+        db_session,
+        florist.id,
+        bouquet.id,
+        BouquetUpdate(description=None),
+    )
+
+    assert updated.description is None
+
+
+def test_update_bouquet_validates_merged_composition_before_replacing_items(
+    db_session,
+):
+    florist = Florist(name="Test Florist")
+    flower = Flower(name="Rose")
+    foliage = Foliage(name="Eucalyptus")
+    wrapping = Wrapping(name="Kraft Paper")
+    db_session.add_all([florist, flower, foliage, wrapping])
+    db_session.flush()
+
+    db_session.add_all(
+        [
+            FloristFlower(
+                florist_id=florist.id,
+                flower_id=flower.id,
+                price=Decimal("12.00"),
+                active=True,
+            ),
+            FloristFoliage(
+                florist_id=florist.id,
+                foliage_id=foliage.id,
+                price=Decimal("5.00"),
+                active=True,
+            ),
+            FloristWrapping(
+                florist_id=florist.id,
+                wrapping_id=wrapping.id,
+                price=Decimal("4.00"),
+                active=True,
+            ),
+            FlowerInventory(
+                florist_id=florist.id,
+                flower_id=flower.id,
+                quantity=5,
+            ),
+            FoliageInventory(
+                florist_id=florist.id,
+                foliage_id=foliage.id,
+                quantity=5,
+            ),
+            WrappingInventory(
+                florist_id=florist.id,
+                wrapping_id=wrapping.id,
+                quantity=5,
+            ),
+        ]
+    )
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Original bouquet",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+    db_session.add_all(
+        [
+            BouquetFlower(
+                bouquet_id=bouquet.id,
+                flower_id=flower.id,
+                quantity=2,
+            ),
+            BouquetFoliage(
+                bouquet_id=bouquet.id,
+                foliage_id=foliage.id,
+                quantity=1,
+            ),
+            BouquetWrapping(
+                bouquet_id=bouquet.id,
+                wrapping_id=wrapping.id,
+                quantity=1,
+            ),
+        ]
+    )
+    db_session.commit()
+
+    with pytest.raises(ValueError, match="not offered by the florist"):
+        update_bouquet(
+            db_session,
+            florist.id,
+            bouquet.id,
+            BouquetUpdate(flowers={999: 2}),
+        )
+
+    assert db_session.get(BouquetFlower, (bouquet.id, flower.id)).quantity == 2
+    assert db_session.get(BouquetFoliage, (bouquet.id, foliage.id)).quantity == 1
+    assert db_session.get(BouquetWrapping, (bouquet.id, wrapping.id)).quantity == 1
+
+    update_bouquet(
+        db_session,
+        florist.id,
+        bouquet.id,
+        BouquetUpdate(flowers={flower.id: 3}),
+    )
+
+    assert db_session.get(BouquetFlower, (bouquet.id, flower.id)).quantity == 3
+    assert db_session.get(BouquetFoliage, (bouquet.id, foliage.id)).quantity == 1
+    assert db_session.get(BouquetWrapping, (bouquet.id, wrapping.id)).quantity == 1
+
+
+def test_update_bouquet_returns_none_for_another_florists_bouquet(db_session):
+    florist = Florist(name="Bouquet Owner")
+    other_florist = Florist(name="Other Florist")
+    db_session.add_all([florist, other_florist])
+    db_session.flush()
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Private bouquet",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+
+    result = update_bouquet(
+        db_session,
+        other_florist.id,
+        bouquet.id,
+        BouquetUpdate(
+            name="Changed",
+            size=BouquetSize.SMALL,
+        ),
+    )
+
+    assert result is None
+
+
+def test_delete_bouquet_deletes_bouquet_and_cascades_to_composition(db_session):
+    florist = Florist(name="Test Florist")
+    flower = Flower(name="Rose")
+    db_session.add_all([florist, flower])
+    db_session.flush()
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Bouquet to delete",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+    db_session.add(
+        BouquetFlower(
+            bouquet_id=bouquet.id,
+            flower_id=flower.id,
+            quantity=2,
+        )
+    )
+    db_session.commit()
+
+    assert delete_bouquet(db_session, florist.id, bouquet.id) is True
+    assert db_session.get(Bouquet, bouquet.id) is None
+    assert db_session.get(BouquetFlower, (bouquet.id, flower.id)) is None
+
+
+def test_delete_bouquet_returns_false_for_another_florists_bouquet(db_session):
+    florist = Florist(name="Bouquet Owner")
+    other_florist = Florist(name="Other Florist")
+    db_session.add_all([florist, other_florist])
+    db_session.flush()
+    now = datetime.now(tz=timezone.utc)
+    bouquet = Bouquet(
+        florist_id=florist.id,
+        name="Private bouquet",
+        size=BouquetSize.SMALL.value,
+        source="MANUAL",
+        created_at=now,
+        updated_at=now,
+    )
+    db_session.add(bouquet)
+    db_session.flush()
+
+    assert delete_bouquet(db_session, other_florist.id, bouquet.id) is False
+
+
 def test_validate_bouquet_items_rejects_items_not_offered_by_florist(
     db_session,
 ):
@@ -303,7 +631,13 @@ def test_validate_bouquet_items_rejects_items_not_offered_by_florist(
         ValueError,
         match="Bouquet contains items not offered by the florist.",
     ):
-        validate_bouquet_items(db_session, florist.id, bouquet_data)
+        validate_bouquet_items(
+            db_session,
+            florist.id,
+            bouquet_data.flowers,
+            bouquet_data.foliage,
+            bouquet_data.wrapping,
+        )
 
 
 def test_validate_bouquet_items_checks_offering_before_stock(db_session):
@@ -321,7 +655,13 @@ def test_validate_bouquet_items_checks_offering_before_stock(db_session):
         ValueError,
         match="Bouquet contains items not offered by the florist.",
     ):
-        validate_bouquet_items(db_session, florist.id, bouquet_data)
+        validate_bouquet_items(
+            db_session,
+            florist.id,
+            bouquet_data.flowers,
+            bouquet_data.foliage,
+            bouquet_data.wrapping,
+        )
 
 
 @pytest.mark.parametrize("quantity", [0, -1])
@@ -343,7 +683,13 @@ def test_validate_bouquet_items_rejects_nonpositive_quantities(
         ValueError,
         match="Bouquet item quantities must be greater than zero.",
     ):
-        validate_bouquet_items(db_session, florist.id, bouquet_data)
+        validate_bouquet_items(
+            db_session,
+            florist.id,
+            bouquet_data.flowers,
+            bouquet_data.foliage,
+            bouquet_data.wrapping,
+        )
 
 
 @pytest.mark.parametrize(
@@ -402,4 +748,10 @@ def test_validate_bouquet_items_rejects_missing_stock(
     )
 
     with pytest.raises(ValueError, match=expected_message):
-        validate_bouquet_items(db_session, florist.id, bouquet_data)
+        validate_bouquet_items(
+            db_session,
+            florist.id,
+            bouquet_data.flowers,
+            bouquet_data.foliage,
+            bouquet_data.wrapping,
+        )

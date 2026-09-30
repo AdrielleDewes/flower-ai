@@ -17,8 +17,8 @@ router = APIRouter(
 
 @router.get("/", response_model=CatalogResponse)
 def get_catalog(
-    florist: Florist = Depends(get_florist),
-    db: Session = Depends(get_db),
+    florist: Florist = Depends(get_florist),  # noqa: B008
+    db: Session = Depends(get_db),  # noqa: B008
 ):
     """Return the complete catalog of a florist."""
     return get_florist_catalog(

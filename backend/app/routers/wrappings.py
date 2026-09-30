@@ -17,8 +17,8 @@ router = APIRouter(
 
 @router.get("/", response_model=list[WrappingResponse])
 def list_wrappings(
-    florist: Florist = Depends(get_florist),
-    db: Session = Depends(get_db),
+    florist: Florist = Depends(get_florist),  # noqa: B008
+    db: Session = Depends(get_db),  # noqa: B008
 ):
     """List wrappings offered by a florist."""
     return get_florist_wrappings(

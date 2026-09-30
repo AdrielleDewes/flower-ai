@@ -27,9 +27,3 @@ def get_db() -> Iterator[Session]:
 
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy ORM models."""
-
-
-
-def create_tables():
-    """Create all tables registered on the declarative model base."""
-    Base.metadata.create_all(bind=engine)

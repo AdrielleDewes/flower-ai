@@ -17,7 +17,7 @@ from app.models.inventory import (
     FoliageInventory,
     WrappingInventory,
 )
-from app.schemas.bouquet import BouquetCreate
+from app.schemas.bouquet import BouquetCreate, BouquetUpdate
 
 
 def get_florist_bouquets(
@@ -118,17 +118,19 @@ def get_bouquet_detail(
 def validate_bouquet_items(
     db: Session,
     florist_id: int,
-    bouquet_data: BouquetCreate,
+    flowers: dict[int, int],
+    foliage: dict[int, int],
+    wrapping: dict[int, int],
 ) -> None:
     """Validate that all bouquet items belong to the florist."""
-    flower_ids = set(bouquet_data.flowers)
-    foliage_ids = set(bouquet_data.foliage)
-    wrapping_ids = set(bouquet_data.wrapping)
+    flower_ids = set(flowers)
+    foliage_ids = set(foliage)
+    wrapping_ids = set(wrapping)
 
     quantities = [
-        *bouquet_data.flowers.values(),
-        *bouquet_data.foliage.values(),
-        *bouquet_data.wrapping.values(),
+        *flowers.values(),
+        *foliage.values(),
+        *wrapping.values(),
     ]
 
     if any(quantity <= 0 for quantity in quantities):
@@ -180,7 +182,7 @@ def validate_bouquet_items(
     if invalid_flowers or invalid_foliage or invalid_wrapping:
         raise ValueError("Bouquet contains items not offered by the florist.")
 
-    for flower_id, quantity in bouquet_data.flowers.items():
+    for flower_id, quantity in flowers.items():
         stock = (
             db.query(FlowerInventory.quantity)
             .filter(
@@ -196,7 +198,7 @@ def validate_bouquet_items(
                 f"Not enough stock for flower {flower_id}."
             )
 
-    for foliage_id, quantity in bouquet_data.foliage.items():
+    for foliage_id, quantity in foliage.items():
         stock = (
             db.query(FoliageInventory.quantity)
             .filter(
@@ -212,7 +214,7 @@ def validate_bouquet_items(
                 f"Not enough stock for foliage {foliage_id}."
             )
 
-    for wrapping_id, quantity in bouquet_data.wrapping.items():
+    for wrapping_id, quantity in wrapping.items():
         stock = (
             db.query(WrappingInventory.quantity)
             .filter(
@@ -235,7 +237,13 @@ def create_bouquet(
     bouquet_data: BouquetCreate,
 ) -> Bouquet:
     """Create and persist a bouquet with its composition."""
-    validate_bouquet_items(db, florist_id, bouquet_data)
+    validate_bouquet_items(
+        db,
+        florist_id,
+        bouquet_data.flowers,
+        bouquet_data.foliage,
+        bouquet_data.wrapping,
+    )
 
     now = datetime.now(tz=timezone.utc)
 
@@ -283,3 +291,159 @@ def create_bouquet(
     db.refresh(bouquet)
 
     return bouquet
+
+
+def update_bouquet(
+    db: Session,
+    florist_id: int,
+    bouquet_id: int,
+    bouquet_data: BouquetUpdate,
+) -> Bouquet | None:
+    """Update a saved bouquet and optionally replace its composition."""
+    bouquet = (
+        db.query(Bouquet)
+        .filter(
+            Bouquet.id == bouquet_id,
+            Bouquet.florist_id == florist_id,
+        )
+        .first()
+    )
+
+    if bouquet is None:
+        return None
+
+    composition_changed = any(
+        value is not None
+        for value in (
+            bouquet_data.flowers,
+            bouquet_data.foliage,
+            bouquet_data.wrapping,
+        )
+    )
+
+    if composition_changed:
+        flowers = (
+            bouquet_data.flowers
+            if bouquet_data.flowers is not None
+            else {
+                item.flower_id: item.quantity
+                for item in db.query(BouquetFlower)
+                .filter(BouquetFlower.bouquet_id == bouquet_id)
+                .all()
+            }
+        )
+
+        foliage = (
+            bouquet_data.foliage
+            if bouquet_data.foliage is not None
+            else {
+                item.foliage_id: item.quantity
+                for item in db.query(BouquetFoliage)
+                .filter(BouquetFoliage.bouquet_id == bouquet_id)
+                .all()
+            }
+        )
+
+        wrapping = (
+            bouquet_data.wrapping
+            if bouquet_data.wrapping is not None
+            else {
+                item.wrapping_id: item.quantity
+                for item in db.query(BouquetWrapping)
+                .filter(BouquetWrapping.bouquet_id == bouquet_id)
+                .all()
+            }
+        )
+
+        validate_bouquet_items(
+            db,
+            florist_id,
+            flowers,
+            foliage,
+            wrapping,
+        )
+
+        if bouquet_data.flowers is not None:
+            (
+                db.query(BouquetFlower)
+                .filter(BouquetFlower.bouquet_id == bouquet_id)
+                .delete(synchronize_session=False)
+            )
+
+            for flower_id, quantity in flowers.items():
+                db.add(
+                    BouquetFlower(
+                        bouquet_id=bouquet_id,
+                        flower_id=flower_id,
+                        quantity=quantity,
+                    )
+                )
+
+        if bouquet_data.foliage is not None:
+            (
+                db.query(BouquetFoliage)
+                .filter(BouquetFoliage.bouquet_id == bouquet_id)
+                .delete(synchronize_session=False)
+            )
+
+            for foliage_id, quantity in foliage.items():
+                db.add(
+                    BouquetFoliage(
+                        bouquet_id=bouquet_id,
+                        foliage_id=foliage_id,
+                        quantity=quantity,
+                    )
+                )
+
+        if bouquet_data.wrapping is not None:
+            (
+                db.query(BouquetWrapping)
+                .filter(BouquetWrapping.bouquet_id == bouquet_id)
+                .delete(synchronize_session=False)
+            )
+
+            for wrapping_id, quantity in wrapping.items():
+                db.add(
+                    BouquetWrapping(
+                        bouquet_id=bouquet_id,
+                        wrapping_id=wrapping_id,
+                        quantity=quantity,
+                    )
+                )
+
+    if bouquet_data.name is not None:
+        bouquet.name = bouquet_data.name
+    if "description" in bouquet_data.model_fields_set:
+        bouquet.description = bouquet_data.description
+    if bouquet_data.size is not None:
+        bouquet.size = bouquet_data.size.value
+    bouquet.updated_at = datetime.now(tz=timezone.utc)
+
+    db.commit()
+    db.refresh(bouquet)
+
+    return bouquet
+
+
+def delete_bouquet(
+    db: Session,
+    florist_id: int,
+    bouquet_id: int,
+) -> bool:
+    """Delete a saved bouquet belonging to a florist."""
+    bouquet = (
+        db.query(Bouquet)
+        .filter(
+            Bouquet.id == bouquet_id,
+            Bouquet.florist_id == florist_id,
+        )
+        .first()
+    )
+
+    if bouquet is None:
+        return False
+
+    db.delete(bouquet)
+    db.commit()
+
+    return True

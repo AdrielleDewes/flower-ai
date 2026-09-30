@@ -17,8 +17,8 @@ router = APIRouter(
 
 @router.get("/", response_model=list[FoliageResponse])
 def list_foliage(
-    florist: Florist = Depends(get_florist),
-    db: Session = Depends(get_db),
+    florist: Florist = Depends(get_florist),  # noqa: B008
+    db: Session = Depends(get_db),  # noqa: B008
 ):
     """List foliage offered by a florist."""
     return get_florist_foliage(

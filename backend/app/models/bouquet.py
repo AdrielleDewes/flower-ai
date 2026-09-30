@@ -38,7 +38,7 @@ class BouquetFlower(Base):
     __tablename__ = "bouquet_flowers"
 
     bouquet_id: Mapped[int] = mapped_column(
-        ForeignKey("bouquets.id"),
+        ForeignKey("bouquets.id", ondelete="CASCADE"),
         primary_key=True,
     )
     flower_id: Mapped[int] = mapped_column(
@@ -54,7 +54,7 @@ class BouquetFoliage(Base):
     __tablename__ = "bouquet_foliage"
 
     bouquet_id: Mapped[int] = mapped_column(
-        ForeignKey("bouquets.id"),
+        ForeignKey("bouquets.id", ondelete="CASCADE"),
         primary_key=True,
     )
     foliage_id: Mapped[int] = mapped_column(
@@ -70,7 +70,7 @@ class BouquetWrapping(Base):
     __tablename__ = "bouquet_wrappings"
 
     bouquet_id: Mapped[int] = mapped_column(
-        ForeignKey("bouquets.id"),
+        ForeignKey("bouquets.id", ondelete="CASCADE"),
         primary_key=True,
     )
     wrapping_id: Mapped[int] = mapped_column(
