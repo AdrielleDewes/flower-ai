@@ -1,4 +1,4 @@
-# FlowerAI 🌸
+# FlowerAI
 
 **FlowerAI** is an AI-powered bouquet recommendation and customization platform designed to help flower shops offer more personalized shopping experiences.
 
