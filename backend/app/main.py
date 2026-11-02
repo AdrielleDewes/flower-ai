@@ -6,6 +6,7 @@ from app.routers.bouquets import router as bouquets_router
 from app.routers.catalog import router as catalog_router
 from app.routers.flowers import router as flowers_router
 from app.routers.foliage import router as foliage_router
+from app.routers.interpretations import router as interpretations_router
 from app.routers.recommendations import router as recommendations_router
 from app.routers.wrappings import router as wrappings_router
 
@@ -16,6 +17,7 @@ app = FastAPI(
 )
 
 app.include_router(recommendations_router)
+app.include_router(interpretations_router)
 app.include_router(bouquets_router)
 app.include_router(catalog_router)
 app.include_router(flowers_router)

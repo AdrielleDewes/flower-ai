@@ -1,5 +1,15 @@
 # Avaliação de modelos
 
+O [Query Extractor v1](query_extractor/README.md) é um experimento determinístico
+independente, com contratos, evidências, anotações auxiliares e avaliador próprios.
+O núcleo puro agora é compartilhado com a [API POC](../docs/poc-interpretation.md),
+sem importar gold ou avaliadores no backend. A [primeira avaliação dos 46 casos](results/query-extractor-v1_bouquet_requests_v1-v2_gold-v2_run1_report.md)
+usa o gold_v2 aprovado para o POC, com regras de extração inalteradas.
+
+Para comandos de avaliação na raiz que importam o extrator, use `PYTHONPATH=backend`.
+Os reexports de `evaluation.query_extractor` continuam compatíveis; o único núcleo
+executável fica em `backend/app/services/query_extractor`.
+
 Esta pasta reúne os experimentos de interpretação de pedidos, separados da
 aplicação em `backend/`.
 

@@ -6,6 +6,10 @@ from app.prompts.bouquet_interpretation import build_bouquet_interpretation_prom
 from app.schemas.bouquet_interpretation import BouquetInterpretation
 from app.schemas.catalog import InterpretationCatalog
 from app.services.catalog_output_schema import build_catalog_output_schema
+from app.services.catalog_validation import CatalogValidationError
+from app.services.catalog_validation import (
+    validate_catalog_values as validate_canonical_values,
+)
 from app.services.llm_provider import (
     InvalidLLMOutputError,
     LLMProvider,
@@ -61,19 +65,9 @@ def validate_catalog_values(
     interpretation: BouquetInterpretation, catalog: InterpretationCatalog,
 ) -> None:
     """Reject noncanonical values using the same catalog supplied to the model."""
-    allowed_values = {
-        "occasion": catalog.occasions,
-        "styles": catalog.styles,
-        "colors": catalog.colors,
-        "preferred_flowers": catalog.flowers,
-        "excluded_flowers": catalog.flowers,
-    }
-    for field, allowed in allowed_values.items():
-        value = getattr(interpretation, field)
-        if value is None:
-            continue
-        values = [value] if isinstance(value, str) else value
-        if any(item not in allowed for item in values):
-            raise InvalidLLMOutputError(
-                f"LLM returned a value outside the catalog for {field}."
-            )
+    try:
+        validate_canonical_values(interpretation, catalog)
+    except CatalogValidationError as exc:
+        raise InvalidLLMOutputError(
+            f"LLM returned a value outside the catalog for {exc.field}."
+        ) from exc

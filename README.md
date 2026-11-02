@@ -27,6 +27,10 @@ The project also includes an evaluation framework for comparing language models 
 Model experiments, datasets, reports, and evaluation tests live separately in
 [`evaluation/`](evaluation/README.md). Application code and tests remain in `backend/`.
 
+The [interpretation POC API](docs/poc-interpretation.md) combines catalog-constrained
+Qwen proposals with deterministic extraction, then accepts reviewed preferences
+through the existing recommendation endpoint. Interpretation never saves a bouquet.
+
 ## Project Status
 
 🚧 **Under active development**
