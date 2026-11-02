@@ -1,0 +1,210 @@
+{
+  "started_at_utc": "2026-10-18T19:13:55.001106+00:00",
+  "ollama_version": "0.35.0",
+  "model": "qwen3:1.7b",
+  "quantization": "Q4_K_M",
+  "model_digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+  "think": false,
+  "input": "A small modern red bouquet of roses for a birthday. No lilies.",
+  "schema": {
+    "$defs": {
+      "BouquetSize": {
+        "description": "Supported bouquet size options.",
+        "enum": [
+          "SMALL",
+          "MEDIUM",
+          "LARGE"
+        ],
+        "title": "BouquetSize",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Bouquet requirements identified in the text, with unknown values absent.",
+    "properties": {
+      "occasion": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Anniversary",
+              "Birthday",
+              "Graduation",
+              "Just Because",
+              "Mother's Day",
+              "Thank You",
+              "Valentine's Day",
+              "Wedding"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Occasion"
+      },
+      "styles": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "Classic",
+                "Colorful",
+                "Delicate",
+                "Elegant",
+                "Minimalist",
+                "Modern",
+                "Romantic",
+                "Rustic"
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Styles"
+      },
+      "colors": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "Blue",
+                "Orange",
+                "Pink",
+                "Purple",
+                "Red",
+                "White",
+                "Yellow"
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Colors"
+      },
+      "size": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/BouquetSize"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Explicitly requested bouquet size only. Null when no size is stated. Never choose a default or derive size from a budget or occasion."
+      },
+      "budget_max": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Budget Max"
+      },
+      "preferred_flowers": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "Baby's Breath",
+                "Carnation",
+                "Daisy",
+                "Gerbera",
+                "Hydrangea",
+                "Lily",
+                "Peony",
+                "Rose",
+                "Sunflower",
+                "Tulip"
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Preferred Flowers"
+      },
+      "excluded_flowers": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "Baby's Breath",
+                "Carnation",
+                "Daisy",
+                "Gerbera",
+                "Hydrangea",
+                "Lily",
+                "Peony",
+                "Rose",
+                "Sunflower",
+                "Tulip"
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Excluded Flowers"
+      }
+    },
+    "title": "BouquetInterpretation",
+    "type": "object"
+  },
+  "schema_sha256": "d6dd26a6072ff860f49a51161790077fa73f9c28af1d2a25828291bdf0085735",
+  "compatible": true,
+  "interpretation": {
+    "occasion": "Birthday",
+    "styles": [
+      "Modern"
+    ],
+    "colors": [
+      "Red"
+    ],
+    "size": "SMALL",
+    "budget_max": null,
+    "preferred_flowers": [
+      "Rose"
+    ],
+    "excluded_flowers": null
+  },
+  "error": null,
+  "ollama_metrics": {
+    "total_duration": 9423755959,
+    "load_duration": 3134196125,
+    "prompt_eval_duration": 3699785000,
+    "eval_duration": 2551901000,
+    "prompt_eval_count": 1245,
+    "eval_count": 57,
+    "eval_tokens_per_second": 22.336289691488815
+  },
+  "finished_at_utc": "2026-10-18T19:14:04.494171+00:00"
+}

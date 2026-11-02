@@ -1,0 +1,762 @@
+{
+  "dataset_version": 1,
+  "cases_total": 16,
+  "cases_completed": 13,
+  "cases_failed": 3,
+  "exact_match": {
+    "correct": 11,
+    "total": 16,
+    "rate": 0.6875
+  },
+  "field_accuracy": {
+    "occasion": {
+      "correct": 12,
+      "total": 16,
+      "rate": 0.75
+    },
+    "styles": {
+      "correct": 13,
+      "total": 16,
+      "rate": 0.8125
+    },
+    "colors": {
+      "correct": 12,
+      "total": 16,
+      "rate": 0.75
+    },
+    "size": {
+      "correct": 13,
+      "total": 16,
+      "rate": 0.8125
+    },
+    "budget_max": {
+      "correct": 13,
+      "total": 16,
+      "rate": 0.8125
+    },
+    "preferred_flowers": {
+      "correct": 13,
+      "total": 16,
+      "rate": 0.8125
+    },
+    "excluded_flowers": {
+      "correct": 13,
+      "total": 16,
+      "rate": 0.8125
+    }
+  },
+  "invented_values": {
+    "count": 1,
+    "evaluated_absent_fields": 47,
+    "rate": 0.02127659574468085
+  },
+  "mean_latency_seconds": 28.941205682251166,
+  "readiness": {
+    "correct": 13,
+    "total": 16,
+    "rate": 0.8125,
+    "by_status": {
+      "READY": {
+        "expected": 4,
+        "actual": 4,
+        "correct": 4
+      },
+      "NEEDS_CLARIFICATION": {
+        "expected": 12,
+        "actual": 9,
+        "correct": 9
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "romantic_red_birthday",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": "150",
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": "150",
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 21.74437887500244,
+      "error": null
+    },
+    {
+      "id": "small_wedding",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "SMALL",
+        "budget_max": "120",
+        "preferred_flowers": [
+          "Lily"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "SMALL",
+        "budget_max": "120",
+        "preferred_flowers": [
+          "Lily"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 22.831318958000338,
+      "error": null
+    },
+    {
+      "id": "large_graduation",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Graduation",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 16.309062375003123,
+      "error": null
+    },
+    {
+      "id": "pt_anniversary_multiple",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Elegant",
+          "Romantic"
+        ],
+        "colors": [
+          "Pink",
+          "White"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "200",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Elegant",
+          "Romantic"
+        ],
+        "colors": [
+          "Pink",
+          "White"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "200",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": false,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 24.34186583400151,
+      "error": null
+    },
+    {
+      "id": "pt_valentines_exclusion",
+      "expected": {
+        "occasion": "Valentine's Day",
+        "styles": null,
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": [
+          "Lily"
+        ]
+      },
+      "actual": {
+        "occasion": "Valentine's Day",
+        "styles": null,
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": [
+          "Lily"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 35.17635670900199,
+      "error": null
+    },
+    {
+      "id": "birthday_delivery_detail",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 17.104982666998694,
+      "error": null
+    },
+    {
+      "id": "blue_white_no_hydrangeas",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Blue",
+          "White"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Hydrangea"
+        ]
+      },
+      "actual": {
+        "occasion": null,
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Blue",
+          "White"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Hydrangea"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 32.78876216700155,
+      "error": null
+    },
+    {
+      "id": "pt_colorful_gerberas",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Colorful"
+        ],
+        "colors": null,
+        "size": "LARGE",
+        "budget_max": "90",
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": null,
+        "styles": [
+          "Colorful"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": "LARGE",
+        "budget_max": "90",
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": false,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 36.189576624994515,
+      "error": null
+    },
+    {
+      "id": "anniversary_budget_only",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": "80",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Anniversary",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": "80",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 29.457029167002474,
+      "error": null
+    },
+    {
+      "id": "pt_thank_you_exclusion",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": [
+          "Delicate"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Daisy"
+        ]
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 52.77607125000213,
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for excluded_flowers."
+    },
+    {
+      "id": "wedding_peonies",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White",
+          "Pink"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White",
+          "Pink"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 40.549128666003526,
+      "error": null
+    },
+    {
+      "id": "pt_minimalist_birthday",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 35.79423500000121,
+      "error": null
+    },
+    {
+      "id": "graduation_delivery_detail",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Graduation",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 22.284062291000737,
+      "error": null
+    },
+    {
+      "id": "multiple_preferences",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Classic",
+          "Modern"
+        ],
+        "colors": [
+          "Red",
+          "Purple"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose",
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 27.34923129100207,
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "pt_mothers_day_exclusion",
+      "expected": {
+        "occasion": "Mother's Day",
+        "styles": null,
+        "colors": null,
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 24.256585916002223,
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "unspecified_request",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 24.10664312500012,
+      "error": null
+    }
+  ],
+  "configuration": {
+    "model": "qwen3:1.7b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 60.0,
+    "dataset": "evaluation/data/bouquet_requests_v1.json"
+  },
+  "run_id": "qwen3-1.7b_bouquet_requests_v1",
+  "dataset_id": "bouquet_requests_v1",
+  "model": "qwen3:1.7b",
+  "total_latency_seconds": 463.05929091601865,
+  "evaluation_failures": {
+    "count": 5,
+    "cases": [
+      {
+        "id": "pt_anniversary_multiple",
+        "fields_diverged": [
+          "occasion"
+        ],
+        "known_invalid_field": null,
+        "comparison_unavailable": false,
+        "error": null,
+        "expected_status": "READY",
+        "actual_status": "READY"
+      },
+      {
+        "id": "pt_colorful_gerberas",
+        "fields_diverged": [
+          "colors"
+        ],
+        "known_invalid_field": null,
+        "comparison_unavailable": false,
+        "error": null,
+        "expected_status": "NEEDS_CLARIFICATION",
+        "actual_status": "NEEDS_CLARIFICATION"
+      },
+      {
+        "id": "pt_thank_you_exclusion",
+        "fields_diverged": null,
+        "known_invalid_field": "excluded_flowers",
+        "comparison_unavailable": true,
+        "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for excluded_flowers.",
+        "expected_status": "NEEDS_CLARIFICATION",
+        "actual_status": null
+      },
+      {
+        "id": "multiple_preferences",
+        "fields_diverged": null,
+        "known_invalid_field": "preferred_flowers",
+        "comparison_unavailable": true,
+        "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers.",
+        "expected_status": "NEEDS_CLARIFICATION",
+        "actual_status": null
+      },
+      {
+        "id": "pt_mothers_day_exclusion",
+        "fields_diverged": null,
+        "known_invalid_field": "preferred_flowers",
+        "comparison_unavailable": true,
+        "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers.",
+        "expected_status": "NEEDS_CLARIFICATION",
+        "actual_status": null
+      }
+    ]
+  }
+}
