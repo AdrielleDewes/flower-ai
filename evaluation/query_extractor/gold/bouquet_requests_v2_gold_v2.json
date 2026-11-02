@@ -1,0 +1,1636 @@
+{
+  "annotation_version": 2,
+  "dataset_sha256": "f96fe878f3ada60a353db035d16a7d768c1d13053635a42f520159b7528bc143",
+  "cases": [
+    {
+      "id": "pt_v2_graduation_classic",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 33,
+                  "end": 55,
+                  "text": "quero um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "135",
+              "evidence": [
+                {
+                  "start": 89,
+                  "end": 98,
+                  "text": "até R$135"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 87,
+                  "text": "com tulipas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_thanks_carnations",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 14,
+                  "text": "Um buquê médio"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "160",
+              "evidence": [
+                {
+                  "start": 83,
+                  "end": 105,
+                  "text": "Posso gastar até R$160"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 45,
+                  "end": 55,
+                  "text": "com cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 72,
+                  "end": 81,
+                  "text": "sem rosas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_just_because_delicate",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 50,
+                  "text": "buquê grande"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 70,
+                  "end": 98,
+                  "text": "com mosquitinho e margaridas"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 70,
+                  "end": 98,
+                  "text": "com mosquitinho e margaridas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_mothers_day_rustic",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 39,
+                  "text": "quero um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 59,
+                  "end": 71,
+                  "text": "com gérberas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 74,
+                  "end": 84,
+                  "text": "sem lírios"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_anniversary_dual_style",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 37,
+                  "end": 52,
+                  "text": "um buquê grande"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 94,
+                  "end": 105,
+                  "text": "com peônias"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 107,
+                  "end": 121,
+                  "text": "nada de cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_budget_not_size",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "450",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 29,
+                  "text": "Tenho até R$450 para um buquê"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_stem_count_not_size",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 24,
+                  "text": "Quero doze rosas brancas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_ambiguous_impact",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 50,
+                "end": 85,
+                "text": "ainda não escolhi cores nem tamanho"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 50,
+                  "end": 85,
+                  "text": "ainda não escolhi cores nem tamanho"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_pink_is_color",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_exclusions_only",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê"
+                }
+              ]
+            },
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_unsupported_flower",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 20,
+                  "end": 41,
+                  "text": "com orquídeas e rosas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 24,
+                "end": 33,
+                "text": "orquídeas"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 20,
+                  "end": 41,
+                  "text": "com orquídeas e rosas"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 47,
+                "end": 55,
+                "text": "antúrios"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 43,
+                  "end": 55,
+                  "text": "sem antúrios"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pt_v2_unsupported_categories",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 50,
+                  "end": 64,
+                  "text": "com margaridas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_small_no_occasion",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 25,
+                  "text": "Pode ser um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "72.50",
+              "evidence": [
+                {
+                  "start": 75,
+                  "end": 86,
+                  "text": "até R$72,50"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 60,
+                  "text": "com girassóis e cravos"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 60,
+                  "text": "com girassóis e cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 62,
+                  "end": 73,
+                  "text": "sem peônias"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_irrelevant_colors",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "pt_v2_size_unsure",
+      "language": "pt",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 70,
+                "end": 87,
+                "text": "pequeno ou grande"
+              },
+              "candidates": [
+                "SMALL",
+                "LARGE"
+              ],
+              "evidence": [
+                {
+                  "start": 53,
+                  "end": 87,
+                  "text": "Ainda não sei se pequeno ou grande"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_birthday_modern",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 18,
+                  "end": 48,
+                  "text": "a medium modern orange bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "175",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 89,
+                  "text": "maximum R$175"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 49,
+                  "end": 62,
+                  "text": "with gerberas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 64,
+                  "end": 74,
+                  "text": "no daisies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_wedding_minimalist",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "A large minimalist purple and white bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 59,
+                  "end": 74,
+                  "text": "with hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 79,
+                  "end": 92,
+                  "text": "no carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_valentines_classic",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 40,
+                  "text": "Please make a small classic pink bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "110",
+              "evidence": [
+                {
+                  "start": 92,
+                  "end": 103,
+                  "text": "up to R$110"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 61,
+                  "end": 90,
+                  "text": "with tulips and baby's breath"
+                }
+              ]
+            },
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 61,
+                  "end": 90,
+                  "text": "with tulips and baby's breath"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_thanks_two_styles",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 18,
+                  "end": 62,
+                  "text": "a medium delicate and elegant yellow bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 63,
+                  "end": 74,
+                  "text": "with lilies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies"
+                }
+              ]
+            },
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_mothers_day_colorful",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 38,
+                  "text": "A large colorful blue and pink bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 57,
+                  "end": 72,
+                  "text": "with hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_low_budget_not_size",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "35",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 73,
+                  "text": "with a budget of at most R$35"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_ambiguous_size",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 54,
+                "end": 82,
+                "text": "I have not decided on a size"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 82,
+                  "text": "Something reasonably sized and lovely for graduation; I have not decided on a size"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_no_specific_shade",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_preference_and_exclusion",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 33,
+                  "text": "Please use sunflowers and daisies"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 33,
+                  "text": "Please use sunflowers and daisies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 39,
+                  "end": 66,
+                  "text": "avoid lilies and carnations"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 39,
+                  "end": 66,
+                  "text": "avoid lilies and carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_unsupported_mixed",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 40,
+                  "text": "A small bohemian teal and yellow bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 41,
+                  "end": 64,
+                  "text": "with orchids and tulips"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 46,
+                "end": 53,
+                "text": "orchids"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 41,
+                  "end": 64,
+                  "text": "with orchids and tulips"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 66,
+                  "end": 85,
+                  "text": "no dahlias or roses"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 69,
+                "end": 76,
+                "text": "dahlias"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 66,
+                  "end": 85,
+                  "text": "no dahlias or roses"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "en_v2_unsupported_occasion",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 31,
+                  "text": "An elegant white medium bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 56,
+                  "end": 68,
+                  "text": "with peonies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_missing_style",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 16,
+                  "end": 35,
+                  "text": "a small red bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "95",
+              "evidence": [
+                {
+                  "start": 51,
+                  "end": 61,
+                  "text": "under R$95"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 36,
+                  "end": 49,
+                  "text": "of carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_irrelevant_numbers",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 28,
+                  "text": "A classic bouquet with roses"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_occasion_no_defaults",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 29,
+                "end": 83,
+                "text": "with no particular flower, color, style or size chosen"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 29,
+                  "end": 83,
+                  "text": "with no particular flower, color, style or size chosen"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 29,
+                "end": 83,
+                "text": "with no particular flower, color, style or size chosen"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 29,
+                  "end": 83,
+                  "text": "with no particular flower, color, style or size chosen"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      }
+    },
+    {
+      "id": "en_v2_missing_colors",
+      "language": "en",
+      "reviewed": true,
+      "fields": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 16,
+                  "end": 39,
+                  "text": "a medium rustic bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 40,
+                  "end": 55,
+                  "text": "with sunflowers"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 57,
+                  "end": 77,
+                  "text": "excluding hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,775 @@
+{
+  "transport": "real HTTP over loopback; isolated in-memory SQLite; real local Ollama",
+  "model": "qwen3:1.7b",
+  "think": false,
+  "cases": [
+    {
+      "scenario": "complete",
+      "request": {
+        "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, com rosas, até R$100."
+      },
+      "interpretation": {
+        "status": 200,
+        "latency_seconds": 9.081187124946155,
+        "body": {
+          "interpretation": {
+            "occasion": "Birthday",
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "size": "SMALL",
+            "budget_max": "100",
+            "preferred_flowers": [
+              "Rose"
+            ],
+            "excluded_flowers": null
+          },
+          "readiness": {
+            "status": "READY",
+            "missing_fields": []
+          },
+          "issues": [],
+          "field_sources": {
+            "occasion": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": "Birthday",
+              "extractor_value": null,
+              "evidence": []
+            },
+            "styles": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Modern"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "colors": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Red"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "size": {
+              "relation": "AGREEMENT",
+              "llm_value": "SMALL",
+              "extractor_value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 81,
+                  "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "budget_max": {
+              "relation": "AGREEMENT",
+              "llm_value": "100",
+              "extractor_value": "100",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 81,
+                  "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "preferred_flowers": {
+              "relation": "AGREEMENT",
+              "llm_value": [
+                "Rose"
+              ],
+              "extractor_value": [
+                "Rose"
+              ],
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 81,
+                  "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "excluded_flowers": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            }
+          },
+          "requires_review": false,
+          "recommendation_request": {
+            "occasion": "Birthday",
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "size": "SMALL",
+            "budget_min": null,
+            "budget_max": "100",
+            "preferred_flowers": [
+              "Rose"
+            ],
+            "excluded_flowers": []
+          },
+          "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, com rosas, até R$100.",
+          "options": {
+            "occasions": [
+              "Birthday"
+            ],
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "flowers": [
+              "Lily",
+              "Rose"
+            ]
+          }
+        }
+      },
+      "inference_metrics": {
+        "total_duration": 8963328375,
+        "load_duration": 3526096834,
+        "prompt_eval_duration": 2475264000,
+        "eval_duration": 2921863000,
+        "prompt_eval_count": 1024,
+        "eval_count": 60,
+        "eval_tokens_per_second": 20.534843693903515
+      },
+      "documented_fields_present": true,
+      "manually_confirmed_request": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_min": null,
+        "budget_max": "100",
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": []
+      },
+      "recommendation": {
+        "status": 200,
+        "latency_seconds": 0.050625709001906216,
+        "body": {
+          "flowers": [
+            {
+              "id": 1,
+              "name": "Rose",
+              "quantity": 2,
+              "unit_price": "10.00",
+              "subtotal": "20.00"
+            },
+            {
+              "id": 2,
+              "name": "Lily",
+              "quantity": 1,
+              "unit_price": "10.00",
+              "subtotal": "10.00"
+            }
+          ],
+          "foliage": [
+            {
+              "id": 1,
+              "name": "Green",
+              "quantity": 1,
+              "unit_price": "2.00",
+              "subtotal": "2.00"
+            }
+          ],
+          "wrapping": [
+            {
+              "id": 1,
+              "name": "Paper",
+              "quantity": 1,
+              "unit_price": "3.00",
+              "subtotal": "3.00"
+            }
+          ],
+          "total_price": "35.00"
+        }
+      },
+      "bouquets_persisted": 0,
+      "stock": {
+        "1": 30,
+        "2": 30
+      }
+    },
+    {
+      "scenario": "incomplete",
+      "request": {
+        "text": "Quero um buquê para aniversário."
+      },
+      "interpretation": {
+        "status": 200,
+        "latency_seconds": 4.113600165990647,
+        "body": {
+          "interpretation": {
+            "occasion": "Birthday",
+            "styles": null,
+            "colors": null,
+            "size": null,
+            "budget_max": null,
+            "preferred_flowers": null,
+            "excluded_flowers": null
+          },
+          "readiness": {
+            "status": "NEEDS_CLARIFICATION",
+            "missing_fields": [
+              "styles",
+              "colors",
+              "size"
+            ]
+          },
+          "issues": [],
+          "field_sources": {
+            "occasion": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": "Birthday",
+              "extractor_value": null,
+              "evidence": []
+            },
+            "styles": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            },
+            "colors": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            },
+            "size": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            },
+            "budget_max": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            },
+            "preferred_flowers": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            },
+            "excluded_flowers": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            }
+          },
+          "requires_review": true,
+          "recommendation_request": null,
+          "text": "Quero um buquê para aniversário.",
+          "options": {
+            "occasions": [
+              "Birthday"
+            ],
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "flowers": [
+              "Lily",
+              "Rose"
+            ]
+          }
+        }
+      },
+      "inference_metrics": {
+        "total_duration": 4101232042,
+        "load_duration": 9127625,
+        "prompt_eval_duration": 1632626000,
+        "eval_duration": 2399109000,
+        "prompt_eval_count": 1004,
+        "eval_count": 52,
+        "eval_tokens_per_second": 21.674713404017908
+      },
+      "documented_fields_present": true,
+      "manually_confirmed_request": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": "100",
+        "preferred_flowers": [
+          "Rose"
+        ]
+      },
+      "recommendation": {
+        "status": 200,
+        "latency_seconds": 0.011098792019765824,
+        "body": {
+          "flowers": [
+            {
+              "id": 1,
+              "name": "Rose",
+              "quantity": 2,
+              "unit_price": "10.00",
+              "subtotal": "20.00"
+            },
+            {
+              "id": 2,
+              "name": "Lily",
+              "quantity": 1,
+              "unit_price": "10.00",
+              "subtotal": "10.00"
+            }
+          ],
+          "foliage": [
+            {
+              "id": 1,
+              "name": "Green",
+              "quantity": 1,
+              "unit_price": "2.00",
+              "subtotal": "2.00"
+            }
+          ],
+          "wrapping": [
+            {
+              "id": 1,
+              "name": "Paper",
+              "quantity": 1,
+              "unit_price": "3.00",
+              "subtotal": "3.00"
+            }
+          ],
+          "total_price": "35.00"
+        }
+      },
+      "bouquets_persisted": 0,
+      "stock": {
+        "1": 30,
+        "2": 30
+      }
+    },
+    {
+      "scenario": "exclusion",
+      "request": {
+        "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, até R$100, sem lírios."
+      },
+      "interpretation": {
+        "status": 200,
+        "latency_seconds": 4.882904959027655,
+        "body": {
+          "interpretation": {
+            "occasion": "Birthday",
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "size": null,
+            "budget_max": "100",
+            "preferred_flowers": [
+              "Rose"
+            ],
+            "excluded_flowers": [
+              "Lily"
+            ]
+          },
+          "readiness": {
+            "status": "NEEDS_CLARIFICATION",
+            "missing_fields": [
+              "size"
+            ]
+          },
+          "issues": [
+            {
+              "field": "size",
+              "related_fields": [],
+              "code": "EXTRACTOR_UNCERTAIN",
+              "message": "Clarify this part of the request."
+            }
+          ],
+          "field_sources": {
+            "occasion": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": "Birthday",
+              "extractor_value": null,
+              "evidence": []
+            },
+            "styles": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Modern"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "colors": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Red"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "size": {
+              "relation": "UNRESOLVED",
+              "llm_value": "SMALL",
+              "extractor_value": null,
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 82,
+                  "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, até R$100, sem lírios"
+                }
+              ]
+            },
+            "budget_max": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": "100",
+              "extractor_value": null,
+              "evidence": []
+            },
+            "preferred_flowers": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Rose"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "excluded_flowers": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": null,
+              "extractor_value": [
+                "Lily"
+              ],
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 82,
+                  "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, até R$100, sem lírios"
+                }
+              ]
+            }
+          },
+          "requires_review": true,
+          "recommendation_request": null,
+          "text": "Quero um buquê pequeno, moderno e vermelho para aniversário, até R$100, sem lírios.",
+          "options": {
+            "occasions": [
+              "Birthday"
+            ],
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "flowers": [
+              "Lily",
+              "Rose"
+            ]
+          }
+        }
+      },
+      "inference_metrics": {
+        "total_duration": 4859920917,
+        "load_duration": 2836209,
+        "prompt_eval_duration": 1773688000,
+        "eval_duration": 3024778000,
+        "prompt_eval_count": 1024,
+        "eval_count": 60,
+        "eval_tokens_per_second": 19.836166488912575
+      },
+      "documented_fields_present": true,
+      "manually_confirmed_request": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": "100",
+        "preferred_flowers": [],
+        "excluded_flowers": [
+          "Lily"
+        ]
+      },
+      "recommendation": {
+        "status": 200,
+        "latency_seconds": 0.04041904199402779,
+        "body": {
+          "flowers": [
+            {
+              "id": 1,
+              "name": "Rose",
+              "quantity": 3,
+              "unit_price": "10.00",
+              "subtotal": "30.00"
+            }
+          ],
+          "foliage": [
+            {
+              "id": 1,
+              "name": "Green",
+              "quantity": 1,
+              "unit_price": "2.00",
+              "subtotal": "2.00"
+            }
+          ],
+          "wrapping": [
+            {
+              "id": 1,
+              "name": "Paper",
+              "quantity": 1,
+              "unit_price": "3.00",
+              "subtotal": "3.00"
+            }
+          ],
+          "total_price": "35.00"
+        }
+      },
+      "bouquets_persisted": 0,
+      "stock": {
+        "1": 30,
+        "2": 30
+      }
+    },
+    {
+      "scenario": "issue",
+      "request": {
+        "text": "Quero um buquê pequeno ou grande, moderno e vermelho para aniversário, com rosas, até R$100."
+      },
+      "interpretation": {
+        "status": 200,
+        "latency_seconds": 4.5180190409882925,
+        "body": {
+          "interpretation": {
+            "occasion": "Birthday",
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "size": null,
+            "budget_max": null,
+            "preferred_flowers": null,
+            "excluded_flowers": null
+          },
+          "readiness": {
+            "status": "NEEDS_CLARIFICATION",
+            "missing_fields": [
+              "size"
+            ]
+          },
+          "issues": [
+            {
+              "field": "size",
+              "related_fields": [],
+              "code": "EXTRACTOR_UNCERTAIN",
+              "message": "Clarify this part of the request."
+            },
+            {
+              "field": "budget_max",
+              "related_fields": [],
+              "code": "EXTRACTOR_UNCERTAIN",
+              "message": "Clarify this part of the request."
+            },
+            {
+              "field": "preferred_flowers",
+              "related_fields": [],
+              "code": "EXTRACTOR_UNCERTAIN",
+              "message": "Clarify this part of the request."
+            }
+          ],
+          "field_sources": {
+            "occasion": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": "Birthday",
+              "extractor_value": null,
+              "evidence": []
+            },
+            "styles": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Modern"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "colors": {
+              "relation": "COMPLEMENTARY",
+              "llm_value": [
+                "Red"
+              ],
+              "extractor_value": null,
+              "evidence": []
+            },
+            "size": {
+              "relation": "UNRESOLVED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 91,
+                  "text": "Quero um buquê pequeno ou grande, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "budget_max": {
+              "relation": "UNRESOLVED",
+              "llm_value": "100",
+              "extractor_value": null,
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 91,
+                  "text": "Quero um buquê pequeno ou grande, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "preferred_flowers": {
+              "relation": "UNRESOLVED",
+              "llm_value": [
+                "Rose"
+              ],
+              "extractor_value": null,
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 91,
+                  "text": "Quero um buquê pequeno ou grande, moderno e vermelho para aniversário, com rosas, até R$100"
+                }
+              ]
+            },
+            "excluded_flowers": {
+              "relation": "NOT_IDENTIFIED",
+              "llm_value": null,
+              "extractor_value": null,
+              "evidence": []
+            }
+          },
+          "requires_review": true,
+          "recommendation_request": null,
+          "text": "Quero um buquê pequeno ou grande, moderno e vermelho para aniversário, com rosas, até R$100.",
+          "options": {
+            "occasions": [
+              "Birthday"
+            ],
+            "styles": [
+              "Modern"
+            ],
+            "colors": [
+              "Red"
+            ],
+            "flowers": [
+              "Lily",
+              "Rose"
+            ]
+          }
+        }
+      },
+      "inference_metrics": {
+        "total_duration": 4487939500,
+        "load_duration": 9169625,
+        "prompt_eval_duration": 1666844000,
+        "eval_duration": 2721327000,
+        "prompt_eval_count": 1026,
+        "eval_count": 58,
+        "eval_tokens_per_second": 21.313131424485185
+      },
+      "documented_fields_present": true,
+      "manually_confirmed_request": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": "100",
+        "preferred_flowers": [
+          "Rose"
+        ]
+      },
+      "recommendation": {
+        "status": 200,
+        "latency_seconds": 0.03526262502418831,
+        "body": {
+          "flowers": [
+            {
+              "id": 1,
+              "name": "Rose",
+              "quantity": 2,
+              "unit_price": "10.00",
+              "subtotal": "20.00"
+            },
+            {
+              "id": 2,
+              "name": "Lily",
+              "quantity": 1,
+              "unit_price": "10.00",
+              "subtotal": "10.00"
+            }
+          ],
+          "foliage": [
+            {
+              "id": 1,
+              "name": "Green",
+              "quantity": 1,
+              "unit_price": "2.00",
+              "subtotal": "2.00"
+            }
+          ],
+          "wrapping": [
+            {
+              "id": 1,
+              "name": "Paper",
+              "quantity": 1,
+              "unit_price": "3.00",
+              "subtotal": "3.00"
+            }
+          ],
+          "total_price": "35.00"
+        }
+      },
+      "bouquets_persisted": 0,
+      "stock": {
+        "1": 30,
+        "2": 30
+      }
+    }
+  ],
+  "ollama_version": "0.35.0",
+  "quantization": "Q4_K_M",
+  "scope_note": "Four real inference calls, one per scenario. Manual confirmations/corrections simulated by the smoke harness. No repeated inference to establish model reproducibility. SQLite test catalog reused from API integration tests; production DB not accessed."
+}

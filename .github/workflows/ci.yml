@@ -36,3 +36,9 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Lint evaluation tools
+        run: ruff check ../evaluation
+
+      - name: Test evaluation tools
+        run: pytest -c ../evaluation/pytest.ini ../evaluation/tests

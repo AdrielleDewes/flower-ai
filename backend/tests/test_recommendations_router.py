@@ -22,6 +22,11 @@ def test_create_recommendation_uses_injected_florist_id(db_session, monkeypatch)
     )
     calls = {}
 
+    def fake_validate_recommendation(db, florist_id, request):
+        calls["validation"] = (db, florist_id, request)
+
+    monkeypatch.setattr(recommendations, "validate_recommendation_request", fake_validate_recommendation)
+
     def fake_generate_recommendation(db, *, florist_id, request):
         calls["db"] = db
         calls["florist_id"] = florist_id
@@ -42,6 +47,7 @@ def test_create_recommendation_uses_injected_florist_id(db_session, monkeypatch)
 
     assert result is expected
     assert calls == {
+        "validation": (db_session, florist.id, request),
         "db": db_session,
         "florist_id": florist.id,
         "request": request,

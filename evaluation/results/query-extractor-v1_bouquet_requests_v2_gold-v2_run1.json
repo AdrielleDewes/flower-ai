@@ -1,0 +1,5724 @@
+{
+  "experiment": "query-extractor-v1",
+  "evaluation_version": 2,
+  "annotation_version": 2,
+  "dataset_version": 2,
+  "dataset_sha256": "f96fe878f3ada60a353db035d16a7d768c1d13053635a42f520159b7528bc143",
+  "groups": {
+    "all": {
+      "cases": 30,
+      "all_fields": {
+        "canonical_values": {
+          "cases": 120,
+          "tp": 54,
+          "fp": 0,
+          "fn": 7,
+          "expected_absent_cases": 66,
+          "false_positive_cases": 0,
+          "exact_matches": 113,
+          "precision": 1.0,
+          "recall": 0.8852459016393442,
+          "f1": 0.9391304347826087,
+          "false_positive_case_rate": 0.0,
+          "exact_match_rate": 0.9416666666666667
+        },
+        "pending_mentions": {
+          "all": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 9,
+            "predicted": 0,
+            "expected": 9,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "by_reason": {
+            "OUT_OF_CATALOG": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "predicted": 0,
+              "expected": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "UNDECIDED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5,
+              "predicted": 0,
+              "expected": 5,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "CONFLICTING_INFORMATION": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            }
+          }
+        },
+        "completeness": {
+          "field_cases": 120,
+          "state_correct": 106,
+          "semantic_exact": 105,
+          "expected_value_fields": 54,
+          "value_fields_attempted": 47,
+          "fields_with_values": 47,
+          "claimed_complete_fields": 112,
+          "correctly_complete_fields": 105,
+          "state_accuracy": 0.8833333333333333,
+          "semantic_exact_match_rate": 0.875,
+          "value_field_coverage": 0.8703703703703703,
+          "claimed_complete_field_rate": 0.9333333333333333,
+          "expected_states": {
+            "RESOLVED": 51,
+            "ABSENT": 60,
+            "AMBIGUOUS": 6,
+            "PARTIAL": 3
+          },
+          "predicted_states": {
+            "RESOLVED": 47,
+            "ABSENT": 65,
+            "AMBIGUOUS": 8
+          }
+        }
+      },
+      "fields": {
+        "size": {
+          "canonical_values": {
+            "cases": 30,
+            "tp": 11,
+            "fp": 0,
+            "fn": 4,
+            "expected_absent_cases": 15,
+            "false_positive_cases": 0,
+            "exact_matches": 26,
+            "precision": 1.0,
+            "recall": 0.7333333333333333,
+            "f1": 0.8461538461538461,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.8666666666666667
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "predicted": 0,
+              "expected": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 4,
+                "predicted": 0,
+                "expected": 4,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 30,
+            "state_correct": 23,
+            "semantic_exact": 22,
+            "expected_value_fields": 15,
+            "value_fields_attempted": 11,
+            "fields_with_values": 11,
+            "claimed_complete_fields": 25,
+            "correctly_complete_fields": 22,
+            "state_accuracy": 0.7666666666666667,
+            "semantic_exact_match_rate": 0.7333333333333333,
+            "value_field_coverage": 0.7333333333333333,
+            "claimed_complete_field_rate": 0.8333333333333334,
+            "expected_states": {
+              "RESOLVED": 15,
+              "ABSENT": 11,
+              "AMBIGUOUS": 4
+            },
+            "predicted_states": {
+              "RESOLVED": 11,
+              "AMBIGUOUS": 5,
+              "ABSENT": 14
+            }
+          }
+        },
+        "budget_max": {
+          "canonical_values": {
+            "cases": 30,
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "expected_absent_cases": 22,
+            "false_positive_cases": 0,
+            "exact_matches": 30,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 1.0
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 30,
+            "state_correct": 30,
+            "semantic_exact": 30,
+            "expected_value_fields": 8,
+            "value_fields_attempted": 8,
+            "fields_with_values": 8,
+            "claimed_complete_fields": 30,
+            "correctly_complete_fields": 30,
+            "state_accuracy": 1.0,
+            "semantic_exact_match_rate": 1.0,
+            "value_field_coverage": 1.0,
+            "claimed_complete_field_rate": 1.0,
+            "expected_states": {
+              "RESOLVED": 8,
+              "ABSENT": 22
+            },
+            "predicted_states": {
+              "RESOLVED": 8,
+              "ABSENT": 22
+            }
+          }
+        },
+        "preferred_flowers": {
+          "canonical_values": {
+            "cases": 30,
+            "tp": 22,
+            "fp": 0,
+            "fn": 2,
+            "expected_absent_cases": 10,
+            "false_positive_cases": 0,
+            "exact_matches": 28,
+            "precision": 1.0,
+            "recall": 0.9166666666666666,
+            "f1": 0.9565217391304348,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.9333333333333333
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "predicted": 0,
+              "expected": 3,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 2,
+                "predicted": 0,
+                "expected": 2,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 30,
+            "state_correct": 25,
+            "semantic_exact": 25,
+            "expected_value_fields": 20,
+            "value_fields_attempted": 18,
+            "fields_with_values": 18,
+            "claimed_complete_fields": 28,
+            "correctly_complete_fields": 25,
+            "state_accuracy": 0.8333333333333334,
+            "semantic_exact_match_rate": 0.8333333333333334,
+            "value_field_coverage": 0.9,
+            "claimed_complete_field_rate": 0.9333333333333333,
+            "expected_states": {
+              "RESOLVED": 18,
+              "ABSENT": 9,
+              "PARTIAL": 2,
+              "AMBIGUOUS": 1
+            },
+            "predicted_states": {
+              "RESOLVED": 18,
+              "ABSENT": 10,
+              "AMBIGUOUS": 2
+            }
+          }
+        },
+        "excluded_flowers": {
+          "canonical_values": {
+            "cases": 30,
+            "tp": 13,
+            "fp": 0,
+            "fn": 1,
+            "expected_absent_cases": 19,
+            "false_positive_cases": 0,
+            "exact_matches": 29,
+            "precision": 1.0,
+            "recall": 0.9285714285714286,
+            "f1": 0.9629629629629629,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.9666666666666667
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 2,
+                "predicted": 0,
+                "expected": 2,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 30,
+            "state_correct": 28,
+            "semantic_exact": 28,
+            "expected_value_fields": 11,
+            "value_fields_attempted": 10,
+            "fields_with_values": 10,
+            "claimed_complete_fields": 29,
+            "correctly_complete_fields": 28,
+            "state_accuracy": 0.9333333333333333,
+            "semantic_exact_match_rate": 0.9333333333333333,
+            "value_field_coverage": 0.9090909090909091,
+            "claimed_complete_field_rate": 0.9666666666666667,
+            "expected_states": {
+              "ABSENT": 18,
+              "RESOLVED": 10,
+              "AMBIGUOUS": 1,
+              "PARTIAL": 1
+            },
+            "predicted_states": {
+              "ABSENT": 19,
+              "RESOLVED": 10,
+              "AMBIGUOUS": 1
+            }
+          }
+        }
+      },
+      "canonical_exact_match": {
+        "correct": 25,
+        "total": 30,
+        "rate": 0.8333333333333334
+      },
+      "semantic_exact_match": {
+        "correct": 19,
+        "total": 30,
+        "rate": 0.6333333333333333
+      }
+    },
+    "pt": {
+      "cases": 15,
+      "all_fields": {
+        "canonical_values": {
+          "cases": 60,
+          "tp": 24,
+          "fp": 0,
+          "fn": 3,
+          "expected_absent_cases": 36,
+          "false_positive_cases": 0,
+          "exact_matches": 57,
+          "precision": 1.0,
+          "recall": 0.8888888888888888,
+          "f1": 0.9411764705882353,
+          "false_positive_case_rate": 0.0,
+          "exact_match_rate": 0.95
+        },
+        "pending_mentions": {
+          "all": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "predicted": 0,
+            "expected": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "by_reason": {
+            "OUT_OF_CATALOG": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "UNDECIDED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "CONFLICTING_INFORMATION": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            }
+          }
+        },
+        "completeness": {
+          "field_cases": 60,
+          "state_correct": 53,
+          "semantic_exact": 52,
+          "expected_value_fields": 24,
+          "value_fields_attempted": 21,
+          "fields_with_values": 21,
+          "claimed_complete_fields": 55,
+          "correctly_complete_fields": 52,
+          "state_accuracy": 0.8833333333333333,
+          "semantic_exact_match_rate": 0.8666666666666667,
+          "value_field_coverage": 0.875,
+          "claimed_complete_field_rate": 0.9166666666666666,
+          "expected_states": {
+            "RESOLVED": 23,
+            "ABSENT": 33,
+            "AMBIGUOUS": 3,
+            "PARTIAL": 1
+          },
+          "predicted_states": {
+            "RESOLVED": 21,
+            "ABSENT": 34,
+            "AMBIGUOUS": 5
+          }
+        }
+      },
+      "fields": {
+        "size": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 3,
+            "fp": 0,
+            "fn": 3,
+            "expected_absent_cases": 9,
+            "false_positive_cases": 0,
+            "exact_matches": 12,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.8
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 2,
+                "predicted": 0,
+                "expected": 2,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 11,
+            "semantic_exact": 10,
+            "expected_value_fields": 6,
+            "value_fields_attempted": 3,
+            "fields_with_values": 3,
+            "claimed_complete_fields": 11,
+            "correctly_complete_fields": 10,
+            "state_accuracy": 0.7333333333333333,
+            "semantic_exact_match_rate": 0.6666666666666666,
+            "value_field_coverage": 0.5,
+            "claimed_complete_field_rate": 0.7333333333333333,
+            "expected_states": {
+              "RESOLVED": 6,
+              "ABSENT": 7,
+              "AMBIGUOUS": 2
+            },
+            "predicted_states": {
+              "RESOLVED": 3,
+              "AMBIGUOUS": 4,
+              "ABSENT": 8
+            }
+          }
+        },
+        "budget_max": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "expected_absent_cases": 11,
+            "false_positive_cases": 0,
+            "exact_matches": 15,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 1.0
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 15,
+            "semantic_exact": 15,
+            "expected_value_fields": 4,
+            "value_fields_attempted": 4,
+            "fields_with_values": 4,
+            "claimed_complete_fields": 15,
+            "correctly_complete_fields": 15,
+            "state_accuracy": 1.0,
+            "semantic_exact_match_rate": 1.0,
+            "value_field_coverage": 1.0,
+            "claimed_complete_field_rate": 1.0,
+            "expected_states": {
+              "RESOLVED": 4,
+              "ABSENT": 11
+            },
+            "predicted_states": {
+              "RESOLVED": 4,
+              "ABSENT": 11
+            }
+          }
+        },
+        "preferred_flowers": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 11,
+            "fp": 0,
+            "fn": 0,
+            "expected_absent_cases": 6,
+            "false_positive_cases": 0,
+            "exact_matches": 15,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 1.0
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "predicted": 0,
+              "expected": 1,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 13,
+            "semantic_exact": 13,
+            "expected_value_fields": 9,
+            "value_fields_attempted": 9,
+            "fields_with_values": 9,
+            "claimed_complete_fields": 14,
+            "correctly_complete_fields": 13,
+            "state_accuracy": 0.8666666666666667,
+            "semantic_exact_match_rate": 0.8666666666666667,
+            "value_field_coverage": 1.0,
+            "claimed_complete_field_rate": 0.9333333333333333,
+            "expected_states": {
+              "RESOLVED": 8,
+              "ABSENT": 6,
+              "PARTIAL": 1
+            },
+            "predicted_states": {
+              "RESOLVED": 9,
+              "ABSENT": 5,
+              "AMBIGUOUS": 1
+            }
+          }
+        },
+        "excluded_flowers": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "expected_absent_cases": 10,
+            "false_positive_cases": 0,
+            "exact_matches": 15,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 1.0
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "predicted": 0,
+              "expected": 1,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 14,
+            "semantic_exact": 14,
+            "expected_value_fields": 5,
+            "value_fields_attempted": 5,
+            "fields_with_values": 5,
+            "claimed_complete_fields": 15,
+            "correctly_complete_fields": 14,
+            "state_accuracy": 0.9333333333333333,
+            "semantic_exact_match_rate": 0.9333333333333333,
+            "value_field_coverage": 1.0,
+            "claimed_complete_field_rate": 1.0,
+            "expected_states": {
+              "ABSENT": 9,
+              "RESOLVED": 5,
+              "AMBIGUOUS": 1
+            },
+            "predicted_states": {
+              "ABSENT": 10,
+              "RESOLVED": 5
+            }
+          }
+        }
+      },
+      "canonical_exact_match": {
+        "correct": 12,
+        "total": 15,
+        "rate": 0.8
+      },
+      "semantic_exact_match": {
+        "correct": 8,
+        "total": 15,
+        "rate": 0.5333333333333333
+      }
+    },
+    "en": {
+      "cases": 15,
+      "all_fields": {
+        "canonical_values": {
+          "cases": 60,
+          "tp": 30,
+          "fp": 0,
+          "fn": 4,
+          "expected_absent_cases": 30,
+          "false_positive_cases": 0,
+          "exact_matches": 56,
+          "precision": 1.0,
+          "recall": 0.8823529411764706,
+          "f1": 0.9375,
+          "false_positive_case_rate": 0.0,
+          "exact_match_rate": 0.9333333333333333
+        },
+        "pending_mentions": {
+          "all": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "predicted": 0,
+            "expected": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "by_reason": {
+            "OUT_OF_CATALOG": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "UNDECIDED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "predicted": 0,
+              "expected": 3,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "CONFLICTING_INFORMATION": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            }
+          }
+        },
+        "completeness": {
+          "field_cases": 60,
+          "state_correct": 53,
+          "semantic_exact": 53,
+          "expected_value_fields": 30,
+          "value_fields_attempted": 26,
+          "fields_with_values": 26,
+          "claimed_complete_fields": 57,
+          "correctly_complete_fields": 53,
+          "state_accuracy": 0.8833333333333333,
+          "semantic_exact_match_rate": 0.8833333333333333,
+          "value_field_coverage": 0.8666666666666667,
+          "claimed_complete_field_rate": 0.95,
+          "expected_states": {
+            "RESOLVED": 28,
+            "ABSENT": 27,
+            "AMBIGUOUS": 3,
+            "PARTIAL": 2
+          },
+          "predicted_states": {
+            "RESOLVED": 26,
+            "ABSENT": 31,
+            "AMBIGUOUS": 3
+          }
+        }
+      },
+      "fields": {
+        "size": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 8,
+            "fp": 0,
+            "fn": 1,
+            "expected_absent_cases": 6,
+            "false_positive_cases": 0,
+            "exact_matches": 14,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.9333333333333333
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 2,
+                "predicted": 0,
+                "expected": 2,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 12,
+            "semantic_exact": 12,
+            "expected_value_fields": 9,
+            "value_fields_attempted": 8,
+            "fields_with_values": 8,
+            "claimed_complete_fields": 14,
+            "correctly_complete_fields": 12,
+            "state_accuracy": 0.8,
+            "semantic_exact_match_rate": 0.8,
+            "value_field_coverage": 0.8888888888888888,
+            "claimed_complete_field_rate": 0.9333333333333333,
+            "expected_states": {
+              "RESOLVED": 9,
+              "ABSENT": 4,
+              "AMBIGUOUS": 2
+            },
+            "predicted_states": {
+              "RESOLVED": 8,
+              "ABSENT": 6,
+              "AMBIGUOUS": 1
+            }
+          }
+        },
+        "budget_max": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "expected_absent_cases": 11,
+            "false_positive_cases": 0,
+            "exact_matches": 15,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 1.0
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0,
+              "predicted": 0,
+              "expected": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 15,
+            "semantic_exact": 15,
+            "expected_value_fields": 4,
+            "value_fields_attempted": 4,
+            "fields_with_values": 4,
+            "claimed_complete_fields": 15,
+            "correctly_complete_fields": 15,
+            "state_accuracy": 1.0,
+            "semantic_exact_match_rate": 1.0,
+            "value_field_coverage": 1.0,
+            "claimed_complete_field_rate": 1.0,
+            "expected_states": {
+              "RESOLVED": 4,
+              "ABSENT": 11
+            },
+            "predicted_states": {
+              "RESOLVED": 4,
+              "ABSENT": 11
+            }
+          }
+        },
+        "preferred_flowers": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 11,
+            "fp": 0,
+            "fn": 2,
+            "expected_absent_cases": 4,
+            "false_positive_cases": 0,
+            "exact_matches": 13,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.8666666666666667
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "predicted": 0,
+              "expected": 2,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 12,
+            "semantic_exact": 12,
+            "expected_value_fields": 11,
+            "value_fields_attempted": 9,
+            "fields_with_values": 9,
+            "claimed_complete_fields": 14,
+            "correctly_complete_fields": 12,
+            "state_accuracy": 0.8,
+            "semantic_exact_match_rate": 0.8,
+            "value_field_coverage": 0.8181818181818182,
+            "claimed_complete_field_rate": 0.9333333333333333,
+            "expected_states": {
+              "RESOLVED": 10,
+              "ABSENT": 3,
+              "PARTIAL": 1,
+              "AMBIGUOUS": 1
+            },
+            "predicted_states": {
+              "RESOLVED": 9,
+              "ABSENT": 5,
+              "AMBIGUOUS": 1
+            }
+          }
+        },
+        "excluded_flowers": {
+          "canonical_values": {
+            "cases": 15,
+            "tp": 7,
+            "fp": 0,
+            "fn": 1,
+            "expected_absent_cases": 9,
+            "false_positive_cases": 0,
+            "exact_matches": 14,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "false_positive_case_rate": 0.0,
+            "exact_match_rate": 0.9333333333333333
+          },
+          "pending_mentions": {
+            "all": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "predicted": 0,
+              "expected": 1,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "by_reason": {
+              "OUT_OF_CATALOG": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "predicted": 0,
+                "expected": 1,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              },
+              "UNDECIDED": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "CONFLICTING_INFORMATION": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "predicted": 0,
+                "expected": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            }
+          },
+          "completeness": {
+            "field_cases": 15,
+            "state_correct": 14,
+            "semantic_exact": 14,
+            "expected_value_fields": 6,
+            "value_fields_attempted": 5,
+            "fields_with_values": 5,
+            "claimed_complete_fields": 14,
+            "correctly_complete_fields": 14,
+            "state_accuracy": 0.9333333333333333,
+            "semantic_exact_match_rate": 0.9333333333333333,
+            "value_field_coverage": 0.8333333333333334,
+            "claimed_complete_field_rate": 0.9333333333333333,
+            "expected_states": {
+              "RESOLVED": 5,
+              "ABSENT": 9,
+              "PARTIAL": 1
+            },
+            "predicted_states": {
+              "RESOLVED": 5,
+              "ABSENT": 9,
+              "AMBIGUOUS": 1
+            }
+          }
+        }
+      },
+      "canonical_exact_match": {
+        "correct": 13,
+        "total": 15,
+        "rate": 0.8666666666666667
+      },
+      "semantic_exact_match": {
+        "correct": 11,
+        "total": 15,
+        "rate": 0.7333333333333333
+      }
+    }
+  },
+  "evidence": {
+    "confirmed_values": 54,
+    "spans": 54,
+    "valid_spans": 54,
+    "gold_span_aligned_values": 54,
+    "span_integrity": 1.0,
+    "gold_span_alignment_rate": 1.0,
+    "semantic_review_required": true
+  },
+  "timing": {
+    "total_extraction_seconds": 0.01334091485477984,
+    "mean_extraction_seconds": 0.00044469716182599464,
+    "vocabulary_setup_seconds": 0.0003664590185508132
+  },
+  "experimental_targets": {
+    "precision": 0.95,
+    "recall": 0.8,
+    "acceptance_gate": false
+  },
+  "legacy_prediction_cases": 30,
+  "cases": [
+    {
+      "id": "pt_v2_graduation_classic",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 33,
+                  "end": 55,
+                  "text": "quero um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "135",
+              "evidence": [
+                {
+                  "start": 89,
+                  "end": 98,
+                  "text": "até R$135"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 87,
+                  "text": "com tulipas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "135",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "135",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0011437080102041364
+    },
+    {
+      "id": "pt_v2_thanks_carnations",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 14,
+                  "text": "Um buquê médio"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "160",
+              "evidence": [
+                {
+                  "start": 83,
+                  "end": 105,
+                  "text": "Posso gastar até R$160"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 45,
+                  "end": 55,
+                  "text": "com cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 72,
+                  "end": 81,
+                  "text": "sem rosas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 70,
+                  "text": "Um buquê médio e moderno, laranja e amarelo, com cravos para agradecer",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 70,
+                  "text": "Um buquê médio e moderno, laranja e amarelo, com cravos para agradecer",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "160",
+              "evidence": [
+                {
+                  "start": 83,
+                  "end": 105,
+                  "text": "Posso gastar até R$160",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "160",
+              "evidence": [
+                {
+                  "start": 83,
+                  "end": 105,
+                  "text": "Posso gastar até R$160",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 70,
+                  "text": "Um buquê médio e moderno, laranja e amarelo, com cravos para agradecer",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 70,
+                  "text": "Um buquê médio e moderno, laranja e amarelo, com cravos para agradecer",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 72,
+                  "end": 81,
+                  "text": "sem rosas",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 72,
+                  "end": 81,
+                  "text": "sem rosas",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0006112910341471434
+    },
+    {
+      "id": "pt_v2_just_because_delicate",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 50,
+                  "text": "buquê grande"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 70,
+                  "end": 98,
+                  "text": "com mosquitinho e margaridas"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 70,
+                  "end": 98,
+                  "text": "com mosquitinho e margaridas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "negated_or_unclear_size"
+            }
+          ],
+          "reasons": [
+            "negated_or_unclear_size"
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 98,
+                  "text": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": false,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0006948749651201069
+    },
+    {
+      "id": "pt_v2_mothers_day_rustic",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 17,
+                  "end": 39,
+                  "text": "quero um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 59,
+                  "end": 71,
+                  "text": "com gérberas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 74,
+                  "end": 84,
+                  "text": "sem lírios"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 84,
+                  "text": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "negated_or_unclear_size"
+            }
+          ],
+          "reasons": [
+            "negated_or_unclear_size"
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 84,
+                  "text": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 84,
+                  "text": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 84,
+                  "text": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 84,
+                  "text": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": false,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0005313330329954624
+    },
+    {
+      "id": "pt_v2_anniversary_dual_style",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 37,
+                  "end": 52,
+                  "text": "um buquê grande"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 94,
+                  "end": 105,
+                  "text": "com peônias"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 107,
+                  "end": 121,
+                  "text": "nada de cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 105,
+                  "text": "Para nosso aniversário de casamento, um buquê grande, clássico e elegante, vermelho e branco, com peônias",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 105,
+                  "text": "Para nosso aniversário de casamento, um buquê grande, clássico e elegante, vermelho e branco, com peônias",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 105,
+                  "text": "Para nosso aniversário de casamento, um buquê grande, clássico e elegante, vermelho e branco, com peônias",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 105,
+                  "text": "Para nosso aniversário de casamento, um buquê grande, clássico e elegante, vermelho e branco, com peônias",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 107,
+                  "end": 121,
+                  "text": "nada de cravos",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 107,
+                  "end": 121,
+                  "text": "nada de cravos",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.000568999967072159
+    },
+    {
+      "id": "pt_v2_budget_not_size",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "450",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 29,
+                  "text": "Tenho até R$450 para um buquê"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "450",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "Tenho até R$450 para um buquê romântico rosa para o aniversário da minha irmã",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "450",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "Tenho até R$450 para um buquê romântico rosa para o aniversário da minha irmã",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.00043229199945926666
+    },
+    {
+      "id": "pt_v2_stem_count_not_size",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 24,
+                  "text": "Quero doze rosas brancas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Quero doze rosas brancas para um casamento, num estilo minimalista",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Quero doze rosas brancas para um casamento, num estilo minimalista",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0002819159999489784
+    },
+    {
+      "id": "pt_v2_ambiguous_impact",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 50,
+                "end": 85,
+                "text": "ainda não escolhi cores nem tamanho"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 50,
+                  "end": 85,
+                  "text": "ainda não escolhi cores nem tamanho"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.00017162499716505408
+    },
+    {
+      "id": "pt_v2_pink_is_color",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 27,
+                  "text": "Prefiro tons de rosa e roxo",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": "ambiguous_rosa_color_or_flower"
+            }
+          ],
+          "reasons": [
+            "ambiguous_rosa_color_or_flower"
+          ]
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0002496249508112669
+    },
+    {
+      "id": "pt_v2_exclusions_only",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê"
+                }
+              ]
+            },
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            },
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "Não coloque hortênsias nem tulipas no buquê",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0002729579573497176
+    },
+    {
+      "id": "pt_v2_unsupported_flower",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 20,
+                  "end": 41,
+                  "text": "com orquídeas e rosas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 24,
+                "end": 33,
+                "text": "orquídeas"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 20,
+                  "end": 41,
+                  "text": "com orquídeas e rosas"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 47,
+                "end": 55,
+                "text": "antúrios"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 43,
+                  "end": 55,
+                  "text": "sem antúrios"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 55,
+                  "text": "Quero um buquê azul com orquídeas e rosas, sem antúrios",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 55,
+                  "text": "Quero um buquê azul com orquídeas e rosas, sem antúrios",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": false
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.00029320799512788653
+    },
+    {
+      "id": "pt_v2_unsupported_categories",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 50,
+                  "end": 64,
+                  "text": "com margaridas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 64,
+                  "text": "Para uma inauguração, quero um buquê gótico preto com margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 64,
+                  "text": "Para uma inauguração, quero um buquê gótico preto com margaridas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0002823329996317625
+    },
+    {
+      "id": "pt_v2_small_no_occasion",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 25,
+                  "text": "Pode ser um buquê pequeno"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "72.50",
+              "evidence": [
+                {
+                  "start": 75,
+                  "end": 86,
+                  "text": "até R$72,50"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 60,
+                  "text": "com girassóis e cravos"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 38,
+                  "end": 60,
+                  "text": "com girassóis e cravos"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 62,
+                  "end": 73,
+                  "text": "sem peônias"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "negated_or_unclear_size"
+            }
+          ],
+          "reasons": [
+            "negated_or_unclear_size"
+          ]
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "72.50",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "72.50",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 86,
+                  "text": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": false,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.001005499972961843
+    },
+    {
+      "id": "pt_v2_irrelevant_colors",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.000120165990665555
+    },
+    {
+      "id": "pt_v2_size_unsure",
+      "language": "pt",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 70,
+                "end": 87,
+                "text": "pequeno ou grande"
+              },
+              "candidates": [
+                "SMALL",
+                "LARGE"
+              ],
+              "evidence": [
+                {
+                  "start": 53,
+                  "end": 87,
+                  "text": "Ainda não sei se pequeno ou grande"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 53,
+                  "end": 87,
+                  "text": "Ainda não sei se pequeno ou grande",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "undecided_size"
+            },
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 53,
+                  "end": 87,
+                  "text": "Ainda não sei se pequeno ou grande",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "undecided_size"
+            }
+          ],
+          "reasons": [
+            "undecided_size"
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0002762500080280006
+    },
+    {
+      "id": "en_v2_birthday_modern",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 18,
+                  "end": 48,
+                  "text": "a medium modern orange bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "175",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 89,
+                  "text": "maximum R$175"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 49,
+                  "end": 62,
+                  "text": "with gerberas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 64,
+                  "end": 74,
+                  "text": "no daisies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "175",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "175",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Gerbera",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 89,
+                  "text": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0006713749608024955
+    },
+    {
+      "id": "en_v2_wedding_minimalist",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 43,
+                  "text": "A large minimalist purple and white bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 59,
+                  "end": 74,
+                  "text": "with hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 79,
+                  "end": 92,
+                  "text": "no carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 92,
+                  "text": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0005548750050365925
+    },
+    {
+      "id": "en_v2_valentines_classic",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 40,
+                  "text": "Please make a small classic pink bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "110",
+              "evidence": [
+                {
+                  "start": 92,
+                  "end": 103,
+                  "text": "up to R$110"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 61,
+                  "end": 90,
+                  "text": "with tulips and baby's breath"
+                }
+              ]
+            },
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 61,
+                  "end": 90,
+                  "text": "with tulips and baby's breath"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "110",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "110",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            },
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Baby's Breath",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 103,
+                  "text": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0008393329917453229
+    },
+    {
+      "id": "en_v2_thanks_two_styles",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 18,
+                  "end": 62,
+                  "text": "a medium delicate and elegant yellow bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 63,
+                  "end": 74,
+                  "text": "with lilies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies"
+                }
+              ]
+            },
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 74,
+                  "text": "To say thank you: a medium delicate and elegant yellow bouquet with lilies",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 74,
+                  "text": "To say thank you: a medium delicate and elegant yellow bouquet with lilies",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 74,
+                  "text": "To say thank you: a medium delicate and elegant yellow bouquet with lilies",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 74,
+                  "text": "To say thank you: a medium delicate and elegant yellow bouquet with lilies",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            },
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 76,
+                  "end": 103,
+                  "text": "Leave out roses and peonies",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0005230839597061276
+    },
+    {
+      "id": "en_v2_mothers_day_colorful",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 38,
+                  "text": "A large colorful blue and pink bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 57,
+                  "end": 72,
+                  "text": "with hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 72,
+                  "text": "A large colorful blue and pink bouquet for Mother's Day, with hydrangeas",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "LARGE",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 72,
+                  "text": "A large colorful blue and pink bouquet for Mother's Day, with hydrangeas",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 72,
+                  "text": "A large colorful blue and pink bouquet for Mother's Day, with hydrangeas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 72,
+                  "text": "A large colorful blue and pink bouquet for Mother's Day, with hydrangeas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.00042316701728850603
+    },
+    {
+      "id": "en_v2_low_budget_not_size",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "35",
+              "evidence": [
+                {
+                  "start": 44,
+                  "end": 73,
+                  "text": "with a budget of at most R$35"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "35",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 73,
+                  "text": "A romantic red bouquet for our anniversary, with a budget of at most R$35",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "35",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 73,
+                  "text": "A romantic red bouquet for our anniversary, with a budget of at most R$35",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0003011669614352286
+    },
+    {
+      "id": "en_v2_ambiguous_size",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 54,
+                "end": 82,
+                "text": "I have not decided on a size"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 82,
+                  "text": "Something reasonably sized and lovely for graduation; I have not decided on a size"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.00018737500067800283
+    },
+    {
+      "id": "en_v2_no_specific_shade",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.00020054104970768094
+    },
+    {
+      "id": "en_v2_preference_and_exclusion",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 33,
+                  "text": "Please use sunflowers and daisies"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 33,
+                  "text": "Please use sunflowers and daisies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 39,
+                  "end": 66,
+                  "text": "avoid lilies and carnations"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 39,
+                  "end": 66,
+                  "text": "avoid lilies and carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Daisy",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Lily",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            },
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 66,
+                  "text": "Please use sunflowers and daisies, and avoid lilies and carnations",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0005274160066619515
+    },
+    {
+      "id": "en_v2_unsupported_mixed",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 40,
+                  "text": "A small bohemian teal and yellow bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 41,
+                  "end": 64,
+                  "text": "with orchids and tulips"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 46,
+                "end": 53,
+                "text": "orchids"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 41,
+                  "end": 64,
+                  "text": "with orchids and tulips"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "PARTIAL",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 66,
+                  "end": 85,
+                  "text": "no dahlias or roses"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": [
+            {
+              "reason": "OUT_OF_CATALOG",
+              "mention": {
+                "start": 69,
+                "end": 76,
+                "text": "dahlias"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 66,
+                  "end": 85,
+                  "text": "no dahlias or roses"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 85,
+                  "text": "A small bohemian teal and yellow bouquet with orchids and tulips, no dahlias or roses",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": "undecided_size"
+            }
+          ],
+          "reasons": [
+            "undecided_size"
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "Tulip",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 85,
+                  "text": "A small bohemian teal and yellow bouquet with orchids and tulips, no dahlias or roses",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": "undecided_flower"
+            }
+          ],
+          "reasons": [
+            "undecided_flower"
+          ]
+        },
+        "excluded_flowers": {
+          "state": "AMBIGUOUS",
+          "values": [],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 85,
+                  "text": "A small bohemian teal and yellow bouquet with orchids and tulips, no dahlias or roses",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": "undecided_flower"
+            }
+          ],
+          "reasons": [
+            "undecided_flower"
+          ]
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": false
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": false
+      },
+      "canonical_exact_match": false,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0005258750170469284
+    },
+    {
+      "id": "en_v2_unsupported_occasion",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 31,
+                  "text": "An elegant white medium bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 56,
+                  "end": 68,
+                  "text": "with peonies"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 68,
+                  "text": "An elegant white medium bouquet for a retirement party, with peonies",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 68,
+                  "text": "An elegant white medium bouquet for a retirement party, with peonies",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 68,
+                  "text": "An elegant white medium bouquet for a retirement party, with peonies",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Peony",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 68,
+                  "text": "An elegant white medium bouquet for a retirement party, with peonies",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0003251250018365681
+    },
+    {
+      "id": "en_v2_missing_style",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 16,
+                  "end": 35,
+                  "text": "a small red bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "95",
+              "evidence": [
+                {
+                  "start": 51,
+                  "end": 61,
+                  "text": "under R$95"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Carnation",
+              "evidence": [
+                {
+                  "start": 36,
+                  "end": 49,
+                  "text": "of carnations"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 61,
+                  "text": "For a birthday, a small red bouquet of carnations, under R$95",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "SMALL",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 61,
+                  "text": "For a birthday, a small red bouquet of carnations, under R$95",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "95",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 61,
+                  "text": "For a birthday, a small red bouquet of carnations, under R$95",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "95",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 61,
+                  "text": "For a birthday, a small red bouquet of carnations, under R$95",
+                  "rule_id": "budget.explicit_upper"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": false,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.000417709001339972
+    },
+    {
+      "id": "en_v2_irrelevant_numbers",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 28,
+                  "text": "A classic bouquet with roses"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 36,
+                  "text": "A classic bouquet with roses, please",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Rose",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 36,
+                  "text": "A classic bouquet with roses, please",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.0002784589887596667
+    },
+    {
+      "id": "en_v2_occasion_no_defaults",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 29,
+                "end": 83,
+                "text": "with no particular flower, color, style or size chosen"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 29,
+                  "end": 83,
+                  "text": "with no particular flower, color, style or size chosen"
+                }
+              ]
+            }
+          ]
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "AMBIGUOUS",
+          "resolved_values": [],
+          "unresolved_mentions": [
+            {
+              "reason": "UNDECIDED",
+              "mention": {
+                "start": 29,
+                "end": 83,
+                "text": "with no particular flower, color, style or size chosen"
+              },
+              "candidates": [],
+              "evidence": [
+                {
+                  "start": 29,
+                  "end": 83,
+                  "text": "with no particular flower, color, style or size chosen"
+                }
+              ]
+            }
+          ]
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": false,
+      "extraction_seconds": 0.0001533749746158719
+    },
+    {
+      "id": "en_v2_missing_colors",
+      "language": "en",
+      "prediction_contract": "legacy",
+      "pending_mentions_supported": false,
+      "expected": {
+        "size": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 16,
+                  "end": 39,
+                  "text": "a medium rustic bouquet"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "resolved_values": [],
+          "unresolved_mentions": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 40,
+                  "end": 55,
+                  "text": "with sunflowers"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "resolved_values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 57,
+                  "end": 77,
+                  "text": "excluding hydrangeas"
+                }
+              ]
+            }
+          ],
+          "unresolved_mentions": []
+        }
+      },
+      "actual": {
+        "size": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "size.explicit"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "MEDIUM",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "size.explicit"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "budget_max": {
+          "state": "ABSENT",
+          "values": [],
+          "candidates": [],
+          "reasons": []
+        },
+        "preferred_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Sunflower",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "flower.explicit_preference"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "excluded_flowers": {
+          "state": "RESOLVED",
+          "values": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "value": "Hydrangea",
+              "evidence": [
+                {
+                  "start": 0,
+                  "end": 77,
+                  "text": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas",
+                  "rule_id": "flower.explicit_exclusion"
+                }
+              ],
+              "reason": null
+            }
+          ],
+          "reasons": []
+        },
+        "rules_version": "query-extractor-v1"
+      },
+      "canonical_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "semantic_field_matches": {
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "canonical_exact_match": true,
+      "semantic_exact_match": true,
+      "extraction_seconds": 0.00047595903743058443
+    }
+  ],
+  "annotations_sha256": "ba9816129a372473c09676ca0b34b62142f9c7f3351020bce93a6b8bcbd8cefe"
+}

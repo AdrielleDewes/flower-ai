@@ -1,0 +1,1526 @@
+{
+  "dataset_version": 2,
+  "cases_total": 30,
+  "cases_completed": 21,
+  "cases_failed": 9,
+  "exact_match": {
+    "correct": 9,
+    "total": 30,
+    "rate": 0.3
+  },
+  "field_accuracy": {
+    "occasion": {
+      "correct": 19,
+      "total": 30,
+      "rate": 0.6333333333333333
+    },
+    "styles": {
+      "correct": 17,
+      "total": 30,
+      "rate": 0.5666666666666667
+    },
+    "colors": {
+      "correct": 17,
+      "total": 30,
+      "rate": 0.5666666666666667
+    },
+    "size": {
+      "correct": 18,
+      "total": 30,
+      "rate": 0.6
+    },
+    "budget_max": {
+      "correct": 21,
+      "total": 30,
+      "rate": 0.7
+    },
+    "preferred_flowers": {
+      "correct": 18,
+      "total": 30,
+      "rate": 0.6
+    },
+    "excluded_flowers": {
+      "correct": 17,
+      "total": 30,
+      "rate": 0.5666666666666667
+    }
+  },
+  "invented_values": {
+    "count": 8,
+    "evaluated_absent_fields": 66,
+    "rate": 0.12121212121212122
+  },
+  "mean_latency_seconds": 5.262165834763437,
+  "total_latency_seconds": 157.8649750429031,
+  "ollama_inference_metrics": {
+    "responses_with_metrics": 30,
+    "totals": {
+      "total_duration": 157494313502,
+      "load_duration": 3052399962,
+      "prompt_eval_duration": 54782791999,
+      "eval_duration": 98934104000,
+      "prompt_eval_count": 31840,
+      "eval_count": 1905
+    },
+    "responses_by_metric": {
+      "total_duration": 30,
+      "load_duration": 30,
+      "prompt_eval_duration": 30,
+      "eval_duration": 30,
+      "prompt_eval_count": 30,
+      "eval_count": 30
+    },
+    "eval_tokens_per_second": 19.25524084192444
+  },
+  "readiness": {
+    "correct": 19,
+    "total": 30,
+    "rate": 0.6333333333333333,
+    "by_status": {
+      "READY": {
+        "expected": 10,
+        "actual": 7,
+        "correct": 7
+      },
+      "NEEDS_CLARIFICATION": {
+        "expected": 20,
+        "actual": 14,
+        "correct": 12
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "pt_v2_graduation_classic",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Purple"
+        ],
+        "size": "SMALL",
+        "budget_max": "135",
+        "preferred_flowers": [
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Graduation",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Purple"
+        ],
+        "size": "SMALL",
+        "budget_max": "135",
+        "preferred_flowers": [
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 8.81475083300029,
+      "ollama_metrics": {
+        "total_duration": 8745884625,
+        "load_duration": 2875371917,
+        "prompt_eval_duration": 2905381000,
+        "eval_duration": 2929898000,
+        "prompt_eval_count": 1075,
+        "eval_count": 63,
+        "eval_tokens_per_second": 21.502455034270817
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_thanks_carnations",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Orange",
+          "Yellow"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "160",
+        "preferred_flowers": [
+          "Carnation"
+        ],
+        "excluded_flowers": [
+          "Rose"
+        ]
+      },
+      "actual": {
+        "occasion": "Thank You",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Yellow",
+          "Orange"
+        ],
+        "size": null,
+        "budget_max": "160",
+        "preferred_flowers": [
+          "Baby's Breath",
+          "Carnation",
+          "Daisy",
+          "Gerbera",
+          "Hydrangea",
+          "Lily",
+          "Sunflower",
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": false,
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": false
+      },
+      "exact_match": false,
+      "expected_status": "READY",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 6.308609291008906,
+      "ollama_metrics": {
+        "total_duration": 6297840625,
+        "load_duration": 10793000,
+        "prompt_eval_duration": 1673951000,
+        "eval_duration": 4596474000,
+        "prompt_eval_count": 1078,
+        "eval_count": 96,
+        "eval_tokens_per_second": 20.885574464252382
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_just_because_delicate",
+      "expected": {
+        "occasion": "Just Because",
+        "styles": [
+          "Delicate"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Baby's Breath",
+          "Daisy"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "READY",
+      "actual_status": null,
+      "latency_seconds": 4.626830166991567,
+      "ollama_metrics": {
+        "total_duration": 4620979542,
+        "load_duration": 4355417,
+        "prompt_eval_duration": 1797868000,
+        "eval_duration": 2799166000,
+        "prompt_eval_count": 1064,
+        "eval_count": 59,
+        "eval_tokens_per_second": 21.077706716929256
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "pt_v2_mothers_day_rustic",
+      "expected": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": [
+          "Lily"
+        ]
+      },
+      "actual": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": false
+      },
+      "exact_match": false,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 5.155785707989708,
+      "ollama_metrics": {
+        "total_duration": 5149144458,
+        "load_duration": 4003291,
+        "prompt_eval_duration": 1757703000,
+        "eval_duration": 3366248000,
+        "prompt_eval_count": 1078,
+        "eval_count": 63,
+        "eval_tokens_per_second": 18.715198642524257
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_anniversary_dual_style",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Classic",
+          "Elegant"
+        ],
+        "colors": [
+          "Red",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "actual": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Red",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": false,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": false
+      },
+      "exact_match": false,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 4.644256125000538,
+      "ollama_metrics": {
+        "total_duration": 4636824500,
+        "load_duration": 11124750,
+        "prompt_eval_duration": 1682460000,
+        "eval_duration": 2918823000,
+        "prompt_eval_count": 1077,
+        "eval_count": 62,
+        "eval_tokens_per_second": 21.241438758019928
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_budget_not_size",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Pink"
+        ],
+        "size": null,
+        "budget_max": "450",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": null,
+        "colors": [
+          "Pink"
+        ],
+        "size": null,
+        "budget_max": "450",
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": false,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.576348999980837,
+      "ollama_metrics": {
+        "total_duration": 4569226125,
+        "load_duration": 4570458,
+        "prompt_eval_duration": 1705456000,
+        "eval_duration": 2838364000,
+        "prompt_eval_count": 1064,
+        "eval_count": 57,
+        "eval_tokens_per_second": 20.081990893345605
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_stem_count_not_size",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": false,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.874347542005125,
+      "ollama_metrics": {
+        "total_duration": 4867973375,
+        "load_duration": 3759000,
+        "prompt_eval_duration": 1760796000,
+        "eval_duration": 3081674000,
+        "prompt_eval_count": 1055,
+        "eval_count": 56,
+        "eval_tokens_per_second": 18.171941613551596
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_ambiguous_impact",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.195598124992102,
+      "ollama_metrics": {
+        "total_duration": 4189711208,
+        "load_duration": 6967000,
+        "prompt_eval_duration": 1709099000,
+        "eval_duration": 2455731000,
+        "prompt_eval_count": 1055,
+        "eval_count": 51,
+        "eval_tokens_per_second": 20.76774695599803
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_pink_is_color",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Pink",
+          "Purple"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 4.160419333027676,
+      "ollama_metrics": {
+        "total_duration": 4153806000,
+        "load_duration": 4749250,
+        "prompt_eval_duration": 1567067000,
+        "eval_duration": 2559866000,
+        "prompt_eval_count": 1057,
+        "eval_count": 55,
+        "eval_tokens_per_second": 21.48549963162134
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for colors."
+    },
+    {
+      "id": "pt_v2_exclusions_only",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Hydrangea",
+          "Tulip"
+        ]
+      },
+      "actual": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": false
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.035559999989346,
+      "ollama_metrics": {
+        "total_duration": 4030231500,
+        "load_duration": 3569334,
+        "prompt_eval_duration": 1571188000,
+        "eval_duration": 2438851000,
+        "prompt_eval_count": 1061,
+        "eval_count": 51,
+        "eval_tokens_per_second": 20.911486597582222
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_unsupported_flower",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Blue"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 4.69616770898574,
+      "ollama_metrics": {
+        "total_duration": 4690811542,
+        "load_duration": 3814834,
+        "prompt_eval_duration": 1580277000,
+        "eval_duration": 3088764000,
+        "prompt_eval_count": 1058,
+        "eval_count": 63,
+        "eval_tokens_per_second": 20.39650811781023
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "pt_v2_unsupported_categories",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Daisy"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 4.739438916993095,
+      "ollama_metrics": {
+        "total_duration": 4734221834,
+        "load_duration": 5379959,
+        "prompt_eval_duration": 1914548000,
+        "eval_duration": 2799674000,
+        "prompt_eval_count": 1058,
+        "eval_count": 60,
+        "eval_tokens_per_second": 21.431066617041843
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for styles."
+    },
+    {
+      "id": "pt_v2_small_no_occasion",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Colorful"
+        ],
+        "colors": null,
+        "size": "SMALL",
+        "budget_max": "72.50",
+        "preferred_flowers": [
+          "Sunflower",
+          "Carnation"
+        ],
+        "excluded_flowers": [
+          "Peony"
+        ]
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 5.939353291993029,
+      "ollama_metrics": {
+        "total_duration": 5927443667,
+        "load_duration": 4676084,
+        "prompt_eval_duration": 2102237999,
+        "eval_duration": 3798248000,
+        "prompt_eval_count": 1073,
+        "eval_count": 75,
+        "eval_tokens_per_second": 19.745946025641295
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for occasion."
+    },
+    {
+      "id": "pt_v2_irrelevant_colors",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Thank You",
+        "styles": null,
+        "colors": [
+          "Blue"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": false,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.46029908399214,
+      "ollama_metrics": {
+        "total_duration": 4451656291,
+        "load_duration": 5913666,
+        "prompt_eval_duration": 1636686000,
+        "eval_duration": 2787412000,
+        "prompt_eval_count": 1063,
+        "eval_count": 54,
+        "eval_tokens_per_second": 19.372808899437903
+      },
+      "error": null
+    },
+    {
+      "id": "pt_v2_size_unsure",
+      "expected": {
+        "occasion": "Valentine's Day",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Valentine's Day",
+        "styles": null,
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": false,
+        "colors": true,
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 4.629232916980982,
+      "ollama_metrics": {
+        "total_duration": 4623070042,
+        "load_duration": 3869250,
+        "prompt_eval_duration": 1669416000,
+        "eval_duration": 2932157000,
+        "prompt_eval_count": 1063,
+        "eval_count": 58,
+        "eval_tokens_per_second": 19.78065976685423
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_birthday_modern",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Orange"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "175",
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": [
+          "Daisy"
+        ]
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Orange"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "175",
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": [
+          "Daisy"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 4.763743833987974,
+      "ollama_metrics": {
+        "total_duration": 4755892792,
+        "load_duration": 2824333,
+        "prompt_eval_duration": 1690840000,
+        "eval_duration": 3043712000,
+        "prompt_eval_count": 1062,
+        "eval_count": 64,
+        "eval_tokens_per_second": 21.026956558307752
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_wedding_minimalist",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": [
+          "Purple",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": [
+          "Purple",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 5.014333416998852,
+      "ollama_metrics": {
+        "total_duration": 4998519917,
+        "load_duration": 7724625,
+        "prompt_eval_duration": 1653896000,
+        "eval_duration": 3316921000,
+        "prompt_eval_count": 1056,
+        "eval_count": 67,
+        "eval_tokens_per_second": 20.199456061811542
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_valentines_classic",
+      "expected": {
+        "occasion": "Valentine's Day",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Pink"
+        ],
+        "size": "SMALL",
+        "budget_max": "110",
+        "preferred_flowers": [
+          "Tulip",
+          "Baby's Breath"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Valentine's Day",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Pink"
+        ],
+        "size": "SMALL",
+        "budget_max": "110",
+        "preferred_flowers": [
+          "Tulip",
+          "Baby's Breath"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 5.075721916015027,
+      "ollama_metrics": {
+        "total_duration": 5070699791,
+        "load_duration": 3332791,
+        "prompt_eval_duration": 1686922000,
+        "eval_duration": 3366743000,
+        "prompt_eval_count": 1063,
+        "eval_count": 70,
+        "eval_tokens_per_second": 20.79160779423912
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_thanks_two_styles",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": [
+          "Delicate",
+          "Elegant"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Lily"
+        ],
+        "excluded_flowers": [
+          "Rose",
+          "Peony"
+        ]
+      },
+      "actual": {
+        "occasion": "Thank You",
+        "styles": [
+          "Delicate",
+          "Elegant"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Lily"
+        ],
+        "excluded_flowers": [
+          "Rose",
+          "Peony"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": false,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "READY",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 5.052942415990401,
+      "ollama_metrics": {
+        "total_duration": 5037998458,
+        "load_duration": 3274000,
+        "prompt_eval_duration": 1647590000,
+        "eval_duration": 3367795000,
+        "prompt_eval_count": 1060,
+        "eval_count": 67,
+        "eval_tokens_per_second": 19.894322546354513
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_mothers_day_colorful",
+      "expected": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Colorful"
+        ],
+        "colors": [
+          "Blue",
+          "Pink"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Colorful"
+        ],
+        "colors": [
+          "Blue",
+          "Pink"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "READY",
+      "actual_status": "READY",
+      "latency_seconds": 5.103270624997094,
+      "ollama_metrics": {
+        "total_duration": 5089809250,
+        "load_duration": 7795167,
+        "prompt_eval_duration": 1738332000,
+        "eval_duration": 3323070000,
+        "prompt_eval_count": 1058,
+        "eval_count": 66,
+        "eval_tokens_per_second": 19.86115248851213
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_low_budget_not_size",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": "35",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": "35",
+        "preferred_flowers": [
+          "Baby's Breath",
+          "Carnation",
+          "Daisy",
+          "Gerbera",
+          "Hydrangea",
+          "Lily",
+          "Peony",
+          "Rose",
+          "Sunflower",
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": false,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 7.752988457999891,
+      "ollama_metrics": {
+        "total_duration": 7742654416,
+        "load_duration": 3763916,
+        "prompt_eval_duration": 1787088000,
+        "eval_duration": 5933079000,
+        "prompt_eval_count": 1055,
+        "eval_count": 100,
+        "eval_tokens_per_second": 16.854655061899564
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_ambiguous_size",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Graduation",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 5.312508957984392,
+      "ollama_metrics": {
+        "total_duration": 5297865167,
+        "load_duration": 6321875,
+        "prompt_eval_duration": 2359107000,
+        "eval_duration": 2889157000,
+        "prompt_eval_count": 1052,
+        "eval_count": 53,
+        "eval_tokens_per_second": 18.344451339958333
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_no_specific_shade",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Birthday",
+        "styles": [
+          "Colorful"
+        ],
+        "colors": [
+          "Pink",
+          "Orange",
+          "Yellow"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": false,
+        "styles": false,
+        "colors": false,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 5.158675917016808,
+      "ollama_metrics": {
+        "total_duration": 5143546417,
+        "load_duration": 6272792,
+        "prompt_eval_duration": 1524985000,
+        "eval_duration": 3575267000,
+        "prompt_eval_count": 1055,
+        "eval_count": 61,
+        "eval_tokens_per_second": 17.061662807281248
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_preference_and_exclusion",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower",
+          "Daisy"
+        ],
+        "excluded_flowers": [
+          "Lily",
+          "Carnation"
+        ]
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 5.200697124993894,
+      "ollama_metrics": {
+        "total_duration": 5182270084,
+        "load_duration": 7321709,
+        "prompt_eval_duration": 1496953000,
+        "eval_duration": 3645779000,
+        "prompt_eval_count": 1053,
+        "eval_count": 65,
+        "eval_tokens_per_second": 17.828837129184187
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "en_v2_unsupported_mixed",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Yellow"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Tulip"
+        ],
+        "excluded_flowers": [
+          "Rose"
+        ]
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 5.858863875007955,
+      "ollama_metrics": {
+        "total_duration": 5835370875,
+        "load_duration": 16000833,
+        "prompt_eval_duration": 1852936000,
+        "eval_duration": 3914334000,
+        "prompt_eval_count": 1058,
+        "eval_count": 78,
+        "eval_tokens_per_second": 19.926761487394792
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for styles."
+    },
+    {
+      "id": "en_v2_unsupported_occasion",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 5.188355833000969,
+      "ollama_metrics": {
+        "total_duration": 5174498000,
+        "load_duration": 2465709,
+        "prompt_eval_duration": 1760305000,
+        "eval_duration": 3396057000,
+        "prompt_eval_count": 1051,
+        "eval_count": 59,
+        "eval_tokens_per_second": 17.373088849804347
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for occasion."
+    },
+    {
+      "id": "en_v2_missing_style",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": null,
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": "95",
+        "preferred_flowers": [
+          "Carnation"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": null,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": null,
+      "latency_seconds": 4.792776957998285,
+      "ollama_metrics": {
+        "total_duration": 4776560792,
+        "load_duration": 3753834,
+        "prompt_eval_duration": 1877376000,
+        "eval_duration": 2868910000,
+        "prompt_eval_count": 1061,
+        "eval_count": 60,
+        "eval_tokens_per_second": 20.913866241882804
+      },
+      "error": "InvalidLLMOutputError: LLM returned a value outside the catalog for preferred_flowers."
+    },
+    {
+      "id": "en_v2_irrelevant_numbers",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Classic"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Wedding",
+        "styles": [
+          "Classic"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": false,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": false,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 5.64734187501017,
+      "ollama_metrics": {
+        "total_duration": 5636745667,
+        "load_duration": 8573292,
+        "prompt_eval_duration": 2151824000,
+        "eval_duration": 3448888000,
+        "prompt_eval_count": 1062,
+        "eval_count": 55,
+        "eval_tokens_per_second": 15.947169058548726
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_occasion_no_defaults",
+      "expected": {
+        "occasion": "Just Because",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "actual": {
+        "occasion": "Just Because",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 6.019523333990946,
+      "ollama_metrics": {
+        "total_duration": 6007368083,
+        "load_duration": 4974917,
+        "prompt_eval_duration": 2476442000,
+        "eval_duration": 3487898000,
+        "prompt_eval_count": 1056,
+        "eval_count": 53,
+        "eval_tokens_per_second": 15.195398489290685
+      },
+      "error": null
+    },
+    {
+      "id": "en_v2_missing_colors",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": null,
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower"
+        ],
+        "excluded_flowers": [
+          "Hydrangea"
+        ]
+      },
+      "actual": {
+        "occasion": "Graduation",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": null,
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower"
+        ],
+        "excluded_flowers": [
+          "Hydrangea"
+        ]
+      },
+      "field_matches": {
+        "occasion": true,
+        "styles": true,
+        "colors": true,
+        "size": true,
+        "budget_max": true,
+        "preferred_flowers": true,
+        "excluded_flowers": true
+      },
+      "exact_match": true,
+      "expected_status": "NEEDS_CLARIFICATION",
+      "actual_status": "NEEDS_CLARIFICATION",
+      "latency_seconds": 6.066232458979357,
+      "ollama_metrics": {
+        "total_duration": 6055688459,
+        "load_duration": 15082959,
+        "prompt_eval_duration": 2044062000,
+        "eval_duration": 3965144000,
+        "prompt_eval_count": 1059,
+        "eval_count": 64,
+        "eval_tokens_per_second": 16.140649620795614
+      },
+      "error": null
+    }
+  ],
+  "configuration": {
+    "model": "qwen3:1.7b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 60.0,
+    "think": false,
+    "dataset": "/Users/adrielledornellesdewes/Documents/flower-ai/evaluation/data/bouquet_requests_v2.json"
+  }
+}

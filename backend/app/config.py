@@ -13,6 +13,7 @@ class OllamaConfig:
     model: str
     base_url: str
     timeout_seconds: float = 60.0
+    think: bool | None = None
 
     def __post_init__(self) -> None:
         """Reject missing model names and unusable connection settings."""
@@ -27,6 +28,20 @@ class OllamaConfig:
 
         if not math.isfinite(self.timeout_seconds) or self.timeout_seconds <= 0:
             raise ValueError("OLLAMA_TIMEOUT_SECONDS must be greater than zero.")
+        if self.think is not None and type(self.think) is not bool:
+            raise ValueError("OLLAMA_THINK must be true or false.")
+
+    @staticmethod
+    def parse_optional_bool(value: str | None) -> bool | None:
+        """Parse an optional boolean setting without conflating false and unset."""
+        if value is None or not value.strip():
+            return None
+        normalized = value.strip().lower()
+        if normalized in {"true", "1", "yes", "on"}:
+            return True
+        if normalized in {"false", "0", "no", "off"}:
+            return False
+        raise ValueError("OLLAMA_THINK must be true or false.")
 
     @classmethod
     def from_env(cls) -> "OllamaConfig":
@@ -41,4 +56,5 @@ class OllamaConfig:
             model=os.getenv("OLLAMA_MODEL", ""),
             base_url=os.getenv("OLLAMA_BASE_URL", ""),
             timeout_seconds=timeout_seconds,
+            think=cls.parse_optional_bool(os.getenv("OLLAMA_THINK")),
         )

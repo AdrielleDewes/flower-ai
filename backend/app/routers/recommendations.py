@@ -9,6 +9,7 @@ from app.models.florist import Florist
 from app.schemas.bouquet import BouquetRequest
 from app.schemas.recommendation import Recommendation
 from app.services.recommendation import generate_recommendation
+from app.services.recommendation_validation import validate_recommendation_request
 
 router = APIRouter(tags=["recommendations"])
 
@@ -23,6 +24,10 @@ def create_recommendation(
     db: Session = Depends(get_db),  # noqa: B008
 ):
     """Generate a bouquet recommendation."""
+    try:
+        validate_recommendation_request(db, florist.id, request)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     recommendation = generate_recommendation(
         db,
         florist_id=florist.id,
