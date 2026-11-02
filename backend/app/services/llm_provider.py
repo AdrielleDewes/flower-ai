@@ -20,6 +20,13 @@ class LLMProvider(Protocol):
         self,
         prompt: str,
         schema: type[BaseModel],
+        *,
+        json_schema: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Return data for schema validation or raise LLMProviderError."""
+        """Use generation constraints and validate with the canonical model schema.
+
+        Providers must honor json_schema for generation or fail explicitly, never
+        silently retry without it. This contract does not add generic JSON Schema
+        validation; callers must still validate application-specific constraints.
+        """
         ...

@@ -1,0 +1,618 @@
+{
+  "version": 2,
+  "catalog": {
+    "occasions": [
+      "Anniversary",
+      "Birthday",
+      "Graduation",
+      "Just Because",
+      "Mother's Day",
+      "Thank You",
+      "Valentine's Day",
+      "Wedding"
+    ],
+    "styles": [
+      "Classic",
+      "Colorful",
+      "Delicate",
+      "Elegant",
+      "Minimalist",
+      "Modern",
+      "Romantic",
+      "Rustic"
+    ],
+    "colors": [
+      "Blue",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "flowers": [
+      "Baby's Breath",
+      "Carnation",
+      "Daisy",
+      "Gerbera",
+      "Hydrangea",
+      "Lily",
+      "Peony",
+      "Rose",
+      "Sunflower",
+      "Tulip"
+    ]
+  },
+  "cases": [
+    {
+      "id": "pt_v2_graduation_classic",
+      "input": "Para a formatura da minha filha, quero um buquê pequeno, clássico, em roxo, com tulipas, até R$135.",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Purple"
+        ],
+        "size": "SMALL",
+        "budget_max": "135",
+        "preferred_flowers": [
+          "Tulip"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "pt_v2_thanks_carnations",
+      "input": "Um buquê médio e moderno, laranja e amarelo, com cravos para agradecer; sem rosas. Posso gastar até R$160.",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Orange",
+          "Yellow"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "160",
+        "preferred_flowers": [
+          "Carnation"
+        ],
+        "excluded_flowers": [
+          "Rose"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "pt_v2_just_because_delicate",
+      "input": "É só um presente sem motivo especial: buquê grande, delicado, branco, com mosquitinho e margaridas.",
+      "expected": {
+        "occasion": "Just Because",
+        "styles": [
+          "Delicate"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Baby's Breath",
+          "Daisy"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "pt_v2_mothers_day_rustic",
+      "input": "No Dia das Mães, quero um buquê pequeno, rústico, amarelo, com gérberas e sem lírios; retirar às 11h.",
+      "expected": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": [
+          "Lily"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "pt_v2_anniversary_dual_style",
+      "input": "Para nosso aniversário de casamento, um buquê grande, clássico e elegante, vermelho e branco, com peônias; nada de cravos.",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Classic",
+          "Elegant"
+        ],
+        "colors": [
+          "Red",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "pt_v2_budget_not_size",
+      "input": "Tenho até R$450 para um buquê romântico rosa para o aniversário da minha irmã.",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Pink"
+        ],
+        "size": null,
+        "budget_max": "450",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_stem_count_not_size",
+      "input": "Quero doze rosas brancas para um casamento, num estilo minimalista.",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_ambiguous_impact",
+      "input": "Quero algo marcante para uma pessoa especial, mas ainda não escolhi cores nem tamanho.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_pink_is_color",
+      "input": "Prefiro tons de rosa e roxo; não tenho preferência por espécie de flor.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Pink",
+          "Purple"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_exclusions_only",
+      "input": "Não coloque hortênsias nem tulipas no buquê. Vou buscar de bicicleta.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": [
+          "Hydrangea",
+          "Tulip"
+        ]
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_unsupported_flower",
+      "input": "Quero um buquê azul com orquídeas e rosas, sem antúrios.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Blue"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_unsupported_categories",
+      "input": "Para uma inauguração, quero um buquê gótico preto com margaridas.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Daisy"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_small_no_occasion",
+      "input": "Pode ser um buquê pequeno e colorido, com girassóis e cravos, sem peônias, até R$72,50.",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Colorful"
+        ],
+        "colors": null,
+        "size": "SMALL",
+        "budget_max": "72.50",
+        "preferred_flowers": [
+          "Sunflower",
+          "Carnation"
+        ],
+        "excluded_flowers": [
+          "Peony"
+        ]
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_irrelevant_colors",
+      "input": "É um buquê para agradecer. A portaria é azul e o entregador deve usar a entrada branca.",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "pt_v2_size_unsure",
+      "input": "Um buquê elegante vermelho para o Dia dos Namorados. Ainda não sei se pequeno ou grande.",
+      "expected": {
+        "occasion": "Valentine's Day",
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_birthday_modern",
+      "input": "For his birthday, a medium modern orange bouquet with gerberas, no daisies, maximum R$175.",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": [
+          "Modern"
+        ],
+        "colors": [
+          "Orange"
+        ],
+        "size": "MEDIUM",
+        "budget_max": "175",
+        "preferred_flowers": [
+          "Gerbera"
+        ],
+        "excluded_flowers": [
+          "Daisy"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "en_v2_wedding_minimalist",
+      "input": "A large minimalist purple and white bouquet for a wedding, with hydrangeas and no carnations.",
+      "expected": {
+        "occasion": "Wedding",
+        "styles": [
+          "Minimalist"
+        ],
+        "colors": [
+          "Purple",
+          "White"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": [
+          "Carnation"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "en_v2_valentines_classic",
+      "input": "Please make a small classic pink bouquet for Valentine's Day with tulips and baby's breath, up to R$110.",
+      "expected": {
+        "occasion": "Valentine's Day",
+        "styles": [
+          "Classic"
+        ],
+        "colors": [
+          "Pink"
+        ],
+        "size": "SMALL",
+        "budget_max": "110",
+        "preferred_flowers": [
+          "Tulip",
+          "Baby's Breath"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "en_v2_thanks_two_styles",
+      "input": "To say thank you: a medium delicate and elegant yellow bouquet with lilies. Leave out roses and peonies.",
+      "expected": {
+        "occasion": "Thank You",
+        "styles": [
+          "Delicate",
+          "Elegant"
+        ],
+        "colors": [
+          "Yellow"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Lily"
+        ],
+        "excluded_flowers": [
+          "Rose",
+          "Peony"
+        ]
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "en_v2_mothers_day_colorful",
+      "input": "A large colorful blue and pink bouquet for Mother's Day, with hydrangeas. Please deliver before breakfast.",
+      "expected": {
+        "occasion": "Mother's Day",
+        "styles": [
+          "Colorful"
+        ],
+        "colors": [
+          "Blue",
+          "Pink"
+        ],
+        "size": "LARGE",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Hydrangea"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "READY"
+    },
+    {
+      "id": "en_v2_low_budget_not_size",
+      "input": "A romantic red bouquet for our anniversary, with a budget of at most R$35.",
+      "expected": {
+        "occasion": "Anniversary",
+        "styles": [
+          "Romantic"
+        ],
+        "colors": [
+          "Red"
+        ],
+        "size": null,
+        "budget_max": "35",
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_ambiguous_size",
+      "input": "Something reasonably sized and lovely for graduation; I have not decided on a size.",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_no_specific_shade",
+      "input": "I want a cheerful bouquet with bright colors, but I have not chosen any specific colors yet.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_preference_and_exclusion",
+      "input": "Please use sunflowers and daisies, and avoid lilies and carnations.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower",
+          "Daisy"
+        ],
+        "excluded_flowers": [
+          "Lily",
+          "Carnation"
+        ]
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_unsupported_mixed",
+      "input": "A small bohemian teal and yellow bouquet with orchids and tulips, no dahlias or roses.",
+      "expected": {
+        "occasion": null,
+        "styles": null,
+        "colors": [
+          "Yellow"
+        ],
+        "size": "SMALL",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Tulip"
+        ],
+        "excluded_flowers": [
+          "Rose"
+        ]
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_unsupported_occasion",
+      "input": "An elegant white medium bouquet for a retirement party, with peonies.",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Elegant"
+        ],
+        "colors": [
+          "White"
+        ],
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Peony"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_missing_style",
+      "input": "For a birthday, a small red bouquet of carnations, under R$95; I have no style in mind.",
+      "expected": {
+        "occasion": "Birthday",
+        "styles": null,
+        "colors": [
+          "Red"
+        ],
+        "size": "SMALL",
+        "budget_max": "95",
+        "preferred_flowers": [
+          "Carnation"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_irrelevant_numbers",
+      "input": "A classic bouquet with roses, please. Deliver to apartment 250 at 10; that is not my budget.",
+      "expected": {
+        "occasion": null,
+        "styles": [
+          "Classic"
+        ],
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": [
+          "Rose"
+        ],
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_occasion_no_defaults",
+      "input": "This is a just-because gift, with no particular flower, color, style or size chosen.",
+      "expected": {
+        "occasion": "Just Because",
+        "styles": null,
+        "colors": null,
+        "size": null,
+        "budget_max": null,
+        "preferred_flowers": null,
+        "excluded_flowers": null
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "en_v2_missing_colors",
+      "input": "For graduation, a medium rustic bouquet with sunflowers, excluding hydrangeas. I have not picked any colors.",
+      "expected": {
+        "occasion": "Graduation",
+        "styles": [
+          "Rustic"
+        ],
+        "colors": null,
+        "size": "MEDIUM",
+        "budget_max": null,
+        "preferred_flowers": [
+          "Sunflower"
+        ],
+        "excluded_flowers": [
+          "Hydrangea"
+        ]
+      },
+      "expected_status": "NEEDS_CLARIFICATION"
+    }
+  ]
+}

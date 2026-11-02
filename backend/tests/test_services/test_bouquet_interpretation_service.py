@@ -19,7 +19,7 @@ def test_complete_interpretation_is_ready_without_optional_fields():
     """The required fields in BouquetRequest determine readiness."""
     interpretation = BouquetRequestInterpretation(
         occasion="Birthday",
-        styles=[],
+        styles=["Romantic"],
         colors=["Red"],
         size=BouquetSize.SMALL,
     )
@@ -68,3 +68,17 @@ def test_complete_interpretation_converts_to_valid_bouquet_request():
     assert request.budget_min is None
     assert request.preferred_flowers == ["Rose"]
     assert request.excluded_flowers == []
+
+
+@pytest.mark.parametrize("value", [None, []])
+def test_empty_and_null_lists_require_the_same_clarification(value):
+    """Empty style/color lists must not accidentally satisfy required fields."""
+    interpretation = BouquetRequestInterpretation(
+        occasion="Birthday", styles=value, colors=value, size="SMALL",
+        preferred_flowers=value, excluded_flowers=value,
+    )
+    readiness = assess_bouquet_interpretation(interpretation)
+    assert readiness.status is BouquetRequestReadinessStatus.NEEDS_CLARIFICATION
+    assert readiness.missing_fields == ["styles", "colors"]
+    with pytest.raises(ValueError, match="styles, colors"):
+        to_bouquet_request(interpretation)

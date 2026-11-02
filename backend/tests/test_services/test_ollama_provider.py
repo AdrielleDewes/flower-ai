@@ -9,18 +9,73 @@ import pytest
 
 from app.config import OllamaConfig
 from app.schemas.bouquet_interpretation import BouquetInterpretation
+from app.schemas.catalog import InterpretationCatalog
+from app.services.catalog_output_schema import build_catalog_output_schema
 from app.services.llm_bouquet_request_interpreter import LLMBouquetRequestInterpreter
 from app.services.llm_provider import InvalidLLMOutputError, LLMProviderError
 from app.services.ollama_provider import OllamaProvider
 
+CATALOG = InterpretationCatalog(
+    occasions=["Birthday"], styles=["Romantic"], colors=["Red"],
+    flowers=["Rose", "Lily"],
+)
 
-def make_provider():
+
+@pytest.mark.parametrize("content,valid", [
+    ('{"preferred_flowers": ["Rose"], "colors": null}', True),
+    ('{"colors": ["Purple"]}', False),
+    ('{"size": "HUGE"}', False),
+])
+def test_constrained_inference_sends_schema_and_keeps_metrics(monkeypatch, content, valid):
+    """The same schema grounds and constrains output; tokens survive rejection."""
+    observed = {}
+    metrics = {"prompt_eval_count": 1234, "eval_count": 60, "eval_duration": 3_000_000_000}
+
+    def fake_urlopen(request, timeout):
+        observed.update(json.loads(request.data))
+        return BytesIO(json.dumps({"message": {"content": content}, **metrics}).encode())
+
+    monkeypatch.setattr("app.services.ollama_provider.urlopen", fake_urlopen)
+    provider = make_provider(think=False)
+    interpreter = LLMBouquetRequestInterpreter(provider, CATALOG, catalog_constraints=True)
+    if valid:
+        assert interpreter.interpret("Roses please").preferred_flowers == ["Rose"]
+    else:
+        with pytest.raises(InvalidLLMOutputError):
+            interpreter.interpret("Roses please")
+    schema = build_catalog_output_schema(CATALOG)
+    assert observed["format"] == schema
+    assert observed["messages"][0]["content"].endswith(
+        "Output JSON schema:\n" + json.dumps(schema, ensure_ascii=False)
+    )
+    assert observed["think"] is False
+    assert observed["options"] == {"temperature": 0}
+    assert provider.last_inference_metrics["prompt_eval_count"] == 1234
+    assert provider.last_inference_metrics["eval_count"] == 60
+    assert provider.last_inference_metrics["eval_tokens_per_second"] == 20
+
+
+def test_constrained_http_error_has_no_unconstrained_retry(monkeypatch):
+    """An unsupported schema fails visibly without another provider request."""
+    calls = []
+
+    def fake_urlopen(request, timeout):
+        calls.append(request)
+        raise HTTPError(request.full_url, 400, "Bad schema", None, None)
+
+    monkeypatch.setattr("app.services.ollama_provider.urlopen", fake_urlopen)
+    with pytest.raises(LLMProviderError, match="400"):
+        LLMBouquetRequestInterpreter(make_provider(), CATALOG, catalog_constraints=True).interpret("Bouquet")
+    assert len(calls) == 1
+
+def make_provider(think=None):
     """Build an adapter with explicit local settings for tests."""
     return OllamaProvider(
         OllamaConfig(
             model="installed-test-model",
             base_url="http://localhost:11434/",
             timeout_seconds=12.5,
+            think=think,
         )
     )
 
@@ -73,12 +128,81 @@ def test_ollama_provider_sends_schema_and_returns_valid_data(monkeypatch):
         "messages": [
             {
                 "role": "user",
-                "content": "A small red birthday bouquet under 75.50",
+                "content": (
+                    "A small red birthday bouquet under 75.50\n\nOutput JSON schema:\n"
+                    + json.dumps(BouquetInterpretation.model_json_schema(), ensure_ascii=False)
+                ),
             }
         ],
         "stream": False,
         "format": BouquetInterpretation.model_json_schema(),
+        "options": {"temperature": 0},
     }
+
+
+def test_ollama_provider_sends_explicit_think_false(monkeypatch):
+    """The thinking option is sent only when the caller configures it."""
+    observed = {}
+
+    def fake_urlopen(request, timeout):
+        observed["body"] = json.loads(request.data)
+        return ollama_response("{}")
+
+    monkeypatch.setattr("app.services.ollama_provider.urlopen", fake_urlopen)
+    provider = make_provider(think=False)
+    provider.generate_structured("A bouquet", BouquetInterpretation)
+
+    assert observed["body"]["think"] is False
+
+
+def test_ollama_provider_captures_inference_metrics_and_generation_rate(monkeypatch):
+    """Server telemetry is retained separately from structured interpretation."""
+    metrics = {
+        "total_duration": 900,
+        "load_duration": 100,
+        "prompt_eval_duration": 200,
+        "eval_duration": 500,
+        "prompt_eval_count": 20,
+        "eval_count": 4,
+    }
+    response = {"message": {"content": "{}"}, **metrics}
+    monkeypatch.setattr(
+        "app.services.ollama_provider.urlopen",
+        lambda request, timeout: BytesIO(json.dumps(response).encode()),
+    )
+    provider = make_provider()
+
+    result = provider.generate_structured("A bouquet", BouquetInterpretation)
+
+    assert result == {}
+    assert provider.last_inference_metrics == {
+        **metrics,
+        "eval_tokens_per_second": 8_000_000,
+    }
+    assert provider.last_total_duration_ns == 900
+
+
+def test_inference_metrics_survive_invalid_structured_content(monkeypatch):
+    """Response timing remains observable when output validation rejects content."""
+    response = {
+        "message": {"content": "not-json"},
+        "total_duration": 42,
+        "eval_duration": 21,
+        "eval_count": 3,
+    }
+    monkeypatch.setattr(
+        "app.services.ollama_provider.urlopen",
+        lambda request, timeout: BytesIO(json.dumps(response).encode()),
+    )
+    provider = make_provider()
+
+    with pytest.raises(InvalidLLMOutputError):
+        provider.generate_structured("A bouquet", BouquetInterpretation)
+
+    assert provider.last_inference_metrics["total_duration"] == 42
+    assert provider.last_inference_metrics["eval_tokens_per_second"] == pytest.approx(
+        3 / 21 * 1e9
+    )
 
 
 def test_ollama_provider_preserves_unknown_fields_through_interpreter(monkeypatch):
@@ -88,7 +212,7 @@ def test_ollama_provider_preserves_unknown_fields_through_interpreter(monkeypatc
         lambda request, timeout: ollama_response('{"occasion":"Birthday"}'),
     )
 
-    result = LLMBouquetRequestInterpreter(make_provider()).interpret(
+    result = LLMBouquetRequestInterpreter(make_provider(), CATALOG).interpret(
         "Birthday bouquet"
     )
 
@@ -162,6 +286,31 @@ def test_ollama_provider_maps_error_envelope(monkeypatch):
         make_provider().generate_structured("A bouquet", BouquetInterpretation)
 
 
+@pytest.mark.parametrize("duration", [1234567890, 0, None, -1, "123", True])
+def test_ollama_duration_is_optional_and_reset_between_calls(monkeypatch, duration):
+    """Keep valid server timing without leaking it into subsequent calls."""
+    responses = iter([
+        BytesIO(json.dumps({
+            "message": {"content": "{}"},
+            "total_duration": duration,
+        }).encode()),
+        ollama_response("{}"),
+    ])
+    monkeypatch.setattr(
+        "app.services.ollama_provider.urlopen",
+        lambda request, timeout: next(responses),
+    )
+    provider = make_provider()
+    assert provider.generate_structured("A bouquet", BouquetInterpretation) == {}
+    expected = duration if type(duration) is int and duration >= 0 else None
+    assert provider.last_total_duration_ns == expected
+    assert provider.last_inference_metrics["total_duration"] == expected
+
+    provider.generate_structured("Another bouquet", BouquetInterpretation)
+    assert provider.last_total_duration_ns is None
+    assert provider.last_inference_metrics["total_duration"] is None
+
+
 def test_interpreter_preserves_invalid_ollama_output_error(monkeypatch):
     """Malformed Ollama data stays distinct from transport failures."""
     monkeypatch.setattr(
@@ -170,7 +319,7 @@ def test_interpreter_preserves_invalid_ollama_output_error(monkeypatch):
     )
 
     with pytest.raises(InvalidLLMOutputError):
-        LLMBouquetRequestInterpreter(make_provider()).interpret("A bouquet")
+        LLMBouquetRequestInterpreter(make_provider(), CATALOG).interpret("A bouquet")
 
 
 def test_ollama_config_reads_environment(monkeypatch):
@@ -178,12 +327,29 @@ def test_ollama_config_reads_environment(monkeypatch):
     monkeypatch.setenv("OLLAMA_MODEL", "local-model")
     monkeypatch.setenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
     monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", "9.5")
+    monkeypatch.setenv("OLLAMA_THINK", "false")
 
     config = OllamaConfig.from_env()
 
     assert config.model == "local-model"
     assert config.base_url == "http://127.0.0.1:11434"
     assert config.timeout_seconds == 9.5
+    assert config.think is False
+
+
+@pytest.mark.parametrize("value, expected", [
+    (None, None), ("", None), ("true", True), ("false", False),
+    ("ON", True), ("off", False),
+])
+def test_ollama_config_parses_optional_think(value, expected):
+    """Unset retains model defaults while explicit booleans remain distinct."""
+    assert OllamaConfig.parse_optional_bool(value) is expected
+
+
+def test_ollama_config_rejects_invalid_think_value():
+    """Unrecognized strings cannot silently enable or disable thinking."""
+    with pytest.raises(ValueError, match="OLLAMA_THINK"):
+        OllamaConfig.parse_optional_bool("sometimes")
 
 
 @pytest.mark.parametrize(

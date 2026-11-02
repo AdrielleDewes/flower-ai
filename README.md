@@ -24,6 +24,9 @@ Large Language Models (LLMs) are responsible for understanding customer preferen
 
 The project also includes an evaluation framework for comparing language models based on extraction accuracy, hallucination rates, structured output validity, and inference latency.
 
+Model experiments, datasets, reports, and evaluation tests live separately in
+[`evaluation/`](evaluation/README.md). Application code and tests remain in `backend/`.
+
 ## Project Status
 
 🚧 **Under active development**
